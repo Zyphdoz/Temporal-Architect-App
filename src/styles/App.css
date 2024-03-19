@@ -1,0 +1,12 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+fieldset {
+  width: fit-content;
+  border-color: #646cff;
+  border-radius: 4px;
+}
