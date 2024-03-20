@@ -88,21 +88,34 @@ export default function DateTimePicker() {
   }
 
   function dayPicker() {
-    const day: string[] = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
     let html = [];
-    for (let i = 0; i < day.length; i++) {
+    let day: string = "";
+    let dayPickerItemClassName: string = "DayPickerItem";
+
+    for (let i = 1; i < 32; i++) {
+
+      if (i < 10) {
+        day = prependZero(i.toString());
+      } else {
+        day = (i.toString());
+      }
+
+      if (i > daysThisMonth()) {
+        dayPickerItemClassName = "DayPickerItemGray";
+      }
+
       html.push(
-        <div key={day[i]}>
+        <div key={day}>
           <input
-            className="DayPickerItem"
+            className={dayPickerItemClassName}
             type="radio"
-            id={`day-${day[i]}`}
+            id={`day-${day}`}
             name="day"
-            value={day[i]}
-            checked={formData.day === day[i]}
+            value={day}
+            checked={formData.day === day}
             onChange={handleChange}
           />
-          <label htmlFor={`day-${day[i]}`}>{day[i]}</label>
+          <label htmlFor={`day-${day}`}>{day}</label>
         </div>
       );
     }
@@ -194,23 +207,39 @@ export default function DateTimePicker() {
   function daysThisMonth() {
     const month = formData.month;
     switch (month) {
-      case "Jan" || "Mar" || "May" || "Jul" || "Aug" || "Oct" || "Dec":
+      case "Jan":
+      case "Mar":
+      case "May":
+      case "Jul":
+      case "Aug":
+      case "Oct":
+      case "Dec":
         return 31;
 
-      case "Apr" || "Jun" || "Sep" || "Nov":
+      case "Apr":
+      case "Jun":
+      case "Sep":
+      case "Nov":
         return 30;
-      
+
       case "Feb":
         if (isLeapYear()) {
           return 29;
         } else {
           return 28;
         }
+
+      default:
+        return 0;
     }
   }
 
   function isLeapYear() {
     return parseInt(formData.year) % 4 > 0 ? false : true;
+  }
+
+  function prependZero(value: string) {
+    return "0" + value;
   }
 
   return (

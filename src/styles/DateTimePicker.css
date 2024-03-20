@@ -90,6 +90,32 @@ input[type="radio"].DayPickerItem:checked + label{
     border-radius: 8px;
 }
 
+.DayPickerItemGray + label{
+    height: 30px;
+    width: 30px;
+    padding: 1px;
+    margin: 1px;
+    display: grid;
+    align-items: center;
+    color: #646969;
+}
+
+input[type="radio"].DayPickerItemGray {
+    display: none;
+}
+
+input[type="radio"].DayPickerItemGray:hover + label{
+    padding: 0px;
+    border: 1px solid #666aa3;
+    border-radius: 8px;
+    cursor: pointer;
+}
+input[type="radio"].DayPickerItemGray:checked + label{
+    border: 1px solid #646cff;
+    padding: 0px;
+    border-radius: 8px;
+}
+
 
 .HourPicker {
     display: grid;
