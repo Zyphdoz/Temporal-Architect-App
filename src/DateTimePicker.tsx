@@ -1,6 +1,6 @@
 import React from "react";
 import { DateAndTime } from "./types/DateAndTime";
-import "./styles/HourSelector.css";
+import "./styles/DateTimePicker.css";
 
 export default function DateTimePicker() {
   const [formData, setFormData] = React.useState<DateAndTime>({
@@ -94,7 +94,7 @@ export default function DateTimePicker() {
       html.push(
         <div key={day[i]}>
           <input
-            className="dayPickerItem"
+            className="DayPickerItem"
             type="radio"
             id={day[i]}
             name="day"
