@@ -39,13 +39,13 @@ export default function DateTimePicker() {
           <input
             className="YearPickerItem"
             type="radio"
-            id={year[i]}
+            id={`year-${year[i]}`} 
             name="year"
             value={year[i]}
             checked={formData.year === year[i]}
             onChange={handleChange}
           />
-          <label htmlFor={year[i]}>{year[i]}</label>
+          <label htmlFor={`year-${year[i]}`}>{year[i]}</label>
         </div>
       );
     }
@@ -74,13 +74,13 @@ export default function DateTimePicker() {
           <input
             className="MonthPickerItem"
             type="radio"
-            id={month[i]}
+            id={`month-${month[i]}`} 
             name="month"
             value={month[i]}
             checked={formData.month === month[i]}
             onChange={handleChange}
           />
-          <label htmlFor={month[i]}>{month[i]}</label>
+          <label htmlFor={`month-${month[i]}`}>{month[i]}</label>
         </div>
       );
     }
@@ -96,13 +96,13 @@ export default function DateTimePicker() {
           <input
             className="DayPickerItem"
             type="radio"
-            id={day[i]}
+            id={`day-${day[i]}`}
             name="day"
             value={day[i]}
             checked={formData.day === day[i]}
             onChange={handleChange}
           />
-          <label htmlFor={day[i]}>{day[i]}</label>
+          <label htmlFor={`day-${day[i]}`}>{day[i]}</label>
         </div>
       );
     }
@@ -143,13 +143,13 @@ export default function DateTimePicker() {
           <input
             className="HourPickerItem"
             type="radio"
-            id={hour[i]}
+            id={`hour-${hour[i]}`}
             name="hour"
             value={hour[i]}
             checked={formData.hour === hour[i]}
             onChange={handleChange}
           />
-          <label htmlFor={hour[i]}>{hour[i]}</label>
+          <label htmlFor={`hour-${hour[i]}`}>{hour[i]}</label>
         </div>
       );
     }
@@ -178,13 +178,13 @@ export default function DateTimePicker() {
           <input
             className="MinutePickerItem"
             type="radio"
-            id={minute[i]}
+            id={`minute-${minute[i]}`}
             name="minute"
             value={minute[i]}
             checked={formData.minute === minute[i]}
             onChange={handleChange}
           />
-          <label htmlFor={minute[i]}>{minute[i]}</label>
+          <label htmlFor={`minute-${minute[i]}`}>{minute[i]}</label>
         </div>
       );
     }
