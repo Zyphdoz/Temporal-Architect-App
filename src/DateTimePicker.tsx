@@ -39,7 +39,7 @@ export default function DateTimePicker() {
           <input
             className="YearPickerItem"
             type="radio"
-            id={`year-${year[i]}`} 
+            id={`year-${year[i]}`}
             name="year"
             value={year[i]}
             checked={formData.year === year[i]}
@@ -74,7 +74,7 @@ export default function DateTimePicker() {
           <input
             className="MonthPickerItem"
             type="radio"
-            id={`month-${month[i]}`} 
+            id={`month-${month[i]}`}
             name="month"
             value={month[i]}
             checked={formData.month === month[i]}
@@ -189,6 +189,28 @@ export default function DateTimePicker() {
       );
     }
     return html;
+  }
+
+  function daysThisMonth() {
+    const month = formData.month;
+    switch (month) {
+      case "Jan" || "Mar" || "May" || "Jul" || "Aug" || "Oct" || "Dec":
+        return 31;
+
+      case "Apr" || "Jun" || "Sep" || "Nov":
+        return 30;
+      
+      case "Feb":
+        if (isLeapYear()) {
+          return 29;
+        } else {
+          return 28;
+        }
+    }
+  }
+
+  function isLeapYear() {
+    return parseInt(formData.year) % 4 > 0 ? false : true;
   }
 
   return (
