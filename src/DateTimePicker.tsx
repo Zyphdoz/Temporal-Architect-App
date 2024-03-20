@@ -11,6 +11,8 @@ export default function DateTimePicker() {
     minute: "0",
   });
 
+  const [showError, setShowError] = React.useState<boolean>(false);
+
   function handleChange(
     event: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -27,8 +29,18 @@ export default function DateTimePicker() {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log(formData);
+    if (selectedDayExistsInSelectedMonth()) {
+      console.log(formData);
+    } else {
+      setShowError(true);
+    }
   }
+
+  React.useEffect(() => {
+    if (selectedDayExistsInSelectedMonth()) {
+      setShowError(false);
+    }
+  }, [formData.day]);
 
   function yearPicker() {
     const year: string[] = ["2024"];
@@ -93,11 +105,10 @@ export default function DateTimePicker() {
     let dayPickerItemClassName: string = "DayPickerItem";
 
     for (let i = 1; i < 32; i++) {
-
       if (i < 10) {
         day = prependZero(i.toString());
       } else {
-        day = (i.toString());
+        day = i.toString();
       }
 
       if (i > daysThisMonth()) {
@@ -242,30 +253,42 @@ export default function DateTimePicker() {
     return "0" + value;
   }
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <fieldset className="YearPicker">
-        <legend>Year</legend>
-        {yearPicker()}
-      </fieldset>
-      <fieldset className="MonthPicker">
-        <legend>Month</legend>
-        {monthPicker()}
-      </fieldset>
-      <fieldset className="DayPicker">
-        <legend>Day</legend>
-        {dayPicker()}
-      </fieldset>
-      <fieldset className="HourPicker">
-        <legend>Hour</legend>
-        {hourPicker()}
-      </fieldset>
-      <fieldset className="MinutePicker">
-        <legend>Minute</legend>
-        {minutePicker()}
-      </fieldset>
+  function selectedDayExistsInSelectedMonth() {
+    const day = parseInt(formData.day);
+    if (day <= daysThisMonth()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-      <button>Submit</button>
-    </form>
+  return (
+    <>
+      <form onSubmit={handleSubmit}>
+        <fieldset className="YearPicker">
+          <legend>Year</legend>
+          {yearPicker()}
+        </fieldset>
+        <fieldset className="MonthPicker">
+          <legend>Month</legend>
+          {monthPicker()}
+        </fieldset>
+        <fieldset className="DayPicker">
+          <legend>Day</legend>
+          {dayPicker()}
+        </fieldset>
+        <fieldset className="HourPicker">
+          <legend>Hour</legend>
+          {hourPicker()}
+        </fieldset>
+        <fieldset className="MinutePicker">
+          <legend>Minute</legend>
+          {minutePicker()}
+        </fieldset>
+
+        <button>Submit</button>
+      </form>
+      {showError && <div className="ErrorMessage">The selected month does not have {formData.day} days. Please select a different day or month. </div>}
+    </>
   );
 }

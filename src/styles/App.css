@@ -10,3 +10,11 @@ fieldset {
   border-color: #646cff;
   border-radius: 4px;
 }
+
+.ErrorMessage {
+  width: fit-content;
+  border: 2px solid #ff0000;
+  border-radius: 4px;
+  padding: 5px 10px;
+  display: inline;
+}
