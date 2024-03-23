@@ -1,17 +1,25 @@
-import React from "react";
+import { useEffect, useState } from 'react';
 import { DateAndTime } from "./types/DateAndTime";
 import "./styles/DateTimePicker.css";
 
-export default function DateTimePicker() {
-  const [formData, setFormData] = React.useState<DateAndTime>({
-    year: "0",
-    month: "0",
-    day: "0",
-    hour: "0",
-    minute: "0",
-  });
+export default function DateTimePicker({ defaultTime }: {defaultTime: DateAndTime}) {
+  const [formData, setFormData] = useState<DateAndTime>(
+    defaultTime
+  );
 
-  const [showError, setShowError] = React.useState<boolean>(false);
+  const [showError, setShowError] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isDataIncomplete(formData)) {
+      setFormDataToCurrentTime();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (selectedDayExistsInSelectedMonth()) {
+      setShowError(false);
+    }
+  }, [formData.day]);
 
   function handleChange(
     event: React.ChangeEvent<
@@ -36,11 +44,10 @@ export default function DateTimePicker() {
     }
   }
 
-  React.useEffect(() => {
-    if (selectedDayExistsInSelectedMonth()) {
-      setShowError(false);
-    }
-  }, [formData.day]);
+  function isDataIncomplete(data: DateAndTime) {
+    const requiredFields: (keyof DateAndTime)[] = ['year', 'month', 'day', 'hour', 'minute'];
+    return requiredFields.some(field => !data[field]);
+  }
 
   function yearPicker() {
     const year: string[] = ["2024"];
@@ -253,6 +260,57 @@ export default function DateTimePicker() {
     return "0" + value;
   }
 
+  function setFormDataToCurrentTime() {
+    //force 3 letter english month names and 24 hour clock
+    //produces a string in the format 'Mar 23, 2024, 16:39:40'
+    const currentDate = new Date()
+      .toLocaleString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: false,
+      })
+      .split(" ");
+    const month = currentDate[0];
+    const day = currentDate[1].replace(',', '');
+    const year = currentDate[2].replace(',', '');
+    const hour = currentDate[3].split(":")[0];
+    const minute = fitToMinutePicker(currentDate[3].split(":")[1]);
+
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        year: year,
+        month: month,
+        day: day,
+        hour: hour,
+        minute: minute,
+      };
+    });
+  }
+
+
+
+  function fitToMinutePicker(value: string): string {
+    let number = parseInt(value);
+    let numberIsDivisibleByFive: boolean = number % 5 === 0 ? true : false;
+
+    if (numberIsDivisibleByFive) return number.toString();
+    if (number > 55) return "55";
+
+    for (let i = 0; i < 55; i++) {
+      number++;
+      numberIsDivisibleByFive = number % 5 === 0 ? true : false;
+      if (number === 5) return prependZero(number.toString());
+      if (numberIsDivisibleByFive) return number.toString();
+    }
+
+    return "00"; //this should never be reached, but it makes TypeScript happy
+  }
+
   function selectedDayExistsInSelectedMonth() {
     const day = parseInt(formData.day);
     if (day <= daysThisMonth()) {
@@ -288,7 +346,12 @@ export default function DateTimePicker() {
 
         <button>Submit</button>
       </form>
-      {showError && <div className="ErrorMessage">The selected month does not have {formData.day} days. Please select a different day or month. </div>}
+      {showError && (
+        <div className="ErrorMessage">
+          The selected month does not have {formData.day} days. Please select a
+          different day or month.
+        </div>
+      )}
     </>
   );
 }
