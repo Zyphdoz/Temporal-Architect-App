@@ -5,18 +5,16 @@ import "./styles/DateTimePicker.css";
 export default function DateTimePicker({
   defaultTime,
 }: {
-  defaultTime: DateAndTime;
+  defaultTime?: DateAndTime;
 }) {
-  const [formData, setFormData] = useState<DateAndTime>(defaultTime);
+  const [formData, setFormData] = useState<DateAndTime>(defaultTime ? defaultTime : setFormDataToCurrentTime());
   const [yearPickerStrings, setYearPickerStrings] = useState<string[]>(
     getPreviousCurrentAndNextYear()
   );
   const [showError, setShowError] = useState<boolean>(false);
 
   useEffect(() => {
-    if (isDataIncomplete(formData)) {
-      setFormDataToCurrentTime();
-    } else if (parseInt(formData.minute) % 5 !== 0) {
+    if (parseInt(formData.minute) % 5 !== 0) {
       setFormData((prevFormData) => {
         return {
           ...prevFormData,
@@ -49,17 +47,6 @@ export default function DateTimePicker({
     } else {
       setShowError(true);
     }
-  }
-
-  function isDataIncomplete(data: DateAndTime) {
-    const requiredFields: (keyof DateAndTime)[] = [
-      "year",
-      "month",
-      "day",
-      "hour",
-      "minute",
-    ];
-    return requiredFields.some((field) => !data[field]);
   }
 
   function yearPicker() {
@@ -341,16 +328,13 @@ export default function DateTimePicker({
     const hour = currentDate[3].split(":")[0] as Hour;
     const minute = fitToMinutePicker(currentDate[3].split(":")[1]);
 
-    setFormData((prevFormData) => {
-      return {
-        ...prevFormData,
-        year: year,
-        month: month,
-        day: day,
-        hour: hour,
-        minute: minute,
-      };
-    });
+    return {
+      year: year,
+      month: month,
+      day: day,
+      hour: hour,
+      minute: minute,
+    };
   }
 
   function fitToMinutePicker(value: string): Minute {
