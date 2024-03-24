@@ -1,15 +1,37 @@
 .YearPicker {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  display: flex;
+  align-items: center;
+  width: 204px;
 }
 
 .YearPickerItem + label {
   height: 30px;
-  width: 30px;
+  width: 42px;
   padding: 1px;
   margin: 1px;
-  display: grid;
+  display: flex;
+  justify-content: space-around;
   align-items: center;
+}
+
+button.YearPickerItem {
+  height: 30px;
+  width: 30px;
+  padding: 1px;
+  padding-bottom: 3px;
+  margin: 1px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background:none;
+}
+
+button.YearPickerItem:focus {
+  outline: none;
+}
+
+button.YearPickerItem:active {
+  scale: 0.95;
 }
 
 input[type="radio"].YearPickerItem {

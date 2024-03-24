@@ -8,7 +8,9 @@ export default function DateTimePicker({
   defaultTime: DateAndTime;
 }) {
   const [formData, setFormData] = useState<DateAndTime>(defaultTime);
-
+  const [yearPickerStrings, setYearPickerStrings] = useState<string[]>(
+    getPreviousCurrentAndNextYear()
+  );
   const [showError, setShowError] = useState<boolean>(false);
 
   useEffect(() => {
@@ -61,8 +63,18 @@ export default function DateTimePicker({
   }
 
   function yearPicker() {
-    const year: string[] = ["2024"];
+    const year: string[] = yearPickerStrings;
     let html = [];
+    html.push(
+      <button
+        key={"decrementYearButton"}
+        type="button"
+        className="YearPickerItem"
+        onClick={() => decrementYearPickerStrings(3)}
+      >
+        ❮
+      </button>
+    );
     for (let i = 0; i < year.length; i++) {
       html.push(
         <div key={year[i]}>
@@ -79,6 +91,16 @@ export default function DateTimePicker({
         </div>
       );
     }
+    html.push(
+      <button
+        key={"incrementYearButton"}
+        type="button"
+        className="YearPickerItem"
+        onClick={() => incrementYearPickerStrings(3)}
+      >
+        ❯
+      </button>
+    );
     return html;
   }
 
@@ -355,6 +377,32 @@ export default function DateTimePicker({
     } else {
       return false;
     }
+  }
+
+  function getPreviousCurrentAndNextYear(): string[] {
+    const currentYear: string = new Date().toLocaleString("en-US", {
+      year: "numeric",
+    });
+    const previousYear: string = (parseInt(currentYear) - 1).toString();
+    const nextYear: string = (parseInt(currentYear) + 1).toString();
+
+    return [previousYear, currentYear, nextYear];
+  }
+
+  function incrementYearPickerStrings(incrementBy: number) {
+    setYearPickerStrings((prevYearPickerStrings) => {
+      return prevYearPickerStrings.map((year) => {
+        return (parseInt(year) + incrementBy).toString();
+      });
+    });
+  }
+
+  function decrementYearPickerStrings(decrementBy: number) {
+    setYearPickerStrings((prevYearPickerStrings) => {
+      return prevYearPickerStrings.map((year) => {
+        return (parseInt(year) - decrementBy).toString();
+      });
+    });
   }
 
   return (
