@@ -24,14 +24,16 @@ button.YearPickerItem {
   justify-content: space-around;
   align-items: center;
   background:none;
+  border: none;
 }
 
 button.YearPickerItem:focus {
   outline: none;
 }
 
-button.YearPickerItem:active {
-  scale: 0.95;
+button.YearPickerItem:hover {
+  border: 1px solid #666aa3;
+  border-radius: 8px;
 }
 
 input[type="radio"].YearPickerItem {
