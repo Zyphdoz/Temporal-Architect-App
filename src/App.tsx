@@ -6,11 +6,11 @@ import { DateAndTime } from "./types/DateAndTime";
 
 function App() {
   const time: DateAndTime = {
-    year: "",
-    month: "",
-    day: "",
-    hour: "",
-    minute: "",
+    year: "2024",
+    month: "Jan",
+    day: "01",
+    hour: "01",
+    minute: "01",
   };
 
   return (

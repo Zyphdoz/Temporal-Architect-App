@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { DateAndTime } from "./types/DateAndTime";
+import { DateAndTime, Day, Hour, Minute, Month } from "./types/DateAndTime";
 import "./styles/DateTimePicker.css";
 
 export default function DateTimePicker({
@@ -313,10 +313,10 @@ export default function DateTimePicker({
         hour12: false,
       })
       .split(" ");
-    const month = currentDate[0];
-    const day = currentDate[1].replace(",", "");
+    const month = currentDate[0] as Month;
+    const day = currentDate[1].replace(",", "") as Day;
     const year = currentDate[2].replace(",", "");
-    const hour = currentDate[3].split(":")[0];
+    const hour = currentDate[3].split(":")[0] as Hour;
     const minute = fitToMinutePicker(currentDate[3].split(":")[1]);
 
     setFormData((prevFormData) => {
@@ -331,18 +331,18 @@ export default function DateTimePicker({
     });
   }
 
-  function fitToMinutePicker(value: string): string {
+  function fitToMinutePicker(value: string): Minute {
     let number = parseInt(value);
     let numberIsDivisibleByFive: boolean = number % 5 === 0 ? true : false;
 
-    if (numberIsDivisibleByFive) return number.toString();
+    if (numberIsDivisibleByFive) return number.toString() as Minute;
     if (number > 55) return "55";
 
     for (let i = 0; i < 55; i++) {
       number++;
       numberIsDivisibleByFive = number % 5 === 0 ? true : false;
-      if (number === 5) return prependZero(number.toString());
-      if (numberIsDivisibleByFive) return number.toString();
+      if (number === 5) return prependZero(number.toString()) as Minute;
+      if (numberIsDivisibleByFive) return number.toString() as Minute;
     }
 
     return "00"; //this should never be reached, but it makes TypeScript happy
