@@ -3,8 +3,10 @@ import { DateAndTime, Day, Hour, Minute, Month } from "./types/DateAndTime";
 import "./styles/DateTimePicker.css";
 
 export default function DateTimePicker({
+  onStateChange,
   defaultTime,
 }: {
+  onStateChange: (formData: DateAndTime) => void;
   defaultTime?: DateAndTime;
 }) {
   const [formData, setFormData] = useState<DateAndTime>(defaultTime ? defaultTime : setFormDataToCurrentTime());
@@ -27,10 +29,11 @@ export default function DateTimePicker({
   useEffect(() => {
     if (selectedDayExistsInSelectedMonth()) {
       setShowError(false);
+      onStateChange(formData);
     } else {
       setShowError(true);
     }
-  }, [formData.day, formData.month, formData.year]);
+  }, [formData]);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
@@ -414,8 +417,6 @@ export default function DateTimePicker({
           <legend>Minute</legend>
           {minutePicker()}
         </fieldset>
-
-        <button>Submit</button>
       </form>
       {showError && (
         <div className="ErrorMessage">

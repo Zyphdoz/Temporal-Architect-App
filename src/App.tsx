@@ -13,9 +13,13 @@ function App() {
     minute: "01",
   };
 
+  function handleStateChange(state: DateAndTime) {
+    console.log(state);
+  }
+
   return (
     <>
-      <DateTimePicker defaultTime={time} />
+      <DateTimePicker onStateChange={handleStateChange} defaultTime={time} />
     </>
   );
 }
