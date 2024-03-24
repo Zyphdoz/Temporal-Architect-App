@@ -362,7 +362,7 @@ export default function DateTimePicker({
   }
 
   function getPreviousCurrentAndNextYear(year: string): string[] {
-    const currentYear: string = year.length ? year : new Date().toLocaleString("en-US", {
+    const currentYear: string = year !== undefined ? year : new Date().toLocaleString("en-US", {
       year: "numeric",
     });
     const previousYear: string = (parseInt(currentYear) - 1).toString();
