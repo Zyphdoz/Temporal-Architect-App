@@ -9,13 +9,15 @@ export default function DateTimePicker({
   onStateChange: (formData: DateAndTime) => void;
   defaultTime?: DateAndTime;
 }) {
-  const [formData, setFormData] = useState<DateAndTime>(defaultTime ? defaultTime : setFormDataToCurrentTime());
+  const [formData, setFormData] = useState<DateAndTime>(defaultTime ? defaultTime : getCurrentTime());
   const [yearPickerStrings, setYearPickerStrings] = useState<string[]>(
     getPreviousCurrentAndNextYear()
   );
   const [showError, setShowError] = useState<boolean>(false);
 
   useEffect(() => {
+    // if the passed in minute prop is not divisible by 5
+    // replace it with one that is divisible by 5
     if (parseInt(formData.minute) % 5 !== 0) {
       setFormData((prevFormData) => {
         return {
@@ -43,15 +45,6 @@ export default function DateTimePicker({
         [name]: value,
       };
     });
-  }
-
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (selectedDayExistsInSelectedMonth()) {
-      console.log(formData);
-    } else {
-      setShowError(true);
-    }
   }
 
   function yearPicker() {
@@ -313,7 +306,7 @@ export default function DateTimePicker({
     return "0" + value;
   }
 
-  function setFormDataToCurrentTime() {
+  function getCurrentTime(): DateAndTime {
     //force 3 letter english month names and 24 hour clock
     //produces a string in the format 'Mar 23, 2024, 16:39:40'
     const currentDate = new Date()
@@ -396,7 +389,7 @@ export default function DateTimePicker({
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form>
         <fieldset className="YearPicker">
           <legend>Year</legend>
           {yearPicker()}
