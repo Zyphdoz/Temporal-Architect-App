@@ -115,32 +115,61 @@ export default function DateTimePicker({ defaultTime }: {defaultTime: DateAndTim
 
   function dayPicker() {
     let html = [];
-    let day: string = "";
+    const day: string[] = [
+      "00",
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30",
+      "31",
+    ];
+    
     let dayPickerItemClassName: string = "DayPickerItem";
 
     for (let i = 1; i < 32; i++) {
-      if (i < 10) {
-        day = prependZero(i.toString());
-      } else {
-        day = i.toString();
-      }
 
       if (i > daysThisMonth()) {
         dayPickerItemClassName = "DayPickerItemGray";
       }
 
       html.push(
-        <div key={day}>
+        <div key={day[i]}>
           <input
             className={dayPickerItemClassName}
             type="radio"
-            id={`day-${day}`}
+            id={`day-${day[i]}`}
             name="day"
-            value={day}
-            checked={formData.day === day}
+            value={day[i]}
+            checked={formData.day === day[i]}
             onChange={handleChange}
           />
-          <label htmlFor={`day-${day}`}>{day}</label>
+          <label htmlFor={`day-${day[i]}`}>{day[i]}</label>
         </div>
       );
     }
