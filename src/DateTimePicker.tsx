@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import { DateAndTime } from "./types/DateAndTime";
 import "./styles/DateTimePicker.css";
 
-export default function DateTimePicker({ defaultTime }: {defaultTime: DateAndTime}) {
-  const [formData, setFormData] = useState<DateAndTime>(
-    defaultTime
-  );
+export default function DateTimePicker({
+  defaultTime,
+}: {
+  defaultTime: DateAndTime;
+}) {
+  const [formData, setFormData] = useState<DateAndTime>(defaultTime);
 
   const [showError, setShowError] = useState<boolean>(false);
 
@@ -28,11 +30,7 @@ export default function DateTimePicker({ defaultTime }: {defaultTime: DateAndTim
     }
   }, [formData.day]);
 
-  function handleChange(
-    event: React.ChangeEvent<
-      HTMLInputElement
-    >
-  ) {
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
     setFormData((prevFormData) => {
       return {
@@ -52,8 +50,14 @@ export default function DateTimePicker({ defaultTime }: {defaultTime: DateAndTim
   }
 
   function isDataIncomplete(data: DateAndTime) {
-    const requiredFields: (keyof DateAndTime)[] = ['year', 'month', 'day', 'hour', 'minute'];
-    return requiredFields.some(field => !data[field]);
+    const requiredFields: (keyof DateAndTime)[] = [
+      "year",
+      "month",
+      "day",
+      "hour",
+      "minute",
+    ];
+    return requiredFields.some((field) => !data[field]);
   }
 
   function yearPicker() {
@@ -149,11 +153,10 @@ export default function DateTimePicker({ defaultTime }: {defaultTime: DateAndTim
       "30",
       "31",
     ];
-    
+
     let dayPickerItemClassName: string = "DayPickerItem";
 
     for (let i = 1; i < 32; i++) {
-
       if (i > daysThisMonth()) {
         dayPickerItemClassName = "DayPickerItemGray";
       }
@@ -311,8 +314,8 @@ export default function DateTimePicker({ defaultTime }: {defaultTime: DateAndTim
       })
       .split(" ");
     const month = currentDate[0];
-    const day = currentDate[1].replace(',', '');
-    const year = currentDate[2].replace(',', '');
+    const day = currentDate[1].replace(",", "");
+    const year = currentDate[2].replace(",", "");
     const hour = currentDate[3].split(":")[0];
     const minute = fitToMinutePicker(currentDate[3].split(":")[1]);
 
@@ -327,8 +330,6 @@ export default function DateTimePicker({ defaultTime }: {defaultTime: DateAndTim
       };
     });
   }
-
-
 
   function fitToMinutePicker(value: string): string {
     let number = parseInt(value);

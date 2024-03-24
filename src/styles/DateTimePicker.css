@@ -1,179 +1,175 @@
 .YearPicker {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-  }
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
 
-.YearPickerItem + label{
-    height: 30px;
-    width: 30px;
-    padding: 1px;
-    margin: 1px;
-    display: grid;
-    align-items: center;
+.YearPickerItem + label {
+  height: 30px;
+  width: 30px;
+  padding: 1px;
+  margin: 1px;
+  display: grid;
+  align-items: center;
 }
 
 input[type="radio"].YearPickerItem {
-    display: none;
+  display: none;
 }
 
-input[type="radio"].YearPickerItem:hover + label{
-    padding: 0px;
-    border: 1px solid #666aa3;
-    border-radius: 8px;
-    cursor: pointer;
+input[type="radio"].YearPickerItem:hover + label {
+  padding: 0px;
+  border: 1px solid #666aa3;
+  border-radius: 8px;
+  cursor: pointer;
 }
-input[type="radio"].YearPickerItem:checked + label{
-    border: 1px solid #646cff;
-    padding: 0px;
-    border-radius: 8px;
+input[type="radio"].YearPickerItem:checked + label {
+  border: 1px solid #646cff;
+  padding: 0px;
+  border-radius: 8px;
 }
-
 
 .MonthPicker {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-  }
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
 
-.MonthPickerItem + label{
-    height: 30px;
-    width: 30px;
-    padding: 1px;
-    margin: 1px;
-    display: grid;
-    align-items: center;
+.MonthPickerItem + label {
+  height: 30px;
+  width: 30px;
+  padding: 1px;
+  margin: 1px;
+  display: grid;
+  align-items: center;
 }
 
 input[type="radio"].MonthPickerItem {
-    display: none;
+  display: none;
 }
 
-input[type="radio"].MonthPickerItem:hover + label{
-    padding: 0px;
-    border: 1px solid #666aa3;
-    border-radius: 8px;
-    cursor: pointer;
+input[type="radio"].MonthPickerItem:hover + label {
+  padding: 0px;
+  border: 1px solid #666aa3;
+  border-radius: 8px;
+  cursor: pointer;
 }
-input[type="radio"].MonthPickerItem:checked + label{
-    border: 1px solid #646cff;
-    padding: 0px;
-    border-radius: 8px;
+input[type="radio"].MonthPickerItem:checked + label {
+  border: 1px solid #646cff;
+  padding: 0px;
+  border-radius: 8px;
 }
-
 
 .DayPicker {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-  }
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
 
-.DayPickerItem + label{
-    height: 30px;
-    width: 30px;
-    padding: 1px;
-    margin: 1px;
-    display: grid;
-    align-items: center;
+.DayPickerItem + label {
+  height: 30px;
+  width: 30px;
+  padding: 1px;
+  margin: 1px;
+  display: grid;
+  align-items: center;
 }
 
 input[type="radio"].DayPickerItem {
-    display: none;
+  display: none;
 }
 
-input[type="radio"].DayPickerItem:hover + label{
-    padding: 0px;
-    border: 1px solid #666aa3;
-    border-radius: 8px;
-    cursor: pointer;
+input[type="radio"].DayPickerItem:hover + label {
+  padding: 0px;
+  border: 1px solid #666aa3;
+  border-radius: 8px;
+  cursor: pointer;
 }
-input[type="radio"].DayPickerItem:checked + label{
-    border: 1px solid #646cff;
-    padding: 0px;
-    border-radius: 8px;
+input[type="radio"].DayPickerItem:checked + label {
+  border: 1px solid #646cff;
+  padding: 0px;
+  border-radius: 8px;
 }
 
-.DayPickerItemGray + label{
-    height: 30px;
-    width: 30px;
-    padding: 1px;
-    margin: 1px;
-    display: grid;
-    align-items: center;
-    color: #646969;
+.DayPickerItemGray + label {
+  height: 30px;
+  width: 30px;
+  padding: 1px;
+  margin: 1px;
+  display: grid;
+  align-items: center;
+  color: #646969;
 }
 
 input[type="radio"].DayPickerItemGray {
-    display: none;
+  display: none;
 }
 
-input[type="radio"].DayPickerItemGray:hover + label{
-    padding: 0px;
-    border: 1px solid #666aa3;
-    border-radius: 8px;
-    cursor: pointer;
+input[type="radio"].DayPickerItemGray:hover + label {
+  padding: 0px;
+  border: 1px solid #666aa3;
+  border-radius: 8px;
+  cursor: pointer;
 }
-input[type="radio"].DayPickerItemGray:checked + label{
-    border: 1px solid #646cff;
-    padding: 0px;
-    border-radius: 8px;
+input[type="radio"].DayPickerItemGray:checked + label {
+  border: 1px solid #646cff;
+  padding: 0px;
+  border-radius: 8px;
 }
-
 
 .HourPicker {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-  }
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
 
-.HourPickerItem + label{
-    height: 30px;
-    width: 30px;
-    padding: 1px;
-    margin: 1px;
-    display: grid;
-    align-items: center;
+.HourPickerItem + label {
+  height: 30px;
+  width: 30px;
+  padding: 1px;
+  margin: 1px;
+  display: grid;
+  align-items: center;
 }
 
 input[type="radio"].HourPickerItem {
-    display: none;
+  display: none;
 }
 
-input[type="radio"].HourPickerItem:hover + label{
-    padding: 0px;
-    border: 1px solid #666aa3;
-    border-radius: 8px;
-    cursor: pointer;
+input[type="radio"].HourPickerItem:hover + label {
+  padding: 0px;
+  border: 1px solid #666aa3;
+  border-radius: 8px;
+  cursor: pointer;
 }
-input[type="radio"].HourPickerItem:checked + label{
-    border: 1px solid #646cff;
-    padding: 0px;
-    border-radius: 8px;
+input[type="radio"].HourPickerItem:checked + label {
+  border: 1px solid #646cff;
+  padding: 0px;
+  border-radius: 8px;
 }
-
 
 .MinutePicker {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-  }
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
 
-.MinutePickerItem + label{
-    height: 30px;
-    width: 30px;
-    padding: 1px;
-    margin: 1px;
-    display: grid;
-    align-items: center;
+.MinutePickerItem + label {
+  height: 30px;
+  width: 30px;
+  padding: 1px;
+  margin: 1px;
+  display: grid;
+  align-items: center;
 }
 
 input[type="radio"].MinutePickerItem {
-    display: none;
+  display: none;
 }
 
-input[type="radio"].MinutePickerItem:hover + label{
-    padding: 0px;
-    border: 1px solid #666aa3;
-    border-radius: 8px;
-    cursor: pointer;
+input[type="radio"].MinutePickerItem:hover + label {
+  padding: 0px;
+  border: 1px solid #666aa3;
+  border-radius: 8px;
+  cursor: pointer;
 }
-input[type="radio"].MinutePickerItem:checked + label{
-    border: 1px solid #646cff;
-    padding: 0px;
-    border-radius: 8px;
+input[type="radio"].MinutePickerItem:checked + label {
+  border: 1px solid #646cff;
+  padding: 0px;
+  border-radius: 8px;
 }
