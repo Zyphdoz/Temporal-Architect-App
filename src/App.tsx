@@ -3,15 +3,10 @@ import { useState } from "react";
 import "./styles/App.css";
 import DateTimePicker from "./DateTimePicker";
 import { DateAndTime } from "./types/DateAndTime";
+import CalendarTaskEditor from "./CalendarTaskEditor";
 
 function App() {
-  const time: DateAndTime = {
-    year: "2024",
-    month: "Jan",
-    day: "01",
-    hour: "01",
-    minute: "01",
-  };
+
 
   function handleStateChange(state: DateAndTime) {
     console.log(state);
@@ -19,7 +14,7 @@ function App() {
 
   return (
     <>
-      <DateTimePicker onStateChange={handleStateChange} defaultTime={time} />
+      <CalendarTaskEditor/>
     </>
   );
 }

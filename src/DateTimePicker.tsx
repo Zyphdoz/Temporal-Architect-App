@@ -5,9 +5,11 @@ import "./styles/DateTimePicker.css";
 export default function DateTimePicker({
   onStateChange,
   defaultTime,
+  uniqueKey,
 }: {
   onStateChange: (formData: DateAndTime) => void;
   defaultTime?: DateAndTime;
+  uniqueKey: string;
 }) {
   const [formData, setFormData] = useState<DateAndTime>(defaultTime ? defaultTime : getCurrentTime());
   const [yearPickerStrings, setYearPickerStrings] = useState<string[]>(
@@ -52,7 +54,7 @@ export default function DateTimePicker({
     let html = [];
     html.push(
       <button
-        key={"decrementYearButton"}
+        key={uniqueKey + "decrementYearButton"}
         type="button"
         className="YearPickerItem"
         onClick={() => decrementYearPickerStrings(3)}
@@ -62,23 +64,23 @@ export default function DateTimePicker({
     );
     for (let i = 0; i < year.length; i++) {
       html.push(
-        <div key={year[i]}>
+        <div key={uniqueKey + year[i]}>
           <input
             className="YearPickerItem"
             type="radio"
-            id={`year-${year[i]}`}
+            id={`year-${uniqueKey}${year[i]}`}
             name="year"
             value={year[i]}
             checked={formData.year === year[i]}
             onChange={handleChange}
           />
-          <label htmlFor={`year-${year[i]}`}>{year[i]}</label>
+          <label htmlFor={`year-${uniqueKey}${year[i]}`}>{year[i]}</label>
         </div>
       );
     }
     html.push(
       <button
-        key={"incrementYearButton"}
+        key={uniqueKey + "incrementYearButton"}
         type="button"
         className="YearPickerItem"
         onClick={() => incrementYearPickerStrings(3)}
@@ -107,17 +109,17 @@ export default function DateTimePicker({
     let html = [];
     for (let i = 0; i < month.length; i++) {
       html.push(
-        <div key={month[i]}>
+        <div key={uniqueKey + month[i]}>
           <input
             className="MonthPickerItem"
             type="radio"
-            id={`month-${month[i]}`}
+            id={`month-${uniqueKey}${month[i]}`}
             name="month"
             value={month[i]}
             checked={formData.month === month[i]}
             onChange={handleChange}
           />
-          <label htmlFor={`month-${month[i]}`}>{month[i]}</label>
+          <label htmlFor={`month-${uniqueKey}${month[i]}`}>{month[i]}</label>
         </div>
       );
     }
@@ -169,17 +171,17 @@ export default function DateTimePicker({
       }
 
       html.push(
-        <div key={day[i]}>
+        <div key={uniqueKey + day[i]}>
           <input
             className={dayPickerItemClassName}
             type="radio"
-            id={`day-${day[i]}`}
+            id={`day-${uniqueKey}${day[i]}`}
             name="day"
             value={day[i]}
             checked={formData.day === day[i]}
             onChange={handleChange}
           />
-          <label htmlFor={`day-${day[i]}`}>{day[i]}</label>
+          <label htmlFor={`day-${uniqueKey}${day[i]}`}>{day[i]}</label>
         </div>
       );
     }
@@ -216,17 +218,17 @@ export default function DateTimePicker({
     let html = [];
     for (let i = 0; i < hour.length; i++) {
       html.push(
-        <div key={hour[i]}>
+        <div key={uniqueKey + hour[i]}>
           <input
             className="HourPickerItem"
             type="radio"
-            id={`hour-${hour[i]}`}
+            id={`hour-${uniqueKey}${hour[i]}`}
             name="hour"
             value={hour[i]}
             checked={formData.hour === hour[i]}
             onChange={handleChange}
           />
-          <label htmlFor={`hour-${hour[i]}`}>{hour[i]}</label>
+          <label htmlFor={`hour-${uniqueKey}${hour[i]}`}>{hour[i]}</label>
         </div>
       );
     }
@@ -251,17 +253,17 @@ export default function DateTimePicker({
     let html = [];
     for (let i = 0; i < minute.length; i++) {
       html.push(
-        <div key={minute[i]}>
+        <div key={uniqueKey + minute[i]}>
           <input
             className="MinutePickerItem"
             type="radio"
-            id={`minute-${minute[i]}`}
+            id={`minute-${uniqueKey}${minute[i]}`}
             name="minute"
             value={minute[i]}
             checked={formData.minute === minute[i]}
             onChange={handleChange}
           />
-          <label htmlFor={`minute-${minute[i]}`}>{minute[i]}</label>
+          <label htmlFor={`minute-${uniqueKey}${minute[i]}`}>{minute[i]}</label>
         </div>
       );
     }
