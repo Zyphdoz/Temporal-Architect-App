@@ -11,7 +11,7 @@ export default function DateTimePicker({
 }) {
   const [formData, setFormData] = useState<DateAndTime>(defaultTime ? defaultTime : getCurrentTime());
   const [yearPickerStrings, setYearPickerStrings] = useState<string[]>(
-    getPreviousCurrentAndNextYear()
+    getPreviousCurrentAndNextYear(defaultTime?.year as string)
   );
   const [showError, setShowError] = useState<boolean>(false);
 
@@ -361,8 +361,8 @@ export default function DateTimePicker({
     }
   }
 
-  function getPreviousCurrentAndNextYear(): string[] {
-    const currentYear: string = new Date().toLocaleString("en-US", {
+  function getPreviousCurrentAndNextYear(year: string): string[] {
+    const currentYear: string = year.length ? year : new Date().toLocaleString("en-US", {
       year: "numeric",
     });
     const previousYear: string = (parseInt(currentYear) - 1).toString();
