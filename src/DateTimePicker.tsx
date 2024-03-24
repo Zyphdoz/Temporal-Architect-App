@@ -30,14 +30,14 @@ export default function DateTimePicker({ defaultTime }: {defaultTime: DateAndTim
 
   function handleChange(
     event: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      HTMLInputElement
     >
   ) {
-    const { name, value, type, checked } = event.target;
+    const { name, value } = event.target;
     setFormData((prevFormData) => {
       return {
         ...prevFormData,
-        [name]: type === "checkbox" ? checked : value,
+        [name]: value,
       };
     });
   }
