@@ -27,8 +27,10 @@ export default function DateTimePicker({
   useEffect(() => {
     if (selectedDayExistsInSelectedMonth()) {
       setShowError(false);
+    } else {
+      setShowError(true);
     }
-  }, [formData.day]);
+  }, [formData.day, formData.month, formData.year]);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
@@ -417,8 +419,8 @@ export default function DateTimePicker({
       </form>
       {showError && (
         <div className="ErrorMessage">
-          The selected month does not have {formData.day} days. Please select a
-          different day or month.
+          The selected month does not have {formData.day} days. <br></br>
+          Please select a different day or month.
         </div>
       )}
     </>
