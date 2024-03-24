@@ -12,6 +12,13 @@ export default function DateTimePicker({ defaultTime }: {defaultTime: DateAndTim
   useEffect(() => {
     if (isDataIncomplete(formData)) {
       setFormDataToCurrentTime();
+    } else if (parseInt(formData.minute) % 5 !== 0) {
+      setFormData((prevFormData) => {
+        return {
+          ...prevFormData,
+          minute: fitToMinutePicker(formData.minute),
+        };
+      });
     }
   }, []);
 
