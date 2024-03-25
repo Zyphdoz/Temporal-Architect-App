@@ -12,10 +12,15 @@ fieldset {
 }
 
 .ErrorMessage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   border: 2px groove #d02020;
   border-radius: 4px;
   padding: 5px 10px;
   display: block;
   margin: 10px auto;
-  max-width: 208px;
+  width: fit-content;
+  background-color: #1a1a1a;
 }
