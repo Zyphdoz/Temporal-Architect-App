@@ -1,0 +1,90 @@
+.CalendarTaskEditor {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: fit-content;
+  height: fit-content;
+}
+
+.TaskDetails {
+  display: flex;
+  flex-direction: column;
+  width: 264px;
+  padding-top: 1px;
+}
+
+.TaskDetails > textarea {
+  height: 160px;
+  border: 2px groove #666aa3;
+  border-radius: 4px;
+  background-color: transparent;
+  padding: 10px;
+  width: 240px;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 10px auto;
+}
+
+
+
+.TaskDetails > textarea:focus,
+.TaskDetails > textarea:hover {
+  border-color: #646cff;
+  outline: none;
+}
+
+.TaskDetails > input {
+  margin: 10px auto;
+  border: 2px groove #666aa3;
+  border-radius: 4px;
+  background-color: transparent;
+  padding: 10px;
+  width: 240px;
+}
+
+.TaskDetails > input:focus,
+.TaskDetails > input:hover {
+  border-color: #646cff;
+  outline: none;
+}
+
+#TaskTags {
+  height: 30px;
+}
+
+.RecurringTaskCheckbox {
+  width: 260px;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 5px 0px;
+  border: 2px groove #646cff;
+  border-radius: 4px;
+  margin: 10px auto;
+  border-color: #666aa3;
+}
+
+.RecurringTaskCheckbox > label {
+  height: 30px;
+  width: 30px;
+  padding: 1px;
+  margin: 1px;
+  display: grid;
+  align-items: center;
+}
+
+input[type="checkbox"]:hover + label {
+  padding: 0px;
+  border: 1px solid #666aa3;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked + label {
+  border: 1px solid #646cff;
+  padding: 0px;
+  border-radius: 8px;
+}
+
+.RecurringTaskCheckbox > input[type="checkbox"] {
+  display: none;
+}

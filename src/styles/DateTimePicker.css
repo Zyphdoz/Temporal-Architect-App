@@ -46,6 +46,7 @@ input[type="radio"].YearPickerItem:hover + label {
   border-radius: 8px;
   cursor: pointer;
 }
+
 input[type="radio"].YearPickerItem:checked + label {
   border: 1px solid #646cff;
   padding: 0px;
