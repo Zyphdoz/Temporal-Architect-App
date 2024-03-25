@@ -17,7 +17,7 @@ export default function DateTimePicker({
   const [yearPickerStrings, setYearPickerStrings] = useState<string[]>(
     getPreviousCurrentAndNextYear(defaultTime?.year as string)
   );
-  const [showError, setShowError] = useState<boolean>(false);
+  const [showInvalidDayErrorMessage, setShowInvalidDayErrorMessage] = useState<boolean>(false);
 
   useEffect(() => {
     // if the passed in minute prop is not divisible by 5
@@ -34,10 +34,10 @@ export default function DateTimePicker({
 
   useEffect(() => {
     if (selectedDayExistsInSelectedMonth()) {
-      setShowError(false);
+      setShowInvalidDayErrorMessage(false);
       onStateChange(formData);
     } else {
-      setShowError(true);
+      setShowInvalidDayErrorMessage(true);
     }
   }, [formData]);
 
@@ -418,7 +418,7 @@ export default function DateTimePicker({
           {minutePicker()}
         </fieldset>
       </form>
-      {showError && (
+      {showInvalidDayErrorMessage && (
         <div className="ErrorMessage">
           The selected month does not have {formData.day} days. <br></br>
           Please select a different day or month.
