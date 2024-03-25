@@ -4,7 +4,11 @@ import { DateAndTime } from "./types/DateAndTime";
 import { CalendarTask } from "./types/CalendarTask";
 import "./styles/CalendarTaskEditor.css";
 
-export default function EditCalendarTask() {
+export default function EditCalendarTask({
+  onTaskSubmit,
+}: {
+  onTaskSubmit: (calendarTaskFormData: CalendarTask) => void;
+}) {
   const [calendarTaskFormData, setCalendarTaskFormData] =
     useState<CalendarTask>({
       title: "",
@@ -71,6 +75,8 @@ export default function EditCalendarTask() {
     event.preventDefault();
     if (endTimeComesBeforeStartTime()) {
       setShowNegativeTaskDurationErrorMessage(true);
+    } else {
+      onTaskSubmit(calendarTaskFormData);
     }
   }
 
