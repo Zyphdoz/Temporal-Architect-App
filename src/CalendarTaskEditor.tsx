@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import DateTimePicker from "./DateTimePicker";
 import { DateAndTime } from "./types/DateAndTime";
 import { CalendarTask } from "./types/CalendarTask";
@@ -36,13 +36,32 @@ export default function EditCalendarTask() {
       repeatSunday: false,
     });
 
+  const [
+    showNegativeTaskDurationErrorMessage,
+    setShowNegativeTaskDurationErrorMessage,
+  ] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!endTimeComesBeforeStartTime()) {
+      setShowNegativeTaskDurationErrorMessage(false);
+      setCalendarTaskFormData((prevCalendarTaskFormData) => {
+        return {
+          ...prevCalendarTaskFormData,
+          taskDuration:
+            prevCalendarTaskFormData.endTime.date.getTime() -
+            prevCalendarTaskFormData.startTime.date.getTime(),
+        };
+      });
+    }
+  }, [calendarTaskFormData.startTime.date, calendarTaskFormData.endTime.date]);
+
   function handleChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
     const { name, value, type, checked } = event.target as HTMLInputElement;
-    setCalendarTaskFormData((prevcalendarTaskFormData) => {
+    setCalendarTaskFormData((prevCalendarTaskFormData) => {
       return {
-        ...prevcalendarTaskFormData,
+        ...prevCalendarTaskFormData,
         [name]: type === "checkbox" ? checked : value,
       };
     });
@@ -50,7 +69,9 @@ export default function EditCalendarTask() {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log(calendarTaskFormData);
+    if (endTimeComesBeforeStartTime()) {
+      setShowNegativeTaskDurationErrorMessage(true);
+    }
   }
 
   function handleStartTimeChange(startTime: DateAndTime) {
@@ -69,6 +90,13 @@ export default function EditCalendarTask() {
         endTime: endTime,
       };
     });
+  }
+
+  function endTimeComesBeforeStartTime(): boolean {
+    return calendarTaskFormData.endTime.date.getTime() <
+      calendarTaskFormData.startTime.date.getTime()
+      ? true
+      : false;
   }
 
   return (
@@ -177,6 +205,13 @@ export default function EditCalendarTask() {
           <button type="button">Cancel</button>
         </form>
       </div>
+      {showNegativeTaskDurationErrorMessage && (
+        <div className="ErrorMessage">
+          An event cannot end before it starts. <br />
+          Please double check your start and end times and make sure the start
+          time comes before the end time.
+        </div>
+      )}
     </>
   );
 }

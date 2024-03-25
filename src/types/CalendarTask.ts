@@ -6,6 +6,7 @@ export interface CalendarTask {
   category: string;
   startTime: DateAndTime;
   endTime: DateAndTime;
+  taskDuration: number;
   repeatMonday: boolean;
   repeatTuesday: boolean;
   repeatWednesday: boolean;

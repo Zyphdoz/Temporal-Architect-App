@@ -17,7 +17,8 @@ export default function DateTimePicker({
   const [yearPickerStrings, setYearPickerStrings] = useState<string[]>(
     getPreviousCurrentAndNextYear(defaultTime?.year as string)
   );
-  const [showInvalidDayErrorMessage, setShowInvalidDayErrorMessage] = useState<boolean>(false);
+  const [showInvalidDayErrorMessage, setShowInvalidDayErrorMessage] =
+    useState<boolean>(false);
 
   useEffect(() => {
     // if the passed in minute prop is not divisible by 5
@@ -31,6 +32,21 @@ export default function DateTimePicker({
       });
     }
   }, []);
+
+  useEffect(() => {
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        date: formDataToDateObject(),
+      };
+    });
+  }, [
+    formData.day,
+    formData.year,
+    formData.hour,
+    formData.month,
+    formData.minute,
+  ]);
 
   useEffect(() => {
     if (selectedDayExistsInSelectedMonth()) {
@@ -47,7 +63,6 @@ export default function DateTimePicker({
       return {
         ...prevFormData,
         [name]: value,
-        date: formDataToDateObject(),
       };
     });
   }
@@ -337,7 +352,9 @@ export default function DateTimePicker({
       day: day,
       hour: hour,
       minute: minute,
-      date: new Date(),
+      date: new Date(
+        `${year}-${monthToNumber(month)}-${day}T${hour}:${minute}:00`
+      ),
     };
   }
 
@@ -359,15 +376,10 @@ export default function DateTimePicker({
   }
 
   function formDataToDateObject() {
-    let {
-        year,
-        month,
-        day,
-        hour,
-        minute,
-    } = formData;
-    const monthAsNumber = monthToNumber(month);
-    const date = new Date(`${year}-${monthAsNumber}-${day}T${hour}:${minute}:00`);
+    let { year, month, day, hour, minute } = formData;
+    const date = new Date(
+      `${year}-${monthToNumber(month)}-${day}T${hour}:${minute}:00`
+    );
     return date;
   }
 
@@ -387,7 +399,9 @@ export default function DateTimePicker({
       "Dec",
     ];
     let monthNumber: number = months.indexOf(month) + 1;
-    return monthNumber < 10 ? "0" + monthNumber.toString() : monthNumber.toString();
+    return monthNumber < 10
+      ? "0" + monthNumber.toString()
+      : monthNumber.toString();
   }
 
   function selectedDayExistsInSelectedMonth() {
