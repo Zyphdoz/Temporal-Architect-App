@@ -1,6 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import DateTimePicker from "./DateTimePicker";
-import { DateAndTime, Day, Hour, Minute, Month } from "./types/DateAndTime";
+import { DateAndTime } from "./types/DateAndTime";
 import { CalendarTask } from "./types/CalendarTask";
 import "./styles/CalendarTaskEditor.css";
 
