@@ -47,6 +47,7 @@ export default function DateTimePicker({
       return {
         ...prevFormData,
         [name]: value,
+        date: formDataToDateObject(),
       };
     });
   }
@@ -336,6 +337,7 @@ export default function DateTimePicker({
       day: day,
       hour: hour,
       minute: minute,
+      date: new Date(),
     };
   }
 
@@ -354,6 +356,38 @@ export default function DateTimePicker({
     }
 
     return "00"; //this should never be reached, but it makes TypeScript happy
+  }
+
+  function formDataToDateObject() {
+    let {
+        year,
+        month,
+        day,
+        hour,
+        minute,
+    } = formData;
+    const monthAsNumber = monthToNumber(month);
+    const date = new Date(`${year}-${monthAsNumber}-${day}T${hour}:${minute}:00`);
+    return date;
+  }
+
+  function monthToNumber(month: Month) {
+    const months: string[] = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    let monthNumber: number = months.indexOf(month) + 1;
+    return monthNumber < 10 ? "0" + monthNumber.toString() : monthNumber.toString();
   }
 
   function selectedDayExistsInSelectedMonth() {

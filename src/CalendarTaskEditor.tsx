@@ -5,34 +5,40 @@ import { CalendarTask } from "./types/CalendarTask";
 import "./styles/CalendarTaskEditor.css";
 
 export default function EditCalendarTask() {
-  const [calendarTaskFormData, setCalendarTaskFormData] = useState<CalendarTask>({
-    title: "",
-    description: "",
-    category: "",
-    startTime: {
-      year: "1970",
-      month: "Jan",
-      day: "01",
-      hour: "00",
-      minute: "00",
-    },
-    endTime: {
-      year: "1970",
-      month: "Jan",
-      day: "01",
-      hour: "00",
-      minute: "00",
-    },
-    repeatMonday: false,
-    repeatTuesday: false,
-    repeatWednesday: false,
-    repeatThursday: false,
-    repeatFriday: false,
-    repeatSaturday: false,
-    repeatSunday: false,
-  });
+  const [calendarTaskFormData, setCalendarTaskFormData] =
+    useState<CalendarTask>({
+      title: "",
+      description: "",
+      category: "",
+      startTime: {
+        year: "1970",
+        month: "Jan",
+        day: "01",
+        hour: "00",
+        minute: "00",
+        date: new Date(),
+      },
+      endTime: {
+        year: "1970",
+        month: "Jan",
+        day: "01",
+        hour: "00",
+        minute: "00",
+        date: new Date(),
+      },
+      taskDuration: 0,
+      repeatMonday: false,
+      repeatTuesday: false,
+      repeatWednesday: false,
+      repeatThursday: false,
+      repeatFriday: false,
+      repeatSaturday: false,
+      repeatSunday: false,
+    });
 
-  function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function handleChange(
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     const { name, value, type, checked } = event.target as HTMLInputElement;
     setCalendarTaskFormData((prevcalendarTaskFormData) => {
       return {

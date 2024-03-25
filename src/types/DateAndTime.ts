@@ -4,6 +4,7 @@ export interface DateAndTime {
     day: Day;
     hour: Hour;
     minute: Minute;
+    date: Date;
   }
 
 export type Month =
