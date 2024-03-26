@@ -360,8 +360,10 @@ export default function DateTimePicker({
 
   function fitToMinutePicker(value: string): Minute {
     let number = parseInt(value);
-    let numberIsDivisibleByFive: boolean = number % 5 === 0 ? true : false;
+    if (number === 5) return prependZero(number.toString()) as Minute;
+    if (number === 0) return prependZero(number.toString()) as Minute;
 
+    let numberIsDivisibleByFive: boolean = number % 5 === 0 ? true : false;
     if (numberIsDivisibleByFive) return number.toString() as Minute;
     if (number > 55) return "55";
 
