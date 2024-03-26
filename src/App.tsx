@@ -2,6 +2,7 @@ import "./styles/App.css";
 import CalendarTaskEditor from "./CalendarTaskEditor";
 import { useState } from "react";
 import { CalendarTask } from "./types/CalendarTask";
+import Calendar from "./Calendar";
 
 function App() {
   const [calendarTasks, setCalendarTasks] = useState<CalendarTask[]>([]);
@@ -14,8 +15,10 @@ function App() {
 
   return (
     <>
-      <CalendarTaskEditor onTaskSubmit={handleOnTaskSubmit} />
-      {JSON.stringify(calendarTasks)}
+      <div className="hidden">
+      <CalendarTaskEditor onTaskSubmit={handleOnTaskSubmit}/>
+      </div>
+      <Calendar calendarTasks={calendarTasks}/>
     </>
   );
 }

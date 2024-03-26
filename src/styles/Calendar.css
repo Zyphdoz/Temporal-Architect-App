@@ -1,0 +1,53 @@
+.CalendarAndDatePickerContainer {
+    display: flex;
+    align-items: flex-start;
+}
+
+.CalendarAndDatePickerContainer > form {
+    margin-right: 8px;
+    translate: 0px -11px;
+}
+
+.CalendarContainer {
+    width: 1394px;
+    height: 754px;
+    border: 2px groove #646cff;
+    border-radius: 4px;
+    display: flex;
+    flex-wrap: wrap;    
+    padding: 4px;
+    padding-bottom: 8px;
+}
+
+.DayLabelContainer {
+    width: 1354px;
+    height: 30px;
+    border: 2px groove #646cff;
+    border-radius: 4px;
+    margin-left: 35px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.HourLabelContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: fit-content;
+}
+
+.HourLabel {
+    display: flex;
+    height: 30px;
+    padding-right: 4px;
+    font-size: 13px;
+}
+
+.CalendarDayColumn {
+    width: 190px;
+    height: 720px;
+    border: 2px groove #646cff;
+    border-radius: 4px;
+    display: inline-block;
+}

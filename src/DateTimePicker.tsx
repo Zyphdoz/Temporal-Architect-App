@@ -457,7 +457,9 @@ export default function DateTimePicker({
           <legend>Day</legend>
           {dayPicker()}
         </fieldset>
-        <fieldset className="HourPicker">
+        {uniqueKey !== "calendarDatePicker" && (
+          <>
+          <fieldset className="HourPicker">
           <legend>Hour</legend>
           {hourPicker()}
         </fieldset>
@@ -465,6 +467,8 @@ export default function DateTimePicker({
           <legend>Minute</legend>
           {minutePicker()}
         </fieldset>
+          </>
+          )}
       </form>
       {showInvalidDayErrorMessage && (
         <div className="ErrorMessage">
