@@ -15,7 +15,7 @@ function App() {
 
   return (
     <>
-      <div className="hidden">
+      <div className="">
       <CalendarTaskEditor onTaskSubmit={handleOnTaskSubmit}/>
       </div>
       <Calendar calendarTasks={calendarTasks}/>
