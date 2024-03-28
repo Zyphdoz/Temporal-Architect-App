@@ -31,6 +31,7 @@ export default function EditCalendarTask({
         date: new Date(),
       },
       taskDuration: 0,
+      taskId: 0,
       repeatMonday: false,
       repeatTuesday: false,
       repeatWednesday: false,
@@ -54,6 +55,7 @@ export default function EditCalendarTask({
           taskDuration:
             prevCalendarTaskFormData.endTime.date.getTime() -
             prevCalendarTaskFormData.startTime.date.getTime(),
+          taskId: new Date().getTime(),
         };
       });
     }
