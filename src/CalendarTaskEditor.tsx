@@ -6,8 +6,10 @@ import './styles/CalendarTaskEditor.css';
 
 export default function EditCalendarTask({
     onTaskSubmit,
+    onCancelEdit,
 }: {
     onTaskSubmit: (calendarTaskFormData: CalendarTask) => void;
+    onCancelEdit(): void;
 }) {
     const [calendarTaskFormData, setCalendarTaskFormData] = useState<CalendarTask>({
         title: '',
@@ -97,6 +99,7 @@ export default function EditCalendarTask({
 
     function onCancelButtonClick() {
         clearTaskDetails();
+        onCancelEdit();
     }
 
     function clearTaskDetails() {

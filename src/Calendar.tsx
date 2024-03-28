@@ -4,7 +4,13 @@ import DateTimePicker from './DateTimePicker';
 import { DateAndTime } from './types/DateAndTime';
 import './styles/Calendar.css';
 
-export default function Calendar({ calendarTasks }: { calendarTasks: CalendarTask[] }) {
+export default function Calendar({
+    calendarTasks,
+    onCreateNewTaskButtonClick,
+}: {
+    calendarTasks: CalendarTask[];
+    onCreateNewTaskButtonClick(): void;
+}) {
     const [dayLabels, setDayLabels] = useState<Date[]>(initializeWithSevenNextDays());
 
     const [selectedTask, setSelectedTask] = useState<CalendarTask>();
@@ -336,7 +342,7 @@ export default function Calendar({ calendarTasks }: { calendarTasks: CalendarTas
                 <div className="CalendarAndDatePickerContainer">
                     <DateTimePicker onStateChange={handleDateTimePickerStateChange} uniqueKey="calendarDatePicker" />
                     <div className="CalendarTaskControls">
-                        <button>Create new task</button>
+                        <button onClick={onCreateNewTaskButtonClick}>Create new task</button>
                         {selectedTask && (
                             <button onClick={handleClickEditSelectedTaskButton}>Edit selected task</button>
                         )}
