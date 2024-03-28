@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { CalendarTask } from './types/CalendarTask';
 import DateTimePicker from './DateTimePicker';
-import { DateAndTime, Day, Minute, Hour, Month } from './types/DateAndTime';
+import { DateAndTime } from './types/DateAndTime';
 import './styles/Calendar.css';
 
 export default function Calendar({ calendarTasks }: { calendarTasks: CalendarTask[] }) {
@@ -20,8 +20,6 @@ export default function Calendar({ calendarTasks }: { calendarTasks: CalendarTas
             return newDates;
         });
     }
-
-    function tst() {}
 
     function handleUserClickedOnCalendarTask(taskId: number) {
         const selectedTask = getCalendarTaskById(taskId);
