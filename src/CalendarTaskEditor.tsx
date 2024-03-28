@@ -73,6 +73,7 @@ export default function EditCalendarTask({
             setShowNegativeTaskDurationErrorMessage(true);
         } else {
             onTaskSubmit(calendarTaskFormData);
+            clearTaskDetails();
         }
     }
 
@@ -90,6 +91,28 @@ export default function EditCalendarTask({
             return {
                 ...prevcalendarTaskFormData,
                 endTime: endTime,
+            };
+        });
+    }
+
+    function onCancelButtonClick() {
+        clearTaskDetails();
+    }
+
+    function clearTaskDetails() {
+        setCalendarTaskFormData((prevCalendarTaskFormData) => {
+            return {
+                ...prevCalendarTaskFormData,
+                title: '',
+                description: '',
+                category: '',
+                repeatMonday: false,
+                repeatTuesday: false,
+                repeatWednesday: false,
+                repeatThursday: false,
+                repeatFriday: false,
+                repeatSaturday: false,
+                repeatSunday: false,
             };
         });
     }
@@ -197,7 +220,9 @@ export default function EditCalendarTask({
                     </fieldset>
 
                     <button>Add task</button>
-                    <button type="button">Cancel</button>
+                    <button type="button" onClick={onCancelButtonClick}>
+                        Cancel
+                    </button>
                 </form>
             </div>
             {showNegativeTaskDurationErrorMessage && (
