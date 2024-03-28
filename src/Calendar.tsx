@@ -13,6 +13,8 @@ export default function Calendar({
     initializeWithSevenNextDays()
   );
 
+  const [selectedTask, setSelectedTask] = useState<CalendarTask>();
+
   function handleDateTimePickerStateChange(event: DateAndTime) {
     setDayLabels(() => {
       let newDates = [];
@@ -23,6 +25,69 @@ export default function Calendar({
       }
       return newDates;
     });
+  }
+
+  function handleUserClickedOnCalendarTask(taskId: number) {
+    const selectedTask = getCalendarTaskById(taskId);
+    setSelectedTask(selectedTask);
+  }
+
+  function handleClickEditSelectedTaskButton() {}
+
+  function getCalendarTaskById(id: number): NonNullable<CalendarTask> {
+    const task = calendarTasks.find((task) => task.taskId === id);
+    if (!task) {
+      throw new Error(`Task with id ${id} not found`);
+    }
+    return task;
+  }
+
+  function insertSelectedTask() {
+    if (!selectedTask) return;
+
+    const html = (
+      <div
+        className="CalendarEventContainer"
+        style={{
+          height: `fitContent`,
+          minHeight: `fitContentx`,
+        }}
+      >
+        <div>
+          {selectedTask.startTime.date
+            .toLocaleString("en-US", {
+              weekday: "short",
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            })
+            .replace(/,/g, "")}
+          <br />
+          {selectedTask.endTime.date
+            .toLocaleString("en-US", {
+              weekday: "short",
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            })
+            .replace(/,/g, "")}
+          <br />
+          <div className="CalendarTaskTitle">
+            {selectedTask.title}</div>
+          <br />
+          <div className="CalendarTaskDescription">
+            {selectedTask.description}
+          </div>
+        </div>
+      </div>
+    );
+    return html;
   }
 
   function initializeWithSevenNextDays() {
@@ -81,11 +146,10 @@ export default function Calendar({
     const heightOfCalendarEventContainerMarginTopPlusBottom: number = 2;
 
     for (let i = 0; i < todaysTasks.length; i++) {
-      const { title, taskDuration, startTime, endTime } = todaysTasks[i];
+      const { title, taskDuration, startTime, endTime, taskId, description } =
+        todaysTasks[i];
       let duration: string = `${startTime.hour}:${startTime.minute}-${endTime.hour}:${endTime.minute}`;
-      let taskHeight: number =
-        (taskDuration / 3600000) *
-        (hourHeightInPixels);
+      let taskHeight: number = (taskDuration / 3600000) * hourHeightInPixels;
 
       const hoursSincePreviousTask = getHoursBetween(
         previousTaskStartTime,
@@ -128,6 +192,7 @@ export default function Calendar({
       html.push(
         <div
           className="CalendarEventContainer"
+          onClick={() => handleUserClickedOnCalendarTask(taskId)}
           style={{
             height: `${taskHeight}px`,
             minHeight: `${taskHeight}px`,
@@ -136,7 +201,12 @@ export default function Calendar({
         >
           <div className="CalendarEventTitle">
             {duration} <br />
-            {title}
+            <div className="CalendarTaskTitle">
+            {title}</div>
+          <br />
+          <div className="CalendarTaskDescription">
+            {description}
+          </div>
           </div>
         </div>
       );
@@ -291,11 +361,24 @@ export default function Calendar({
 
   return (
     <>
-      <div className="CalendarAndDatePickerContainer">
-        <DateTimePicker
-          onStateChange={handleDateTimePickerStateChange}
-          uniqueKey="calendarDatePicker"
-        />
+      <div className="CalendarDatePickerAndTaskControlsContainer">
+        <div className="CalendarAndDatePickerContainer">
+          <DateTimePicker
+            onStateChange={handleDateTimePickerStateChange}
+            uniqueKey="calendarDatePicker"
+          />
+          <div className="CalendarTaskControls">
+            <button>Create new task</button>
+            {selectedTask && (
+              <button onClick={handleClickEditSelectedTaskButton}>
+                Edit selected task
+              </button>
+            )}
+            <div className="CalendarEventContainer CalendarEventTitle">
+              {insertSelectedTask()}
+            </div>
+          </div>
+        </div>
         <div className="CalendarContainer">
           <div className="DayLabelContainer">{dayLabel()}</div>
           <div className="HourLabelContainer">{hourLabel()}</div>

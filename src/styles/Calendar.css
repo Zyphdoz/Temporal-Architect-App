@@ -1,6 +1,7 @@
 .CalendarAndDatePickerContainer {
     display: flex;
     align-items: flex-start;
+    flex-direction: column;
 }
 
 .CalendarAndDatePickerContainer > form {
@@ -73,7 +74,46 @@
 
 .CalendarEventTitle {
     display: flex;
+    flex-direction: column;
     width: 100%;
-    justify-content: center;
     overflow: hidden;
+}
+
+.CalendarTaskControls {
+    border: 2px groove #646cff;
+    border-radius: 4px;
+    width: 228px;
+    height: 576px;
+    margin-left: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.CalendarTaskControls > button {
+    width: 172px;
+}
+
+.CalendarTaskControls > .CalendarEventContainer {
+    width: 172px;
+    margin: 10px;
+}
+
+
+.CalendarDatePickerAndTaskControlsContainer {
+    display: flex;
+    width: auto;
+}
+
+.CalendarTaskTitle {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.CalendarTaskDescription {
+    text-align: start;
+    padding: 10px;
+    width: 172px;
+    box-sizing: border-box;
 }
