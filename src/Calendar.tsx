@@ -149,8 +149,9 @@ export default function Calendar({
       const { title, taskDuration, startTime, endTime, taskId, description } =
         todaysTasks[i];
       let duration: string = `${startTime.hour}:${startTime.minute}-${endTime.hour}:${endTime.minute}`;
-      let taskHeight: number = (taskDuration / 3600000) * hourHeightInPixels;
-
+      let taskHeight: number = (taskDuration / 3600000) * (hourHeightInPixels + heightOfCalendarEventContainerMarginTopPlusBottom);
+      console.log(taskHeight);
+      
       const hoursSincePreviousTask = getHoursBetween(
         previousTaskStartTime,
         startTime
