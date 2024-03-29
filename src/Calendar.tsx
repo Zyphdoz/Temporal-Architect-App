@@ -7,9 +7,11 @@ import './styles/Calendar.css';
 export default function Calendar({
     calendarTasks,
     onCreateNewTaskButtonClick,
+    onHandleEditTaskClick,
 }: {
     calendarTasks: CalendarTask[];
     onCreateNewTaskButtonClick(): void;
+    onHandleEditTaskClick(task: CalendarTask): void;
 }) {
     const [dayLabels, setDayLabels] = useState<Date[]>(initializeWithSevenNextDays());
 
@@ -32,7 +34,9 @@ export default function Calendar({
         setSelectedTask(selectedTask);
     }
 
-    function handleClickEditSelectedTaskButton() {}
+    function handleClickEditSelectedTaskButton(task: CalendarTask) {
+        onHandleEditTaskClick(task);
+    }
 
     function getCalendarTaskById(id: number): NonNullable<CalendarTask> {
         const task = calendarTasks.find((task) => task.taskId === id);
@@ -344,7 +348,9 @@ export default function Calendar({
                     <div className="CalendarTaskControls">
                         <button onClick={onCreateNewTaskButtonClick}>Create new task</button>
                         {selectedTask && (
-                            <button onClick={handleClickEditSelectedTaskButton}>Edit selected task</button>
+                            <button onClick={() => handleClickEditSelectedTaskButton(selectedTask)}>
+                                Edit selected task
+                            </button>
                         )}
                         <div className="CalendarEventContainer CalendarEventTitle">{insertSelectedTask()}</div>
                     </div>

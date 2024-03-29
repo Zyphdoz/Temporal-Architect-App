@@ -8,7 +8,7 @@ function App() {
     const [calendarTasks, setCalendarTasks] = useState<CalendarTask[]>([]);
     const [isInCalendar, setIsInCalendar] = useState<boolean>(true);
     const [isCreatingNewTask, setIsCreatingNewTask] = useState<boolean>(false);
-    const [isEditingTask, setIsEditingTask] = useState<boolean>(false);
+    const [taskBeingEdited, setTaskBeingEdited] = useState<CalendarTask | undefined>();
 
     function handleOnTaskSubmit(task: CalendarTask) {
         setCalendarTasks((prevCalendarTasks) => {
@@ -28,17 +28,38 @@ function App() {
 
     function showCalendarHideEverythingElse() {
         setIsCreatingNewTask(false);
-        setIsEditingTask(false);
+        setTaskBeingEdited(undefined);
         setIsInCalendar(true);
+    }
+
+    function handleEditTaskClick(task: CalendarTask) {
+        setIsInCalendar(false);
+        setTaskBeingEdited(task);
+    }
+
+    function handleTaskUpdate(newTask: CalendarTask) {
+        setCalendarTasks((prevCalendarTasks) => {
+            return prevCalendarTasks.map((oldTask) => (oldTask.taskId === newTask.taskId ? newTask : oldTask));
+        });
+        showCalendarHideEverythingElse();
     }
 
     return (
         <>
-            {(isCreatingNewTask || isEditingTask) && (
-                <CalendarTaskEditor onTaskSubmit={handleOnTaskSubmit} onCancelEdit={handleCancelEdit} />
+            {(isCreatingNewTask || taskBeingEdited) && (
+                <CalendarTaskEditor
+                    onTaskSubmit={handleOnTaskSubmit}
+                    onTaskUpdate={handleTaskUpdate}
+                    onCancelEdit={handleCancelEdit}
+                    taskBeingEdited={taskBeingEdited}
+                />
             )}
             {isInCalendar && (
-                <Calendar onCreateNewTaskButtonClick={handleCreateNewTaskButtonClick} calendarTasks={calendarTasks} />
+                <Calendar
+                    onHandleEditTaskClick={handleEditTaskClick}
+                    onCreateNewTaskButtonClick={handleCreateNewTaskButtonClick}
+                    calendarTasks={calendarTasks}
+                />
             )}
         </>
     );

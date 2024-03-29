@@ -6,41 +6,49 @@ import './styles/CalendarTaskEditor.css';
 
 export default function EditCalendarTask({
     onTaskSubmit,
+    onTaskUpdate,
     onCancelEdit,
+    taskBeingEdited,
 }: {
     onTaskSubmit: (calendarTaskFormData: CalendarTask) => void;
     onCancelEdit(): void;
+    taskBeingEdited: CalendarTask | undefined;
+    onTaskUpdate: (calendarTaskFormData: CalendarTask) => void;
 }) {
-    const [calendarTaskFormData, setCalendarTaskFormData] = useState<CalendarTask>({
-        title: '',
-        description: '',
-        category: '',
-        startTime: {
-            year: '1970',
-            month: 'Jan',
-            day: '01',
-            hour: '00',
-            minute: '00',
-            date: new Date(),
-        },
-        endTime: {
-            year: '1970',
-            month: 'Jan',
-            day: '01',
-            hour: '00',
-            minute: '00',
-            date: new Date(),
-        },
-        taskDuration: 0,
-        taskId: 0,
-        repeatMonday: false,
-        repeatTuesday: false,
-        repeatWednesday: false,
-        repeatThursday: false,
-        repeatFriday: false,
-        repeatSaturday: false,
-        repeatSunday: false,
-    });
+    const [calendarTaskFormData, setCalendarTaskFormData] = useState<CalendarTask>(
+        taskBeingEdited
+            ? taskBeingEdited
+            : {
+                  title: '',
+                  description: '',
+                  category: '',
+                  startTime: {
+                      year: '1970',
+                      month: 'Jan',
+                      day: '01',
+                      hour: '00',
+                      minute: '00',
+                      date: new Date(),
+                  },
+                  endTime: {
+                      year: '1970',
+                      month: 'Jan',
+                      day: '01',
+                      hour: '00',
+                      minute: '00',
+                      date: new Date(),
+                  },
+                  taskDuration: 0,
+                  taskId: 0,
+                  repeatMonday: false,
+                  repeatTuesday: false,
+                  repeatWednesday: false,
+                  repeatThursday: false,
+                  repeatFriday: false,
+                  repeatSaturday: false,
+                  repeatSunday: false,
+              }
+    );
 
     const [showNegativeTaskDurationErrorMessage, setShowNegativeTaskDurationErrorMessage] = useState<boolean>(false);
 
@@ -53,7 +61,7 @@ export default function EditCalendarTask({
                     taskDuration:
                         prevCalendarTaskFormData.endTime.date.getTime() -
                         prevCalendarTaskFormData.startTime.date.getTime(),
-                    taskId: new Date().getTime(),
+                    taskId: taskBeingEdited ? taskBeingEdited.taskId : new Date().getTime(),
                 };
             });
         }
@@ -74,7 +82,11 @@ export default function EditCalendarTask({
         if (endTimeComesBeforeStartTime()) {
             setShowNegativeTaskDurationErrorMessage(true);
         } else {
-            onTaskSubmit(calendarTaskFormData);
+            if (taskBeingEdited) {
+                onTaskUpdate(calendarTaskFormData);
+            } else {
+                onTaskSubmit(calendarTaskFormData);
+            }
             clearTaskDetails();
         }
     }
@@ -131,11 +143,19 @@ export default function EditCalendarTask({
             <div className="CalendarTaskEditor">
                 <fieldset>
                     <legend>Start Time</legend>
-                    <DateTimePicker uniqueKey="startTime" onStateChange={handleStartTimeChange} />
+                    <DateTimePicker
+                        uniqueKey="startTime"
+                        defaultTime={taskBeingEdited?.startTime}
+                        onStateChange={handleStartTimeChange}
+                    />
                 </fieldset>
                 <fieldset>
                     <legend>End Time</legend>
-                    <DateTimePicker uniqueKey="endTime" onStateChange={handleEndTimeChange} />
+                    <DateTimePicker
+                        uniqueKey="endTime"
+                        defaultTime={taskBeingEdited?.endTime}
+                        onStateChange={handleEndTimeChange}
+                    />
                 </fieldset>
                 <form className="TaskDetails" onSubmit={handleSubmit}>
                     <input
@@ -222,7 +242,8 @@ export default function EditCalendarTask({
                         <label htmlFor="sunday">Sun</label>
                     </fieldset>
 
-                    <button>Add task</button>
+                    <button>{taskBeingEdited ? 'Update Task' : 'Add Task'}</button>
+
                     <button type="button" onClick={onCancelButtonClick}>
                         Cancel
                     </button>
