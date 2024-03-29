@@ -84,9 +84,9 @@ export default function EditCalendarTask({
         if (endTimeComesBeforeStartTime()) {
             setShowNegativeTaskDurationErrorMessage(true);
         } else {
-            if (taskBeingEdited) {
+            if (userIsCreatingNewTask()) {
                 onTaskUpdate(calendarTaskFormData);
-            } else {
+            } else if (userIsEditingExistingTask()) {
                 onTaskSubmit(calendarTaskFormData);
             }
             clearTaskDetails();
@@ -136,6 +136,14 @@ export default function EditCalendarTask({
                 repeatSunday: false,
             };
         });
+    }
+
+    function userIsEditingExistingTask(): boolean {
+        return taskBeingEdited?.taskId !== 0;
+    }
+
+    function userIsCreatingNewTask(): boolean {
+        return taskBeingEdited?.taskId === 0;
     }
 
     function endTimeComesBeforeStartTime(): boolean {

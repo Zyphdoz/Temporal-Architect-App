@@ -37,16 +37,16 @@ function App() {
         setTaskBeingEdited(task);
     }
 
-    function handleDeleteTask(newTask: CalendarTask) {
+    function handleDeleteTask(deletedTask: CalendarTask) {
         setCalendarTasks((prevCalendarTasks) => {
-            return prevCalendarTasks.filter((oldTask) => oldTask.taskId !== newTask.taskId);
+            return prevCalendarTasks.filter((oldTask) => oldTask.taskId !== deletedTask.taskId);
         });
         showCalendarHideEverythingElse();
     }
 
-    function handleTaskUpdate(newTask: CalendarTask) {
+    function handleTaskUpdate(updatedTask: CalendarTask) {
         setCalendarTasks((prevCalendarTasks) => {
-            return prevCalendarTasks.map((oldTask) => (oldTask.taskId === newTask.taskId ? newTask : oldTask));
+            return prevCalendarTasks.map((oldTask) => (oldTask.taskId === updatedTask.taskId ? updatedTask : oldTask));
         });
         showCalendarHideEverythingElse();
     }
