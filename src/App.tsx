@@ -37,6 +37,13 @@ function App() {
         setTaskBeingEdited(task);
     }
 
+    function handleDeleteTask(newTask: CalendarTask) {
+        setCalendarTasks((prevCalendarTasks) => {
+            return prevCalendarTasks.filter((oldTask) => oldTask.taskId !== newTask.taskId);
+        });
+        showCalendarHideEverythingElse();
+    }
+
     function handleTaskUpdate(newTask: CalendarTask) {
         setCalendarTasks((prevCalendarTasks) => {
             return prevCalendarTasks.map((oldTask) => (oldTask.taskId === newTask.taskId ? newTask : oldTask));
@@ -51,6 +58,7 @@ function App() {
                     onTaskSubmit={handleOnTaskSubmit}
                     onTaskUpdate={handleTaskUpdate}
                     onCancelEdit={handleCancelEdit}
+                    onDeleteTask={handleDeleteTask}
                     taskBeingEdited={taskBeingEdited}
                 />
             )}

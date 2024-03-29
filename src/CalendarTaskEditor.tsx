@@ -9,11 +9,13 @@ export default function EditCalendarTask({
     onTaskUpdate,
     onCancelEdit,
     taskBeingEdited,
+    onDeleteTask,
 }: {
     onTaskSubmit: (calendarTaskFormData: CalendarTask) => void;
     onCancelEdit(): void;
     taskBeingEdited: CalendarTask | undefined;
     onTaskUpdate: (calendarTaskFormData: CalendarTask) => void;
+    onDeleteTask: (calendarTaskFormDate: CalendarTask) => void;
 }) {
     const [calendarTaskFormData, setCalendarTaskFormData] = useState<CalendarTask>(
         taskBeingEdited
@@ -112,6 +114,10 @@ export default function EditCalendarTask({
     function onCancelButtonClick() {
         clearTaskDetails();
         onCancelEdit();
+    }
+
+    function handleDeleteButtonClick() {
+        onDeleteTask(calendarTaskFormData);
     }
 
     function clearTaskDetails() {
@@ -247,6 +253,11 @@ export default function EditCalendarTask({
                     <button type="button" onClick={onCancelButtonClick}>
                         Cancel
                     </button>
+                    {taskBeingEdited && (
+                        <button type="button" onClick={handleDeleteButtonClick}>
+                            Delete task
+                        </button>
+                    )}
                 </form>
             </div>
             {showNegativeTaskDurationErrorMessage && (
