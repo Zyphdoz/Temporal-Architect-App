@@ -50,7 +50,7 @@
     height: 30px;
 }
 
-.RecurringTaskCheckbox {
+.RepeatingTaskContainer {
     width: 260px;
     display: flex;
     justify-content: space-evenly;
@@ -61,28 +61,79 @@
     border-color: #666aa3;
 }
 
-.RecurringTaskCheckbox > label {
-    height: 30px;
-    width: 30px;
-    padding: 1px;
-    margin: 1px;
-    display: grid;
-    align-items: center;
+input[type='checkbox']:hover + label {
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.NumberOfRepetitionsContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+}
+
+.RepeatingDaysContainer {
+    width: 232px;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 5px 0px;
+    border: 2px groove #646cff;
+    border-radius: 4px;
+    margin: 10px auto;
+    border-color: #666aa3;
 }
 
 input[type='checkbox']:hover + label {
     padding: 0px;
-    border: 1px solid #666aa3;
+    outline: 1px solid #666aa3;
     border-radius: 8px;
     cursor: pointer;
 }
 
 input[type='checkbox']:checked + label {
-    border: 1px solid #646cff;
+    outline: 1px solid #646cff;
     padding: 0px;
     border-radius: 8px;
 }
 
-.RecurringTaskCheckbox > input[type='checkbox'] {
+.RepeatingDaysContainer > input[type='checkbox'] {
     display: none;
+}
+
+.NumberOfRepetitionsContainer > input[type='number'] {
+    width: 60px;
+    height: 20px;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 5px 0px;
+    border: 2px groove #646cff;
+    border-radius: 4px;
+    margin: 10px auto;
+    border-color: #666aa3;
+    text-align: center;
+    -moz-appearance: textfield;
+}
+
+.NumberOfRepetitionsContainer > input[type='number']:focus {
+    border: 2px groove #646cff;
+    outline: none;
+}
+
+.NumberOfRepetitionsContainer > input[type='number']:hover {
+    border: 2px groove #646cff;
+    outline: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.CreateRepeatingEventContainer {
+    display: flex;
+    flex-direction: column;
+    border-color: #666aa3;
+    margin: 0px auto;
 }

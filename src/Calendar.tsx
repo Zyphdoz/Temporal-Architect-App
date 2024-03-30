@@ -29,21 +29,12 @@ export default function Calendar({
         });
     }
 
-    function handleUserClickedOnCalendarTask(taskId: number) {
-        const selectedTask = getCalendarTaskById(taskId);
+    function handleUserClickedOnCalendarTask(selectedTask: CalendarTask) {
         setSelectedTask(selectedTask);
     }
 
     function handleClickEditSelectedTaskButton(task: CalendarTask) {
         onHandleEditTaskClick(task);
-    }
-
-    function getCalendarTaskById(id: number): NonNullable<CalendarTask> {
-        const task = calendarTasks.find((task) => task.taskId === id);
-        if (!task) {
-            throw new Error(`Task with id ${id} not found`);
-        }
-        return task;
     }
 
     function insertSelectedTask() {
@@ -147,7 +138,7 @@ export default function Calendar({
         const heightOfCalendarEventContainerMarginTopPlusBottom: number = 2;
 
         for (let i = 0; i < todaysTasks.length; i++) {
-            const { title, taskDuration, startTime, endTime, taskId, description } = todaysTasks[i];
+            const { title, taskDuration, startTime, endTime, description } = todaysTasks[i];
             let duration: string = `${startTime.hour}:${startTime.minute}-${endTime.hour}:${endTime.minute}`;
             let taskHeight: number =
                 (taskDuration / 3600000) * (hourHeightInPixels + heightOfCalendarEventContainerMarginTopPlusBottom);
@@ -184,7 +175,7 @@ export default function Calendar({
             html.push(
                 <div
                     className="CalendarEventContainer"
-                    onClick={() => handleUserClickedOnCalendarTask(taskId)}
+                    onClick={() => handleUserClickedOnCalendarTask(todaysTasks[i])}
                     style={{
                         height: `${taskHeight}px`,
                         minHeight: `${taskHeight}px`,
@@ -283,36 +274,6 @@ export default function Calendar({
     }
 
     function taskHappensThisDay(task: CalendarTask, thisDay: Date): boolean {
-        const currentWeekDay: string = thisDay.toLocaleString('en-US', {
-            weekday: 'short',
-        });
-
-        switch (currentWeekDay) {
-            case 'Mon':
-                if (task.repeatMonday) return true;
-                break;
-            case 'Tue':
-                if (task.repeatTuesday) return true;
-                break;
-            case 'Wed':
-                if (task.repeatWednesday) return true;
-                break;
-            case 'Thu':
-                if (task.repeatThursday) return true;
-                break;
-            case 'Fri':
-                if (task.repeatFriday) return true;
-                break;
-            case 'Sat':
-                if (task.repeatSaturday) return true;
-                break;
-            case 'Sun':
-                if (task.repeatSunday) return true;
-                break;
-            default:
-                break;
-        }
-
         if (thisIsTheFirstDayOfTheTask(task.startTime, thisDay)) return true;
         if (thisIsTheLastDayOfTheTask(task.endTime, thisDay)) return true;
 
@@ -347,10 +308,20 @@ export default function Calendar({
                     <DateTimePicker onStateChange={handleDateTimePickerStateChange} uniqueKey="calendarDatePicker" />
                     <div className="CalendarTaskControls">
                         <button onClick={onCreateNewTaskButtonClick}>Create new task</button>
-                        {selectedTask && (
+                        {selectedTask && selectedTask.numRepeats === 0 && (
                             <button onClick={() => handleClickEditSelectedTaskButton(selectedTask)}>
                                 Edit selected task
                             </button>
+                        )}
+                        {selectedTask?.numRepeats !== 0 && selectedTask !== undefined && (
+                            <>
+                                <button onClick={() => handleClickEditSelectedTaskButton(selectedTask)}>
+                                    Edit selected task
+                                </button>
+                                <button onClick={() => handleClickEditSelectedTaskButton(selectedTask)}>
+                                    Edit all copies of selected task
+                                </button>
+                            </>
                         )}
                         <div className="CalendarEventContainer CalendarEventTitle">{insertSelectedTask()}</div>
                     </div>

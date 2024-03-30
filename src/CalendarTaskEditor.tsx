@@ -42,6 +42,7 @@ export default function EditCalendarTask({
                   },
                   taskDuration: 0,
                   taskId: 0,
+                  numRepeats: 0,
                   repeatMonday: false,
                   repeatTuesday: false,
                   repeatWednesday: false,
@@ -85,9 +86,9 @@ export default function EditCalendarTask({
             setShowNegativeTaskDurationErrorMessage(true);
         } else {
             if (userIsCreatingNewTask()) {
-                onTaskUpdate(calendarTaskFormData);
-            } else if (userIsEditingExistingTask()) {
                 onTaskSubmit(calendarTaskFormData);
+            } else if (userIsEditingExistingTask()) {
+                onTaskUpdate(calendarTaskFormData);
             }
             clearTaskDetails();
         }
@@ -127,6 +128,7 @@ export default function EditCalendarTask({
                 title: '',
                 description: '',
                 category: '',
+                numRepeats: 0,
                 repeatMonday: false,
                 repeatTuesday: false,
                 repeatWednesday: false,
@@ -139,11 +141,11 @@ export default function EditCalendarTask({
     }
 
     function userIsEditingExistingTask(): boolean {
-        return taskBeingEdited?.taskId !== 0;
+        return taskBeingEdited?.taskId !== 0 && taskBeingEdited !== undefined;
     }
 
     function userIsCreatingNewTask(): boolean {
-        return taskBeingEdited?.taskId === 0;
+        return taskBeingEdited?.taskId === undefined;
     }
 
     function endTimeComesBeforeStartTime(): boolean {
@@ -195,66 +197,84 @@ export default function EditCalendarTask({
                         value={calendarTaskFormData.category}
                         onChange={handleChange}
                     ></textarea>
+                    {!taskBeingEdited && (
+                        <fieldset className="CreateRepeatingEventContainer">
+                            <legend>Create repeating event</legend>
+                            <div className="NumberOfRepetitionsContainer">
+                                <label htmlFor="numRepeats">Number of repetitions:</label>
+                                <input
+                                    type="number"
+                                    id="numRepeats"
+                                    name="numRepeats"
+                                    value={calendarTaskFormData.numRepeats}
+                                    max={9999}
+                                    min={0}
+                                    required
+                                    onChange={handleChange}
+                                ></input>
+                            </div>
+                            <fieldset className="RepeatingDaysContainer">
+                                <legend>Repeat on:</legend>
 
-                    <fieldset className="RecurringTaskCheckbox">
-                        <legend>Repeat every</legend>
-                        <input
-                            type="checkbox"
-                            id="monday"
-                            name="repeatMonday"
-                            onChange={handleChange}
-                            checked={calendarTaskFormData.repeatMonday}
-                        ></input>
-                        <label htmlFor="monday">Mon</label>
-                        <input
-                            type="checkbox"
-                            id="tuesday"
-                            name="repeatTuesday"
-                            onChange={handleChange}
-                            checked={calendarTaskFormData.repeatTuesday}
-                        ></input>
-                        <label htmlFor="tuesday">Tue</label>
-                        <input
-                            type="checkbox"
-                            id="wednesday"
-                            name="repeatWednesday"
-                            onChange={handleChange}
-                            checked={calendarTaskFormData.repeatWednesday}
-                        ></input>
-                        <label htmlFor="wednesday">Wed</label>
-                        <input
-                            type="checkbox"
-                            id="thursday"
-                            name="repeatThursday"
-                            onChange={handleChange}
-                            checked={calendarTaskFormData.repeatThursday}
-                        ></input>
-                        <label htmlFor="thursday">Thu</label>
-                        <input
-                            type="checkbox"
-                            id="friday"
-                            name="repeatFriday"
-                            onChange={handleChange}
-                            checked={calendarTaskFormData.repeatFriday}
-                        ></input>
-                        <label htmlFor="friday">Fri</label>
-                        <input
-                            type="checkbox"
-                            id="saturday"
-                            name="repeatSaturday"
-                            onChange={handleChange}
-                            checked={calendarTaskFormData.repeatSaturday}
-                        ></input>
-                        <label htmlFor="saturday">Sat</label>
-                        <input
-                            type="checkbox"
-                            id="sunday"
-                            name="repeatSunday"
-                            onChange={handleChange}
-                            checked={calendarTaskFormData.repeatSunday}
-                        ></input>
-                        <label htmlFor="sunday">Sun</label>
-                    </fieldset>
+                                <input
+                                    type="checkbox"
+                                    id="monday"
+                                    name="repeatMonday"
+                                    onChange={handleChange}
+                                    checked={calendarTaskFormData.repeatMonday}
+                                ></input>
+                                <label htmlFor="monday">Mon</label>
+                                <input
+                                    type="checkbox"
+                                    id="tuesday"
+                                    name="repeatTuesday"
+                                    onChange={handleChange}
+                                    checked={calendarTaskFormData.repeatTuesday}
+                                ></input>
+                                <label htmlFor="tuesday">Tue</label>
+                                <input
+                                    type="checkbox"
+                                    id="wednesday"
+                                    name="repeatWednesday"
+                                    onChange={handleChange}
+                                    checked={calendarTaskFormData.repeatWednesday}
+                                ></input>
+                                <label htmlFor="wednesday">Wed</label>
+                                <input
+                                    type="checkbox"
+                                    id="thursday"
+                                    name="repeatThursday"
+                                    onChange={handleChange}
+                                    checked={calendarTaskFormData.repeatThursday}
+                                ></input>
+                                <label htmlFor="thursday">Thu</label>
+                                <input
+                                    type="checkbox"
+                                    id="friday"
+                                    name="repeatFriday"
+                                    onChange={handleChange}
+                                    checked={calendarTaskFormData.repeatFriday}
+                                ></input>
+                                <label htmlFor="friday">Fri</label>
+                                <input
+                                    type="checkbox"
+                                    id="saturday"
+                                    name="repeatSaturday"
+                                    onChange={handleChange}
+                                    checked={calendarTaskFormData.repeatSaturday}
+                                ></input>
+                                <label htmlFor="saturday">Sat</label>
+                                <input
+                                    type="checkbox"
+                                    id="sunday"
+                                    name="repeatSunday"
+                                    onChange={handleChange}
+                                    checked={calendarTaskFormData.repeatSunday}
+                                ></input>
+                                <label htmlFor="sunday">Sun</label>
+                            </fieldset>
+                        </fieldset>
+                    )}
 
                     <button>{taskBeingEdited ? 'Update Task' : 'Add Task'}</button>
 
