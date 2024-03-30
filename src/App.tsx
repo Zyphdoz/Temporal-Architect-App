@@ -164,32 +164,33 @@ function App() {
 
     function getAllRepeatingTasks(task: CalendarTask): CalendarTask[] {
         let startDate = task.startTime.date;
+        let endDate = task.endTime.date;
         let newCalendarTasks: CalendarTask[] = [];
 
         while (newCalendarTasks.length < task.numRepeats) {
             if (task.repeatMonday && getDayOfTheWeek(startDate) === 'Mon') {
-                newCalendarTasks.push(getNewTaskFromDate(startDate, task));
+                newCalendarTasks.push(getNewTaskFromDate(startDate, endDate, task));
             } else if (task.repeatTuesday && getDayOfTheWeek(startDate) === 'Tue') {
-                newCalendarTasks.push(getNewTaskFromDate(startDate, task));
+                newCalendarTasks.push(getNewTaskFromDate(startDate, endDate, task));
             } else if (task.repeatWednesday && getDayOfTheWeek(startDate) === 'Wed') {
-                newCalendarTasks.push(getNewTaskFromDate(startDate, task));
+                newCalendarTasks.push(getNewTaskFromDate(startDate, endDate, task));
             } else if (task.repeatThursday && getDayOfTheWeek(startDate) === 'Thu') {
-                newCalendarTasks.push(getNewTaskFromDate(startDate, task));
+                newCalendarTasks.push(getNewTaskFromDate(startDate, endDate, task));
             } else if (task.repeatFriday && getDayOfTheWeek(startDate) === 'Fri') {
-                newCalendarTasks.push(getNewTaskFromDate(startDate, task));
+                newCalendarTasks.push(getNewTaskFromDate(startDate, endDate, task));
             } else if (task.repeatSaturday && getDayOfTheWeek(startDate) === 'Sat') {
-                newCalendarTasks.push(getNewTaskFromDate(startDate, task));
+                newCalendarTasks.push(getNewTaskFromDate(startDate, endDate, task));
             } else if (task.repeatSunday && getDayOfTheWeek(startDate) === 'Sun') {
-                newCalendarTasks.push(getNewTaskFromDate(startDate, task));
+                newCalendarTasks.push(getNewTaskFromDate(startDate, endDate, task));
             }
             startDate = getNextDate(startDate);
+            endDate = getNextDate(endDate);
         }
 
         return newCalendarTasks;
     }
 
-    function getNewTaskFromDate(startDate: Date, task: CalendarTask): CalendarTask {
-        const endDate = new Date(startDate.getTime() + task.taskDuration);
+    function getNewTaskFromDate(startDate: Date, endDate: Date, task: CalendarTask): CalendarTask {
         return {
             ...task,
             startTime: {
