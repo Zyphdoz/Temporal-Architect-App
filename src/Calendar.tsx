@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CalendarTask } from './types/CalendarTask';
+import { CalendarTask, EditMode } from './types/CalendarTask';
 import DateTimePicker from './DateTimePicker';
 import { DateAndTime } from './types/DateAndTime';
 import './styles/Calendar.css';
@@ -11,7 +11,7 @@ export default function Calendar({
 }: {
     calendarTasks: CalendarTask[];
     onCreateNewTaskButtonClick(): void;
-    onHandleEditTaskClick(task: CalendarTask): void;
+    onHandleEditTaskClick(task: CalendarTask, typeOfEdit: EditMode): void;
 }) {
     const [dayLabels, setDayLabels] = useState<Date[]>(initializeWithSevenNextDays());
 
@@ -33,8 +33,8 @@ export default function Calendar({
         setSelectedTask(selectedTask);
     }
 
-    function handleClickEditSelectedTaskButton(task: CalendarTask) {
-        onHandleEditTaskClick(task);
+    function handleClickEditSelectedTaskButton(task: CalendarTask, typeOfEdit: EditMode) {
+        onHandleEditTaskClick(task, typeOfEdit);
     }
 
     function insertSelectedTask() {
@@ -309,17 +309,31 @@ export default function Calendar({
                     <div className="CalendarTaskControls">
                         <button onClick={onCreateNewTaskButtonClick}>Create new task</button>
                         {selectedTask && selectedTask.numRepeats === 0 && (
-                            <button onClick={() => handleClickEditSelectedTaskButton(selectedTask)}>
+                            <button onClick={() => handleClickEditSelectedTaskButton(selectedTask, 'normal task')}>
                                 Edit selected task
                             </button>
                         )}
                         {selectedTask?.numRepeats !== 0 && selectedTask !== undefined && (
                             <>
-                                <button onClick={() => handleClickEditSelectedTaskButton(selectedTask)}>
+                                <button
+                                    onClick={() =>
+                                        handleClickEditSelectedTaskButton(
+                                            selectedTask,
+                                            'single instance of repeating task'
+                                        )
+                                    }
+                                >
                                     Edit selected task
                                 </button>
-                                <button onClick={() => handleClickEditSelectedTaskButton(selectedTask)}>
-                                    Edit all copies of selected task
+                                <button
+                                    onClick={() =>
+                                        handleClickEditSelectedTaskButton(
+                                            selectedTask,
+                                            'all future instances of repeating task'
+                                        )
+                                    }
+                                >
+                                    Edit this and all future occurences of selected task
                                 </button>
                             </>
                         )}

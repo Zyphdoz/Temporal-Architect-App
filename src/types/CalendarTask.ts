@@ -17,3 +17,5 @@ export interface CalendarTask {
     repeatSaturday: boolean;
     repeatSunday: boolean;
 }
+
+export type EditMode = 'normal task' | 'single instance of repeating task' | 'all future instances of repeating task';

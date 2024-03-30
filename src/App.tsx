@@ -1,7 +1,7 @@
 import './styles/App.css';
 import CalendarTaskEditor from './CalendarTaskEditor';
 import { useState } from 'react';
-import { CalendarTask } from './types/CalendarTask';
+import { CalendarTask, EditMode } from './types/CalendarTask';
 import Calendar from './Calendar';
 import { Day, Hour, Minute, Month } from './types/DateAndTime';
 
@@ -10,6 +10,7 @@ function App() {
     const [isInCalendar, setIsInCalendar] = useState<boolean>(true);
     const [isCreatingNewTask, setIsCreatingNewTask] = useState<boolean>(false);
     const [taskBeingEdited, setTaskBeingEdited] = useState<CalendarTask | undefined>();
+    const [typeOfEdit, setTypeOfEdit] = useState<EditMode>();
 
     function handleOnTaskSubmit(task: CalendarTask) {
         createTask(task);
@@ -31,22 +32,119 @@ function App() {
         setIsInCalendar(true);
     }
 
-    function handleEditTaskClick(task: CalendarTask) {
+    function handleEditTaskClick(task: CalendarTask, typeOfEdit: EditMode) {
         setIsInCalendar(false);
+        setTypeOfEdit(typeOfEdit);
         setTaskBeingEdited(task);
     }
 
     function handleDeleteTask(deletedTask: CalendarTask) {
-        setCalendarTasks((prevCalendarTasks) => {
-            return prevCalendarTasks.filter((oldTask) => oldTask.taskId !== deletedTask.taskId);
-        });
+        if (typeOfEdit === 'normal task') {
+            deleteSingleInstanceOfNonRepeatingTask(deletedTask);
+        } else if (typeOfEdit === 'single instance of repeating task') {
+            deleteSingleCopyOfRepeatingTask(deletedTask);
+        } else if (typeOfEdit === 'all future instances of repeating task') {
+            deleteAllFutureInstancesOfRepeatingTask(deletedTask);
+        }
         showCalendarHideEverythingElse();
     }
 
     function handleTaskUpdate(updatedTask: CalendarTask) {
+        if (typeOfEdit === 'normal task') {
+            updateSingleInstanceOfNonRepeatingTask(updatedTask);
+        } else if (typeOfEdit === 'single instance of repeating task') {
+            updateSingleCopyOfRepeatingTask(updatedTask);
+        } else if (typeOfEdit === 'all future instances of repeating task') {
+            updateAllFutureInstancesOfRepeatingTask(updatedTask);
+        }
+        showCalendarHideEverythingElse();
+    }
+
+    function updateSingleInstanceOfNonRepeatingTask(updatedTask: CalendarTask) {
         handleDeleteTask(updatedTask);
         createTask(updatedTask);
-        showCalendarHideEverythingElse();
+    }
+
+    function updateSingleCopyOfRepeatingTask(updatedTask: CalendarTask) {
+        deleteSingleCopyOfRepeatingTask(updatedTask);
+        const newTask: CalendarTask = {
+            ...updatedTask,
+            taskId: new Date().getTime(),
+            numRepeats: 0,
+            repeatMonday: false,
+            repeatTuesday: false,
+            repeatWednesday: false,
+            repeatThursday: false,
+            repeatFriday: false,
+            repeatSaturday: false,
+            repeatSunday: false,
+        };
+        createTask(newTask);
+    }
+    function updateAllFutureInstancesOfRepeatingTask(updatedTask: CalendarTask) {
+        setCalendarTasks((prevCalendarTasks) => {
+            const allInstancesOfRepeatingTask: CalendarTask[] = prevCalendarTasks.filter(
+                (oldTask) => oldTask.taskId === updatedTask.taskId
+            );
+
+            let futureInstancesOfRepeatingTask: CalendarTask[] = allInstancesOfRepeatingTask.filter(
+                (repeatingTask) => repeatingTask.startTime.date.getTime() >= updatedTask.startTime.date.getTime()
+            );
+
+            // Return only tasks that are not future instances of repeating tasks
+            const prevCalendarTasksFiltered = prevCalendarTasks.filter(
+                (oldTask) =>
+                    !futureInstancesOfRepeatingTask.some((task) => task.startTime.date === oldTask.startTime.date)
+            );
+
+            const numberOfTasksDeleted = prevCalendarTasks.length - prevCalendarTasksFiltered.length;
+
+            const newUpdatedTask: CalendarTask = {
+                ...updatedTask,
+                numRepeats: numberOfTasksDeleted,
+                taskId: new Date().getTime(),
+            };
+
+            return [...prevCalendarTasksFiltered, ...getAllRepeatingTasks(newUpdatedTask)];
+        });
+    }
+
+    function deleteSingleInstanceOfNonRepeatingTask(deletedTask: CalendarTask) {
+        setCalendarTasks((prevCalendarTasks) => {
+            return prevCalendarTasks.filter((oldTask) => oldTask.taskId !== deletedTask.taskId);
+        });
+    }
+
+    function deleteSingleCopyOfRepeatingTask(deletedTask: CalendarTask) {
+        setCalendarTasks((prevCalendarTasks) => {
+            const allInstancesOfRepeatingTask: CalendarTask[] = prevCalendarTasks.filter(
+                (oldTask) => oldTask.taskId === deletedTask.taskId
+            );
+
+            const thisInstanceOfRepeatingTask: CalendarTask = allInstancesOfRepeatingTask.filter(
+                (repeatingTask) => repeatingTask.startTime.date.getTime() === deletedTask.startTime.date.getTime()
+            )[0];
+
+            return prevCalendarTasks.filter((oldTask) => oldTask !== thisInstanceOfRepeatingTask);
+        });
+    }
+
+    function deleteAllFutureInstancesOfRepeatingTask(deletedTask: CalendarTask) {
+        setCalendarTasks((prevCalendarTasks) => {
+            const allInstancesOfRepeatingTask: CalendarTask[] = prevCalendarTasks.filter(
+                (oldTask) => oldTask.taskId === deletedTask.taskId
+            );
+
+            const futureInstancesOfRepeatingTask: CalendarTask[] = allInstancesOfRepeatingTask.filter(
+                (repeatingTask) => repeatingTask.startTime.date.getTime() >= deletedTask.startTime.date.getTime()
+            );
+
+            return prevCalendarTasks.filter(
+                // Return only tasks that are not future instances of repeating tasks
+                (oldTask) =>
+                    !futureInstancesOfRepeatingTask.some((task) => task.startTime.date === oldTask.startTime.date)
+            );
+        });
     }
 
     function createTask(task: CalendarTask) {
