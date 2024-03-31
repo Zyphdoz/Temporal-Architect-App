@@ -175,6 +175,7 @@ export default function EditCalendarTask({
                 </fieldset>
                 <form className="TaskDetails" onSubmit={handleSubmit}>
                     <input
+                        autoFocus
                         id="TaskTitle"
                         placeholder="TITLE"
                         name="title"
@@ -211,6 +212,7 @@ export default function EditCalendarTask({
                                     min={0}
                                     required
                                     onChange={handleChange}
+                                    onClick={(e) => (e.target as HTMLInputElement).select()}
                                 ></input>
                             </div>
                             <fieldset className="RepeatingDaysContainer">
