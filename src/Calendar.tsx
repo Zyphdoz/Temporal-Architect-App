@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { CalendarTask, EditMode } from './types/CalendarTask';
 import DateTimePicker from './DateTimePicker';
 import { DateAndTime } from './types/DateAndTime';
@@ -116,7 +116,7 @@ export default function Calendar({
         return html;
     }
 
-    function calendarDayColumn() {
+    const calendarDayColumn = useMemo(() => {
         let html = [];
         for (let i = 0; i < 7; i++) {
             const currentDay = dayLabels[i];
@@ -127,7 +127,7 @@ export default function Calendar({
             );
         }
         return html;
-    }
+    }, [dayLabels]);
 
     function insertCalendarEvent(currentDay: Date) {
         let html = [];
@@ -343,7 +343,7 @@ export default function Calendar({
                 <div className="CalendarContainer">
                     <div className="DayLabelContainer">{dayLabel()}</div>
                     <div className="HourLabelContainer">{hourLabel()}</div>
-                    {calendarDayColumn()}
+                    {calendarDayColumn}
                 </div>
             </div>
         </>
