@@ -1,10 +1,11 @@
+/*
 export interface DateAndTime {
     year: string;
     month: string;
     day: string;
     hour: string;
     minute: string;
-    date: Date;
+    date?: Date;
 }
 
 export interface CalendarTask {
@@ -13,7 +14,7 @@ export interface CalendarTask {
     category: string;
     startTime: DateAndTime;
     endTime: DateAndTime;
-    taskDuration: number;
+    taskDuration?: number;
     taskId: number;
     numRepeats: number;
     repeatMonday: boolean;
@@ -32,22 +33,41 @@ interface CalendarMap<T> {
 class Calendar {
     private tasks: CalendarMap<CalendarTask[]> = {};
 
-    addTask(task: CalendarTask) {
+    addNewTask(task: CalendarTask) {
         const key = this.getKeyFromTask(task).toString();
-        if (!this.tasks[key]) {
-            this.tasks[key] = [];
+        if (this.noEntryExistInMapForThisDay(key)) {
+            this.createNewEntryForThisDay(key);
         }
         this.tasks[key].push(task);
+        this.updateDate(task, key);
+        //this.updateDuration(task);
     }
 
     getAllTasks() {
         return this.tasks;
     }
 
+    clear() {
+        this.tasks = {};
+    }
+
     private getKeyFromTask(task: CalendarTask) {
         const { month, day, year } = task.startTime;
         return `${month}/${day}/${year}`;
     }
+
+    private noEntryExistInMapForThisDay(key: string): boolean {
+        return this.tasks[key] === undefined ? true : false;
+    }
+
+    private createNewEntryForThisDay(key: string) {
+        this.tasks[key] = [];
+    }
+
+    private updateDate(task: CalendarTask, key: string) {
+        //todo: make this return a new task with the updated date
+    }
 }
 
 export const calendar = new Calendar();
+*/

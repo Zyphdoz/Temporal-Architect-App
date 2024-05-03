@@ -1,3 +1,4 @@
+/*
 import { DateAndTime } from './DateAndTime';
 
 export interface CalendarTask {
@@ -19,3 +20,4 @@ export interface CalendarTask {
 }
 
 export type EditMode = 'normal task' | 'single instance of repeating task' | 'all future instances of repeating task';
+*/

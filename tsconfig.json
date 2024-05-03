@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "old code/services/App.tsx", "old code/services/Calendar.tsx", "old code/services/CalendarTaskEditor.tsx", "old code/services/DateTimePicker.tsx", "old code/types/CalendarTask.ts", "old code/types/DateAndTime.ts", "old code/services/calendar.ts", "old code/services/calendar.test.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

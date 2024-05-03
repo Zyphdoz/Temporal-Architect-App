@@ -1,3 +1,4 @@
+/*
 export interface DateAndTime {
     year: string;
     month: Month;
@@ -126,3 +127,4 @@ export type Minute =
     | '57'
     | '58'
     | '59';
+*/

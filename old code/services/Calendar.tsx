@@ -1,3 +1,4 @@
+/*
 import { useMemo, useState } from 'react';
 import { CalendarTask, EditMode } from './types/CalendarTask';
 import DateTimePicker from './DateTimePicker';
@@ -349,3 +350,4 @@ export default function Calendar({
         </>
     );
 }
+*/

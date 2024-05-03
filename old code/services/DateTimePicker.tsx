@@ -1,3 +1,4 @@
+/*
 import { useEffect, useState } from 'react';
 import { DateAndTime, Day, Hour, Minute, Month } from './types/DateAndTime';
 import './styles/DateTimePicker.css';
@@ -427,3 +428,4 @@ export default function DateTimePicker({
         </>
     );
 }
+*/
