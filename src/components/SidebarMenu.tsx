@@ -1,10 +1,7 @@
-import { useState } from 'react';
 import logo from '../assets/logo.png';
+import { sidebar } from '../services/sidebarMenu.ts'; //.state
 
 function SidebarMenu() {
-    const menuItems: string[] = ['Calendar', 'Statistics', 'Settings'];
-    const [selectedMenuItem, setSelectedMenuItem] = useState(menuItems[0]);
-
     return (
         <aside className="h-screen w-56">
             <nav className="flex h-full flex-col border-r bg-gray-100 shadow-sm">
@@ -18,18 +15,18 @@ function SidebarMenu() {
                 </div>
 
                 <ul className="mt-4 flex-1 px-4 checked:bg-gray-200">
-                    {menuItems.map((menuItem, i) => (
+                    {sidebar.getMenuItems().map((menuItem, i) => (
                         <li
                             key={i}
-                            className={`my-1 cursor-pointer rounded-md px-4 py-2 hover:bg-gray-200 ${selectedMenuItem === menuItem ? 'bg-gray-200' : ''}`}
-                            onClick={() => setSelectedMenuItem(menuItem)}
+                            className={`my-1 cursor-pointer rounded-md px-4 py-2 hover:bg-gray-200 ${sidebar.getSelectedItem() === menuItem ? 'bg-gray-200' : ''}`}
+                            onClick={() => sidebar.setSelectedItem(menuItem)}
                         >
                             <label className="cursor-pointer">
                                 <input
                                     type="radio"
                                     value={menuItem}
-                                    checked={selectedMenuItem === menuItem}
-                                    onChange={() => setSelectedMenuItem(menuItem)}
+                                    checked={sidebar.getSelectedItem() === menuItem}
+                                    onChange={() => sidebar.setSelectedItem(menuItem)}
                                     className="hidden"
                                 ></input>
                                 {menuItem}
