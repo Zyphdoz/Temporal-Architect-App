@@ -1,9 +1,14 @@
 import { expect, test } from 'vitest';
-import { addDays, dateToMmDdYyyyString } from './dateAndTimeUtils';
+import { addDays, dateToMmDdYyyyString, dateToHhMmIn24hFormat } from './dateAndTimeUtils';
 
-test('dateToMmDdYyyyString()_whenGivenADateObject_shouldReturn"mm/dd/yyyy"FormatedString', () => {
+test('dateToMmDdYyyyString(Date)_whenGivenADateObject_shouldReturn"mm/dd/yyyy"FormatedString', () => {
     const testDate = new Date('2013/12/26');
     expect(dateToMmDdYyyyString(testDate)).toEqual('12/26/2013');
+});
+
+test('dateToHhMmIn24hFormat(Date)_whenGivenADateObject_shouldReturn"hh:mm"FormatedString', () => {
+    const testDate = new Date('05/03/2023 0:45');
+    expect(dateToHhMmIn24hFormat(testDate)).toEqual('00:45');
 });
 
 test('addDays_whenAdding5daysToFebruary28th2023_shouldReturnMarch5th', () => {
