@@ -11,7 +11,6 @@ function SidebarMenu() {
                         className="w-20 rounded-full"
                         alt="A minimalistic logo with a clock and some abstract shapes, symbolizing the precision and intentionality of a temporal architect’s approach to time management"
                     ></img>
-                    <h1 className="rounded-md bg-white p-1.5">Temporal Architect App</h1>
                 </div>
 
                 <ul className="mt-4 flex-1 px-4 checked:bg-gray-200">
