@@ -1,13 +1,12 @@
-import CalendarDay from './components/Calendar';
-import CalendarEvent from './components/CalendarDay';
 import SidebarMenu from './components/SidebarMenu';
 import Calendar from './components/Calendar';
+import { sidebar } from './services/sidebarMenu'; //.state
 
 function App() {
     return (
         <div className="flex">
             <SidebarMenu></SidebarMenu>
-            <Calendar></Calendar>
+            {sidebar.getSelectedItem() === 'Calendar' && <Calendar></Calendar>}
         </div>
     );
 }
