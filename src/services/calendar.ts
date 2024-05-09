@@ -69,7 +69,7 @@ class Calendar {
         nextDate.setHours(0, 0, 0, 0);
         let placeholderTask: CalendarTask = {
             title: '',
-            description: 'There are no tasks for this day. Click here to create one.',
+            description: 'There are no tasks for this timespan. Click here to create one.',
             category: '',
             startTime: new Date(date),
             endTime: new Date(nextDate),
@@ -83,7 +83,7 @@ class Calendar {
             repeatFriday: false,
             repeatSaturday: false,
             repeatSunday: false,
-            backgroundColor: '#c1c1c1',
+            backgroundColor: '#F3F4F6',
         };
         return [placeholderTask];
     }

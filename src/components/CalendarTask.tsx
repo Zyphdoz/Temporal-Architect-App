@@ -16,9 +16,10 @@ function CalendarTask({ tasks }: CalendarTaskProps) {
                         <div style={{ height, backgroundColor, boxSizing: 'border-box' }}>
                             <div className="flex justify-between px-4 pb-2 pt-3">
                                 <p>{task.title}</p>
-                                <p>{dateToHhMmIn24hFormat(task.startTime)}</p>
+                                <p>
+                                    {dateToHhMmIn24hFormat(task.startTime)}-{dateToHhMmIn24hFormat(task.endTime)}
+                                </p>
                             </div>
-                            <hr className="border-blue-500"></hr>
                             <div className="px-3">{task.description}</div>
                         </div>
                     </div>
