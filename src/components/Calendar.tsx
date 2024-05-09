@@ -52,26 +52,28 @@ function Calendar() {
                 <label htmlFor="showdatepicker" className="mx-2 cursor-pointer pr-2">
                     {getMonthName(selectedDate)} {selectedDate.getFullYear()}
                 </label>
-                <button
-                    id="showdatepicker"
-                    className={`h-10 w-10 rounded-lg border bg-gray-100 hover:bg-gray-200 ${datePickerIsOpen && 'bg-gray-200'}`}
-                    onClick={() => setDatePickerIsOpen(!datePickerIsOpen)}
-                >
-                    <span className="flex -translate-y-1 justify-center">⌄</span>
-                </button>
-                {datePickerIsOpen && (
-                    <div className="absolute  z-50 translate-x-20 transform">
-                        <DatePicker
-                            selected={selectedDate}
-                            onChange={handleChange}
-                            onClickOutside={() => setDatePickerIsOpen(false)}
-                            showYearDropdown
-                            showMonthDropdown
-                            inline
-                            showTimeInput
-                        />
-                    </div>
-                )}
+                <div className="relative inline-block">
+                    <button
+                        id="showdatepicker"
+                        className={`h-10 w-10 rounded-lg border bg-gray-100 hover:bg-gray-200 ${datePickerIsOpen && 'bg-gray-200'}`}
+                        onClick={() => setDatePickerIsOpen(!datePickerIsOpen)}
+                    >
+                        <span className="flex -translate-y-1 justify-center">⌄</span>
+                    </button>
+                    {datePickerIsOpen && (
+                        <div className="absolute right-0 z-50">
+                            <DatePicker
+                                selected={selectedDate}
+                                onChange={handleChange}
+                                onClickOutside={() => setDatePickerIsOpen(false)}
+                                showYearDropdown
+                                showMonthDropdown
+                                inline
+                                showTimeInput
+                            />
+                        </div>
+                    )}
+                </div>
             </div>
             <div className="flex">
                 <CalendarDay day={selectedDate!}></CalendarDay>
