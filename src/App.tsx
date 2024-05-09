@@ -1,12 +1,13 @@
-import CalendarEvent from './components/CalendarEvent';
+import CalendarDay from './components/Calendar';
+import CalendarEvent from './components/CalendarDay';
 import SidebarMenu from './components/SidebarMenu';
-import { calendar } from './services/calendar';
+import Calendar from './components/Calendar';
 
 function App() {
     return (
         <div className="flex">
             <SidebarMenu></SidebarMenu>
-            <CalendarEvent task={calendar.getTasksForDay(new Date())}></CalendarEvent>
+            <Calendar></Calendar>
         </div>
     );
 }

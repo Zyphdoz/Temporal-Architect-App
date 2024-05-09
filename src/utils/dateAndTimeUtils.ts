@@ -17,3 +17,34 @@ export function dateToHhMmIn24hFormat(date: Date): string {
 
     return hoursString + ':' + minutesString;
 }
+
+export function isSameDate(date1: Date, date2: Date): boolean {
+    return (
+        date1.getDate() === date2.getDate() &&
+        date1.getMonth() === date2.getMonth() &&
+        date1.getFullYear() === date2.getFullYear()
+    );
+}
+
+export function getMonthName(date: Date): string {
+    const monthNames = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+    ];
+    return monthNames[date.getMonth()];
+}
+
+export function getShortWeekday(date: Date): string {
+    const weekdayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    return weekdayNames[date.getDay()];
+}

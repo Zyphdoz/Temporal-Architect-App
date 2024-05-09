@@ -63,11 +63,13 @@ class Calendar {
         return this.tasks[key] === undefined ? true : false;
     }
 
-    private createPlaceholderTask(date: Date): CalendarTask {
+    private createPlaceholderTask(date: Date): CalendarTask[] {
+        date.setHours(0, 0, 0, 0);
         const nextDate = addDays(date, 1);
+        nextDate.setHours(0, 0, 0, 0);
         let placeholderTask: CalendarTask = {
             title: '',
-            description: 'No tasks have been set for this day. Click here to add a new task.',
+            description: 'There are no tasks for this day. Click here to create one.',
             category: '',
             startTime: new Date(date),
             endTime: new Date(nextDate),
@@ -83,7 +85,7 @@ class Calendar {
             repeatSunday: false,
             backgroundColor: '#c1c1c1',
         };
-        return placeholderTask;
+        return [placeholderTask];
     }
 }
 
