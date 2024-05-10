@@ -63,6 +63,7 @@ function Calendar() {
                     {datePickerIsOpen && (
                         <div className="absolute right-0 z-50">
                             <DatePicker
+                                key={selectedDate.getTime()}
                                 selected={selectedDate}
                                 onChange={handleChange}
                                 onClickOutside={() => setDatePickerIsOpen(false)}
