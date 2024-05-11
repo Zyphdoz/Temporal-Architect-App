@@ -12,7 +12,10 @@ function CalendarTask({ tasks }: CalendarTaskProps) {
                 const height = task.taskDuration;
                 const backgroundColor = task.backgroundColor;
                 return (
-                    <div className="m-1" key={index}>
+                    <div
+                        className="transform cursor-pointer transition-all duration-200 hover:opacity-80 hover:shadow-lg"
+                        key={index}
+                    >
                         <div style={{ height, backgroundColor, boxSizing: 'border-box' }}>
                             <div className="flex justify-between px-4 pb-2 pt-3">
                                 <p>{task.title}</p>
