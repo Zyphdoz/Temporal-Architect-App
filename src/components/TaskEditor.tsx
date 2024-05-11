@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { taskEditor } from '../services/taskEditor';
 
 function TaskEditor() {
     const [startDate, setStartDate] = useState(new Date());
@@ -9,6 +10,7 @@ function TaskEditor() {
         <div id="taskeditorcontainer" className="flex min-w-80 flex-col border-r bg-gray-100 p-4 shadow-sm">
             <button
                 id="closebutton"
+                onClick={() => taskEditor.close()}
                 className="ml-auto flex h-10 w-10 items-center justify-center rounded-lg border bg-gray-100 text-5xl font-light hover:bg-gray-200"
             >
                 ×
