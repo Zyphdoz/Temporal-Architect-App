@@ -1,5 +1,5 @@
 import CalendarDay from './CalendarDay';
-import { addDays, isSameDate, getMonthName } from '../utils/dateAndTimeUtils';
+import { addDays, getMonthName } from '../utils/dateAndTimeUtils';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from 'react';
@@ -10,16 +10,8 @@ function Calendar() {
     const [datePickerIsOpen, setDatePickerIsOpen] = useState(false);
 
     const handleChange = (newDate: Date) => {
-        setSelectedDate((prevDate) => {
-            if (isSameDate(newDate, prevDate)) {
-                /**
-                 * do nothing.
-                 * stops unintuitive default behavior where the timepicker
-                 * closes when the user changes the time
-                 */
-            } else {
-                setDatePickerIsOpen(!datePickerIsOpen);
-            }
+        setSelectedDate(() => {
+            setDatePickerIsOpen(!datePickerIsOpen);
             return newDate;
         });
     };
@@ -70,7 +62,6 @@ function Calendar() {
                                 showYearDropdown
                                 showMonthDropdown
                                 inline
-                                showTimeInput
                             />
                         </div>
                     )}
