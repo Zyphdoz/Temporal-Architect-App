@@ -29,7 +29,7 @@ function Calendar() {
             <div className="relative border-b bg-gray-50 pb-3 pt-6 text-left text-4xl shadow-sm">
                 <button
                     id="previousday"
-                    className={`mx-3 hover:font-bold`}
+                    className={`px-3 hover:font-bold`}
                     onClick={() =>
                         setSelectedDate((prevDate) => {
                             return addDays(prevDate, -1);
@@ -40,7 +40,7 @@ function Calendar() {
                 </button>
                 <button
                     id="nextday"
-                    className={`mx-2 hover:font-bold`}
+                    className={`px-2 hover:font-bold`}
                     onClick={() =>
                         setSelectedDate((prevDate) => {
                             return addDays(prevDate, 1);
