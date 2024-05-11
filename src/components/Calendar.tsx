@@ -3,6 +3,7 @@ import { addDays, getMonthName } from '../utils/dateAndTimeUtils';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from 'react';
+import TaskEditor from './TaskEditor';
 
 function Calendar() {
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -68,6 +69,7 @@ function Calendar() {
                 </div>
             </div>
             <div className="flex">
+                <TaskEditor></TaskEditor>
                 <CalendarDay day={selectedDate!}></CalendarDay>
                 <CalendarDay day={addDays(selectedDate, 1)!}></CalendarDay>
                 <CalendarDay day={addDays(selectedDate, 2)!}></CalendarDay>
