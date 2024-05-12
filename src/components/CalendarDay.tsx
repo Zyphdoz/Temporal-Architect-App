@@ -12,7 +12,7 @@ function CalendarDay({ day }: CalendarDayProps) {
     const date = day.getDate();
     return (
         <>
-            <div className="flex flex-col border-l">
+            <div className="flex flex-grow flex-col border-l">
                 <div className="border-b">
                     <div id="headerDay" className="mt-1 text-center">
                         {`${englishWeekdayShort}`}

@@ -18,7 +18,7 @@ function Calendar() {
     };
 
     return (
-        <div>
+        <div className="w-full">
             <div className="relative border-b bg-gray-50 pb-3 pt-6 text-left text-4xl shadow-sm">
                 <button
                     id="previousday"
