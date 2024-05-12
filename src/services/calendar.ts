@@ -64,14 +64,12 @@ class Calendar {
 
     private createPlaceholderTask(date: Date): CalendarTask[] {
         date.setHours(0, 0, 0, 0);
-        const nextDate = addDays(date, 1);
-        nextDate.setHours(0, 0, 0, 0);
         let placeholderTask: CalendarTask = {
             title: '',
             description: 'There are no tasks for this timespan. Click here to create one.',
             category: [],
             startTime: new Date(date),
-            endTime: new Date(nextDate),
+            endTime: new Date(date),
             duration: 1440,
             numRepeats: 0,
             repeatMonday: false,
