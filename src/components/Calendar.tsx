@@ -4,7 +4,6 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from 'react';
 import TaskEditor from './TaskEditor';
-import { taskEditor } from '../services/taskEditor'; //.state
 
 function Calendar() {
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -70,7 +69,7 @@ function Calendar() {
                 </div>
             </div>
             <div className="flex">
-                {taskEditor.isVisible() && <TaskEditor></TaskEditor>}
+                <TaskEditor></TaskEditor>
                 <CalendarDay day={selectedDate!}></CalendarDay>
                 <CalendarDay day={addDays(selectedDate, 1)!}></CalendarDay>
                 <CalendarDay day={addDays(selectedDate, 2)!}></CalendarDay>

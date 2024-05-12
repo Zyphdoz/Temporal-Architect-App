@@ -10,13 +10,16 @@ function CalendarTask({ tasks }: CalendarTaskProps) {
     return (
         <>
             {tasks.map((task, index) => {
-                const height = task.taskDuration;
+                const height = task.duration;
                 const backgroundColor = task.backgroundColor;
                 return (
                     <div
                         className="transform cursor-pointer transition-all duration-200 hover:opacity-80 hover:shadow-lg"
                         key={index}
-                        onClick={() => taskEditor.open()}
+                        onClick={() => {
+                            taskEditor.setTask(task);
+                            taskEditor.open();
+                        }}
                     >
                         <div style={{ height, backgroundColor, boxSizing: 'border-box' }}>
                             <div className="flex justify-between px-4 pb-2 pt-3">

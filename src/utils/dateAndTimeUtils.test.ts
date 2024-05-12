@@ -6,6 +6,7 @@ import {
     isSameDate,
     getMonthName,
     getShortWeekday,
+    dateDiffInMinutes,
 } from './dateAndTimeUtils';
 
 test('dateToMmDdYyyyString(Date)_whenGivenADateObject_shouldReturn"mm/dd/yyyy"FormatedString', () => {
@@ -69,4 +70,10 @@ test('getShortWeekday()_whenCalledWithEachDay_shouldReturnShortEnglishWeekdayNam
         const date = new Date(2024, 0, index); // new Date(2024, 0, 0) is Sun Dec 31 2023
         expect(getShortWeekday(date)).toEqual(weekdayName);
     });
+});
+
+test('dateDiffInMinutes_whenTheDateDiffIsOneDay_shouldReturn1440Minutes', () => {
+    const date1 = new Date('1970/01/01');
+    const date2 = new Date('1970/01/02');
+    expect(dateDiffInMinutes(date1, date2)).toEqual(1440);
 });

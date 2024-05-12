@@ -9,11 +9,10 @@ beforeEach(() => {
 const placeholderTask: CalendarTask = {
     title: '',
     description: 'No tasks have been set for this day. Click here to add a new task.',
-    category: '',
+    category: [],
     startTime: new Date('1970/01/01'),
     endTime: new Date('1970/01/02'),
-    taskDuration: 1440,
-    taskId: 1,
+    duration: 1440,
     numRepeats: 0,
     repeatMonday: false,
     repeatTuesday: false,
@@ -29,7 +28,7 @@ test('calendar.getTasksForDay(mm/dd/yyyy)_whenDateHasNoTasks_shouldReturnPlaceho
     const returnValue: CalendarTask[] = calendar.getTasksForDay(new Date('1970/01/01'))!;
     expect(returnValue[0].startTime).toEqual(placeholderTask.startTime);
     expect(returnValue[0].endTime).toEqual(placeholderTask.endTime);
-    expect(returnValue[0].taskDuration).toEqual(placeholderTask.taskDuration);
+    expect(returnValue[0].duration).toEqual(placeholderTask.duration);
 });
 
 test('calendar.getTasksForDay(mm/dd/yyyy)_whenDateHasNoTasks_shouldNotReturnUndefined', () => {

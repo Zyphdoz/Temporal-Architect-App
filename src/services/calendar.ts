@@ -3,11 +3,10 @@ import { addDays, dateToMmDdYyyyString } from '../utils/dateAndTimeUtils';
 export interface CalendarTask {
     title: string;
     description: string;
-    category: string;
+    category: string[];
     startTime: Date;
     endTime: Date;
-    taskDuration?: number;
-    taskId: number;
+    duration: number;
     numRepeats: number;
     repeatMonday: boolean;
     repeatTuesday: boolean;
@@ -70,11 +69,10 @@ class Calendar {
         let placeholderTask: CalendarTask = {
             title: '',
             description: 'There are no tasks for this timespan. Click here to create one.',
-            category: '',
+            category: [],
             startTime: new Date(date),
             endTime: new Date(nextDate),
-            taskDuration: 1440,
-            taskId: 1,
+            duration: 1440,
             numRepeats: 0,
             repeatMonday: false,
             repeatTuesday: false,

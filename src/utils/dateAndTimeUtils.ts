@@ -48,3 +48,8 @@ export function getShortWeekday(date: Date): string {
     const weekdayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     return weekdayNames[date.getDay()];
 }
+
+export function dateDiffInMinutes(date1: Date, date2: Date): number {
+    const diffInMs = date2.getTime() - date1.getTime();
+    return diffInMs / (1000 * 60);
+}
