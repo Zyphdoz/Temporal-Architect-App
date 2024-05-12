@@ -23,17 +23,18 @@ interface CalendarMap<T> {
 }
 
 class Calendar {
-    private tasks: CalendarMap<CalendarTask[]> = {};
+    private tasks: CalendarMap<CalendarTask[]> = {}; //.state
 
-    /*
-    addNewTask(task: CalendarTask) {
-        const key = dateToMmDdYyyyString(task.startTime.date!);
+    addTask(task: CalendarTask) {
+        const key = dateToMmDdYyyyString(task.startTime);
         if (this.noEntryExistInMapForThisDay(key)) {
             this.createNewEntryForThisDay(key);
         }
         this.tasks[key].push(task);
+        this.tasks = this.tasks; // this assignment is necessary in order to trigger the setter that is injected by pubsubify
     }
 
+    /*
     getAllTasks() {
         return this.tasks;
     }
@@ -48,15 +49,13 @@ class Calendar {
         if (this.noEntryExistInMapForThisDay(key)) {
             return this.createPlaceholderTask(date);
         } else {
-            //return tasks for this day
+            return this.tasks[key];
         }
     }
 
-    /*
     private createNewEntryForThisDay(key: string) {
         this.tasks[key] = [];
     }
-    */
 
     private noEntryExistInMapForThisDay(key: string): boolean {
         return this.tasks[key] === undefined ? true : false;

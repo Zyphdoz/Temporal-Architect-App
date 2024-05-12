@@ -1,4 +1,4 @@
-import { calendar } from '../services/calendar';
+import { calendar } from '../services/calendar'; //.state
 import { getShortWeekday } from '../utils/dateAndTimeUtils';
 import CalendarTask from './CalendarTask';
 

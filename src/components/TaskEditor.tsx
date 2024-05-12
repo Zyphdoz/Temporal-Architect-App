@@ -1,6 +1,7 @@
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { taskEditor } from '../services/taskEditor'; //.state
+import { calendar } from '../services/calendar';
 
 function TaskEditor() {
     const task = taskEditor.getTask();
@@ -186,7 +187,10 @@ function TaskEditor() {
                         Sun
                     </label>
                 </div>
-                <button className="mx-auto mb-2 mt-10 flex h-10 w-fit items-center justify-center rounded-lg border bg-gray-100 px-4 text-lg hover:bg-gray-200">
+                <button
+                    className="mx-auto mb-2 mt-10 flex h-10 w-fit items-center justify-center rounded-lg border bg-gray-100 px-4 text-lg hover:bg-gray-200"
+                    onClick={() => calendar.addTask(task)}
+                >
                     Save
                 </button>
             </div>
