@@ -22,8 +22,11 @@ class TaskEditor {
         backgroundColor: '',
     };
 
+    private errorMessage: string = ''; //.state
+
     clear() {
         this.taskEditorIsVisible = false;
+        this.errorMessage = '';
         this.task = {
             title: '',
             description: '',
@@ -112,6 +115,14 @@ class TaskEditor {
 
     setColor(color: string) {
         this.task = { ...this.task, backgroundColor: color };
+    }
+
+    setErrorMessage(message: string) {
+        this.errorMessage = message;
+    }
+
+    getErrorMessage() {
+        return this.errorMessage;
     }
 
     isVisible() {

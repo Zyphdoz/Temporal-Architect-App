@@ -2,6 +2,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { taskEditor } from '../services/taskEditor'; //.state
 import { calendar } from '../services/calendar';
+import ErrorMessage from './ErrorMessage';
 
 function TaskEditor() {
     const task = taskEditor.getTask();
@@ -9,6 +10,7 @@ function TaskEditor() {
     const checkboxStyleUnchecked =
         'cursor-pointer select-none rounded-md border bg-gray-50 px-1 opacity-20 hover:opacity-40';
     const checkboxStyleChecked = 'cursor-pointer select-none rounded-md border bg-gray-50 px-1 opacity-80';
+
     return (
         taskEditor.isVisible() && (
             <div
@@ -190,10 +192,20 @@ function TaskEditor() {
                 </div>
                 <button
                     className="mx-auto mb-2 mt-10 flex h-10 w-fit items-center justify-center rounded-lg border bg-gray-100 px-4 text-lg hover:bg-gray-200"
-                    onClick={() => calendar.addTask(task)}
+                    onClick={() => {
+                        if (task.startTime < task.endTime) {
+                            calendar.addTask(task);
+                            taskEditor.clear();
+                        } else {
+                            taskEditor.setErrorMessage(
+                                'A task must begin before it can end. Please double check your start and end times and make sure End time comes after Start time.',
+                            );
+                        }
+                    }}
                 >
                     Save
                 </button>
+                <ErrorMessage errorMessage={taskEditor.getErrorMessage()}></ErrorMessage>
             </div>
         )
     );
