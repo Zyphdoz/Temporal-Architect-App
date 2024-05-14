@@ -47,6 +47,7 @@ class TaskEditor {
     }
 
     setTask(task: CalendarTask) {
+        this.clear();
         this.task = task;
     }
 
