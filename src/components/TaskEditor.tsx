@@ -11,7 +11,11 @@ function TaskEditor() {
     const checkboxStyleChecked = 'cursor-pointer select-none rounded-md border bg-gray-50 px-1 opacity-80';
     return (
         taskEditor.isVisible() && (
-            <div id="taskeditorcontainer" className="flex min-w-80 flex-col border-r bg-gray-100 p-4 shadow-sm">
+            <div
+                id="taskeditorcontainer"
+                className="flex min-w-80 flex-col border-r bg-gray-100 p-4 shadow-sm"
+                style={{ background: task.backgroundColor }}
+            >
                 <button
                     id="closebutton"
                     onClick={() => taskEditor.close()}
@@ -67,10 +71,7 @@ function TaskEditor() {
                         id="colorpicker"
                         type="color"
                         className="absolute left-0 top-0 w-0 opacity-0"
-                        onChange={(e) => {
-                            (e.target.parentNode!.parentNode as HTMLElement).style.backgroundColor = e.target.value;
-                            taskEditor.setColor(e.target.value);
-                        }}
+                        onChange={(e) => taskEditor.setColor(e.target.value)}
                     ></input>
                 </div>
 
