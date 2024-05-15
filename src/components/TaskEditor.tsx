@@ -3,6 +3,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { taskEditor } from '../services/taskEditor'; //.state
 import { calendar } from '../services/calendar';
 import ErrorMessage from './ErrorMessage';
+import SuccessMessage from './SuccessMessage';
 
 function TaskEditor() {
     const task = taskEditor.getTask();
@@ -195,7 +196,12 @@ function TaskEditor() {
                     onClick={() => {
                         if (task.startTime < task.endTime) {
                             calendar.addTask(task);
+                            const successMessage = `Added ${task.numRepeats === 0 ? '1' : task.numRepeats} task${task.numRepeats > 1 ? 's' : ''}`;
+                            taskEditor.setSuccessMessage(successMessage);
                             taskEditor.clear();
+                            setTimeout(() => {
+                                taskEditor.setSuccessMessage('');
+                            }, 3000);
                         } else {
                             taskEditor.setErrorMessage(
                                 'A task must begin before it can end. Please double check your start and end times and make sure End time comes after Start time.',
@@ -206,6 +212,7 @@ function TaskEditor() {
                     Save
                 </button>
                 <ErrorMessage errorMessage={taskEditor.getErrorMessage()}></ErrorMessage>
+                <SuccessMessage successMessage={taskEditor.getSuccessMessage()}></SuccessMessage>
             </div>
         )
     );

@@ -23,6 +23,7 @@ class TaskEditor {
     };
 
     private errorMessage: string = ''; //.state
+    private successMessage: string = ''; //.state
 
     clear() {
         this.errorMessage = '';
@@ -123,6 +124,14 @@ class TaskEditor {
 
     getErrorMessage() {
         return this.errorMessage;
+    }
+
+    setSuccessMessage(message: string) {
+        this.successMessage = message;
+    }
+
+    getSuccessMessage() {
+        return this.successMessage;
     }
 
     isVisible() {

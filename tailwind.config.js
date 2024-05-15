@@ -5,6 +5,17 @@ export default {
         extend: {
             colors: {
                 'error-pink': '#F0C9C8',
+                'success-green': '#C9E5DA',
+            },
+            keyframes: {
+                fadeOut: {
+                    '0%': { opacity: 1 },
+                    '66%': { opacity: 1 },
+                    '100%': { opacity: 0 },
+                },
+            },
+            animation: {
+                fadeOut: 'fadeOut 3s ease-in-out',
             },
         },
     },
