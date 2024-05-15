@@ -25,7 +25,6 @@ class TaskEditor {
     private errorMessage: string = ''; //.state
 
     clear() {
-        this.taskEditorIsVisible = false;
         this.errorMessage = '';
         this.task = {
             title: '',
