@@ -69,12 +69,12 @@ class TaskEditor {
     }
 
     setStartTime(date: Date) {
-        this.task.startTime = date;
+        this.task = { ...this.task, startTime: date };
         this.setDuration();
     }
 
     setEndTime(date: Date) {
-        this.task.endTime = date;
+        this.task = { ...this.task, endTime: date };
         this.setDuration();
     }
 
