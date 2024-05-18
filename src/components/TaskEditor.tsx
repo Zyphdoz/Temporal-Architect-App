@@ -90,6 +90,10 @@ function TaskEditor() {
                             let value = parseInt(e.target.value);
                             if (value > 9999) value = task.numRepeats;
                             taskEditor.setRepeats(value);
+                        } else {
+                            // @ts-ignore
+                            // allow user to delete the entire content of the input for intuitive UX
+                            taskEditor.setRepeats('');
                         }
                     }}
                     max="9999"
