@@ -1,4 +1,4 @@
-import { addDays, dateToMmDdYyyyString } from '../utils/dateAndTimeUtils';
+import { addDays, dateToMmDdYyyyString, isSameDate } from '../utils/dateAndTimeUtils';
 
 export interface CalendarTask {
     title: string;
@@ -32,9 +32,36 @@ class Calendar {
             this.tasks[key].push(this.createPlaceholderTask(new Date(key))[0]);
         }
 
-        this.tasks[key] = this.removeOverlap(key, task)!;
+        this.tasks[key] = this.removeOverlap(key, task);
+
+        const taskCrossesMidight: boolean = !isSameDate(task.startTime, task.endTime);
+
+        if (taskCrossesMidight) {
+            splitTaskOnMidnight(this);
+        }
 
         this.tasks = this.tasks; // this assignment is necessary in order to trigger the setter that is injected by pubsubify
+
+        function splitTaskOnMidnight(self: Calendar) {
+            const startTime = task.startTime;
+
+            const startOfNextDay = addDays(
+                new Date(startTime.getFullYear(), startTime.getMonth(), startTime.getDate(), 0, 0, 0),
+                1,
+            );
+
+            self.tasks[key][self.tasks[key].length - 1] = {
+                ...task,
+                endTime: startOfNextDay,
+                duration: self.getDurationInMinutes(task.startTime, startOfNextDay),
+            };
+
+            self.addTask({
+                ...task,
+                startTime: startOfNextDay,
+                duration: self.getDurationInMinutes(startOfNextDay, task.endTime),
+            });
+        }
     }
 
     clear() {

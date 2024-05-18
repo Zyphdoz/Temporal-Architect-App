@@ -217,14 +217,15 @@ test('calendar.addTask()_whenAddedTaskCrossesMidnight_taskShouldBeSplitIntoNewTa
     const tasksSecondDay = calendar.getTasksForDay(new Date('06/03/2023'));
 
     expect(tasksFirstDay.length).toEqual(2);
-    expect(tasksSecondDay.length).toEqual(2);
     expect(dateToHhMmIn24hFormat(tasksFirstDay[0].startTime)).toEqual('00:00');
     expect(dateToHhMmIn24hFormat(tasksFirstDay[0].endTime)).toEqual('15:00');
     expect(dateToHhMmIn24hFormat(tasksFirstDay[1].startTime)).toEqual('15:00');
     expect(dateToHhMmIn24hFormat(tasksFirstDay[1].endTime)).toEqual('00:00');
-    expect(tasksFirstDay[1].description && tasksSecondDay[0].description).toEqual('this task crosses midnight');
+    expect(tasksFirstDay[1].description).toEqual('this task crosses midnight');
+    expect(tasksSecondDay.length).toEqual(2);
     expect(dateToHhMmIn24hFormat(tasksSecondDay[0].startTime)).toEqual('00:00');
     expect(dateToHhMmIn24hFormat(tasksSecondDay[0].endTime)).toEqual('16:00');
     expect(dateToHhMmIn24hFormat(tasksSecondDay[1].startTime)).toEqual('16:00');
     expect(dateToHhMmIn24hFormat(tasksSecondDay[1].endTime)).toEqual('00:00');
+    expect(tasksSecondDay[0].description).toEqual('this task crosses midnight');
 });
