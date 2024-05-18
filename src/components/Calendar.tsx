@@ -25,7 +25,7 @@ function Calendar() {
                     className={`px-3 hover:font-bold`}
                     onClick={() =>
                         setSelectedDate((prevDate) => {
-                            return addDays(prevDate, -1);
+                            return addDays(prevDate, -7);
                         })
                     }
                 >
@@ -36,7 +36,7 @@ function Calendar() {
                     className={`px-2 hover:font-bold`}
                     onClick={() =>
                         setSelectedDate((prevDate) => {
-                            return addDays(prevDate, 1);
+                            return addDays(prevDate, 7);
                         })
                     }
                 >
