@@ -32,7 +32,7 @@ class Calendar {
             this.tasks[key].push(this.createPlaceholderTask(new Date(key))[0]);
         }
 
-        this.tasks[key] = this.removeOverlap(key, task);
+        this.tasks[key] = this.addTaskSortAndRemoveOverlap(key, task);
 
         const taskCrossesMidight: boolean = !isSameDate(task.startTime, task.endTime);
 
@@ -111,7 +111,7 @@ class Calendar {
         return [placeholderTask];
     }
 
-    private removeOverlap(key: string, newTask: CalendarTask) {
+    private addTaskSortAndRemoveOverlap(key: string, newTask: CalendarTask) {
         const tasks = this.tasks[key];
 
         let addedNewTask: boolean = false;
