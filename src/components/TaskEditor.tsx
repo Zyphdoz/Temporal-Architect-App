@@ -85,7 +85,13 @@ function TaskEditor() {
                     id="repeattask"
                     min="0"
                     value={task.numRepeats}
-                    onChange={(e) => taskEditor.setRepeats(parseInt(e.target.value))}
+                    onChange={(e) => {
+                        if (e.target.value !== '') {
+                            let value = parseInt(e.target.value);
+                            if (value > 9999) value = task.numRepeats;
+                            taskEditor.setRepeats(value);
+                        }
+                    }}
                     max="9999"
                     type="number"
                     className={inputStyle}
@@ -194,7 +200,24 @@ function TaskEditor() {
                 <button
                     className="mx-auto mb-2 mt-10 flex h-10 w-fit items-center justify-center rounded-lg border bg-gray-100 px-4 text-lg hover:bg-gray-200"
                     onClick={() => {
-                        if (task.startTime < task.endTime) {
+                        if (task.startTime > task.endTime) {
+                            taskEditor.setErrorMessage(
+                                'A task must begin before it can end. Please double check your start and end times and make sure End time comes after Start time.',
+                            );
+                        } else if (
+                            task.numRepeats > 1 &&
+                            task.repeatMonday === false &&
+                            task.repeatTuesday === false &&
+                            task.repeatWednesday === false &&
+                            task.repeatThursday === false &&
+                            task.repeatFriday === false &&
+                            task.repeatSaturday === false &&
+                            task.repeatSunday === false
+                        ) {
+                            taskEditor.setErrorMessage(
+                                "Please select which days you want the task to repeat on. If you didn't mean to create a repeating task, set Number of repeats to 0.",
+                            );
+                        } else {
                             calendar.addTask(task);
                             const successMessage = `Added ${task.numRepeats === 0 ? '1' : task.numRepeats} task${task.numRepeats > 1 ? 's' : ''}`;
                             taskEditor.setSuccessMessage(successMessage);
@@ -202,10 +225,6 @@ function TaskEditor() {
                             setTimeout(() => {
                                 taskEditor.setSuccessMessage('');
                             }, 3000);
-                        } else {
-                            taskEditor.setErrorMessage(
-                                'A task must begin before it can end. Please double check your start and end times and make sure End time comes after Start time.',
-                            );
                         }
                     }}
                 >

@@ -26,18 +26,24 @@ class Calendar {
     private tasks: CalendarMap<CalendarTask[]> = {}; //.state
 
     addTask(task: CalendarTask) {
-        const key = dateToMmDdYyyyString(task.startTime);
-        if (this.noEntryExistInMapForThisDay(key)) {
-            this.createNewEntryForThisDay(key);
-            this.tasks[key].push(this.createPlaceholderTask(new Date(key))[0]);
-        }
+        const numberOfTasksToAdd = task.numRepeats > 1 ? task.numRepeats : 1;
+        let key = dateToMmDdYyyyString(task.startTime);
 
-        this.tasks[key] = this.addTaskSortAndRemoveOverlap(key, task);
+        if (numberOfTasksToAdd > 1) {
+            addMultipleTasks(this);
+        } else {
+            if (this.noEntryExistInMapForThisDay(key)) {
+                this.createNewEntryForThisDay(key);
+                this.tasks[key].push(this.createPlaceholderTask(new Date(key))[0]);
+            }
 
-        const taskCrossesMidight: boolean = !isSameDate(task.startTime, task.endTime);
+            this.tasks[key] = this.addTaskSortAndRemoveOverlap(key, task);
 
-        if (taskCrossesMidight) {
-            splitTaskOnMidnight(this);
+            const taskCrossesMidight: boolean = !isSameDate(task.startTime, task.endTime);
+
+            if (taskCrossesMidight) {
+                splitTaskOnMidnight(this);
+            }
         }
 
         this.tasks = this.tasks; // this assignment is necessary in order to trigger the setter that is injected by pubsubify
@@ -61,6 +67,35 @@ class Calendar {
                 startTime: startOfNextDay,
                 duration: self.getDurationInMinutes(startOfNextDay, task.endTime),
             });
+        }
+
+        function addMultipleTasks(self: Calendar) {
+            const repeatDays: boolean[] = [
+                task.repeatSunday,
+                task.repeatMonday,
+                task.repeatTuesday,
+                task.repeatWednesday,
+                task.repeatThursday,
+                task.repeatFriday,
+                task.repeatSaturday,
+            ];
+            const singleTask: CalendarTask = { ...task, numRepeats: 0 };
+            let tasksAdded: number = 0;
+            let date = task.startTime;
+            let count: number = 0;
+            while (tasksAdded < numberOfTasksToAdd) {
+                const currentDay = date.getDay();
+                if (repeatDays[currentDay] === true) {
+                    self.addTask({
+                        ...singleTask,
+                        startTime: addDays(task.startTime, count),
+                        endTime: addDays(task.endTime, count),
+                    });
+                    tasksAdded++;
+                }
+                count++;
+                date = addDays(task.startTime, count);
+            }
         }
     }
 

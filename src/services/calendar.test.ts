@@ -229,3 +229,27 @@ test('calendar.addTask()_whenAddedTaskCrossesMidnight_taskShouldBeSplitIntoNewTa
     expect(dateToHhMmIn24hFormat(tasksSecondDay[1].endTime)).toEqual('00:00');
     expect(tasksSecondDay[0].description).toEqual('this task crosses midnight');
 });
+
+test('calendar.addTask()_whenRepeatTaskIs3andRepeatDayIsMonWedFri_taskShouldRepeatAccordingly', () => {
+    calendar.addTask({
+        ...placeholderTask,
+        title: 'this is a repeating task',
+        description:
+            'this task repeats repeats 3 times. first repeat on monday, second on wednesday and third on friday',
+        startTime: new Date('05/05/2024 12:00'),
+        endTime: new Date('05/05/2024 18:00'),
+        duration: 360,
+        numRepeats: 3,
+        repeatMonday: true,
+        repeatWednesday: true,
+        repeatFriday: true,
+    });
+
+    expect(calendar.getTasksForDay(new Date('05/05/2024'))).toHaveLength(1);
+    expect(calendar.getTasksForDay(new Date('05/06/2024'))).toHaveLength(3);
+    expect(calendar.getTasksForDay(new Date('05/06/2024'))[1].title).toEqual('this is a repeating task');
+    expect(calendar.getTasksForDay(new Date('05/08/2024'))).toHaveLength(3);
+    expect(calendar.getTasksForDay(new Date('05/08/2024'))[1].title).toEqual('this is a repeating task');
+    expect(calendar.getTasksForDay(new Date('05/10/2024'))).toHaveLength(3);
+    expect(calendar.getTasksForDay(new Date('05/10/2024'))[1].title).toEqual('this is a repeating task');
+});
