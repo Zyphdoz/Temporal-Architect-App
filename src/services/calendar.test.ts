@@ -122,7 +122,7 @@ test('calendar.addTask()_whenAddFirstTaskAt02:00-03:00_thereShouldBeThreeTasks 0
         duration: 60,
     });
     const tasks = calendar.getTasksForDay(new Date('05/03/2023'));
-    expect(tasks.length).toEqual(3);
+    expect(tasks).toHaveLength(3);
     expect(dateToHhMmIn24hFormat(tasks[0].startTime)).toEqual('00:00');
     expect(dateToHhMmIn24hFormat(tasks[0].endTime)).toEqual('02:00');
     expect(dateToHhMmIn24hFormat(tasks[1].startTime)).toEqual('02:00');
@@ -155,7 +155,7 @@ test('calendar.addTask()_whenAddFirstTaskAt02:00-04:00thenAddSecondTaskAt03:00-0
         duration: 120,
     });
     tasks = calendar.getTasksForDay(new Date('05/03/2023'));
-    expect(tasks.length).toEqual(4);
+    expect(tasks).toHaveLength(4);
 
     expect(dateToHhMmIn24hFormat(tasks[0].startTime)).toEqual('00:00');
     expect(dateToHhMmIn24hFormat(tasks[0].endTime)).toEqual('02:00');
@@ -191,7 +191,7 @@ test('calendar.addTask()_whenAddFirstTaskAt01:00-02:00thenAddSecondTaskAt15:00-1
         duration: 60,
     });
     tasks = calendar.getTasksForDay(new Date('05/03/2023'));
-    expect(tasks.length).toEqual(5);
+    expect(tasks).toHaveLength(5);
 
     expect(dateToHhMmIn24hFormat(tasks[0].startTime)).toEqual('00:00');
     expect(dateToHhMmIn24hFormat(tasks[0].endTime)).toEqual('01:00');
@@ -216,13 +216,13 @@ test('calendar.addTask()_whenAddedTaskCrossesMidnight_taskShouldBeSplitIntoNewTa
     const tasksFirstDay = calendar.getTasksForDay(new Date('05/03/2023'));
     const tasksSecondDay = calendar.getTasksForDay(new Date('06/03/2023'));
 
-    expect(tasksFirstDay.length).toEqual(2);
+    expect(tasksFirstDay).toHaveLength(2);
     expect(dateToHhMmIn24hFormat(tasksFirstDay[0].startTime)).toEqual('00:00');
     expect(dateToHhMmIn24hFormat(tasksFirstDay[0].endTime)).toEqual('15:00');
     expect(dateToHhMmIn24hFormat(tasksFirstDay[1].startTime)).toEqual('15:00');
     expect(dateToHhMmIn24hFormat(tasksFirstDay[1].endTime)).toEqual('00:00');
     expect(tasksFirstDay[1].description).toEqual('this task crosses midnight');
-    expect(tasksSecondDay.length).toEqual(2);
+    expect(tasksSecondDay).toHaveLength(2);
     expect(dateToHhMmIn24hFormat(tasksSecondDay[0].startTime)).toEqual('00:00');
     expect(dateToHhMmIn24hFormat(tasksSecondDay[0].endTime)).toEqual('16:00');
     expect(dateToHhMmIn24hFormat(tasksSecondDay[1].startTime)).toEqual('16:00');
