@@ -8,9 +8,9 @@ interface CalendarDayProps {
 function CalendarDay({ day }: CalendarDayProps) {
     const tasks = calendar.getTasksForDay(day)!;
     return (
-        <>
+        <div>
             <CalendarTask tasks={tasks}></CalendarTask>
-        </>
+        </div>
     );
 }
 
