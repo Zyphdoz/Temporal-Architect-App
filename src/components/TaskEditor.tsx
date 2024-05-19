@@ -27,35 +27,50 @@ function TaskEditor() {
                 >
                     ×
                 </button>
-                <div className="mb-2 mt-2">Title</div>
+                <label htmlFor="title" className="mb-2 mt-2">
+                    Title
+                </label>
                 <input
+                    id="title"
                     className={inputStyle}
                     value={task.title}
                     onChange={(e) => taskEditor.setTitle(e.target.value)}
                 ></input>
-                <div className="mb-2 mt-5">Notes</div>
+                <label htmlFor="notes" className="mb-2 mt-5">
+                    Notes
+                </label>
                 <textarea
+                    id="notes"
                     className={`${inputStyle} h-20 py-1`}
                     value={task.description}
                     onChange={(e) => taskEditor.setDescription(e.target.value)}
                 ></textarea>
-                <div className="mb-2 mt-5">Category</div>
+                <label htmlFor="category" className="mb-2 mt-5">
+                    Category
+                </label>
                 <input
+                    id="category"
                     className={inputStyle}
                     value={task.category}
                     onChange={(e) => taskEditor.setCategory(e.target.value)}
                 ></input>
 
-                <div className="mb-2 mt-5">Start time</div>
+                <label htmlFor="starttime" className="mb-2 mt-5">
+                    Start time
+                </label>
                 <DatePicker
+                    id="starttime"
                     className={`${inputStyle} w-full`}
                     selected={task.startTime}
                     onChange={(date) => taskEditor.setStartTime(date!)}
                     showTimeInput
                     dateFormat="MMMM d, yyyy HH:mm"
                 />
-                <div className="mb-2 mt-5">End time</div>
+                <label htmlFor="endtime" className="mb-2 mt-5">
+                    End time
+                </label>
                 <DatePicker
+                    id="endtime"
                     className={`${inputStyle} w-full`}
                     selected={task.endTime}
                     onChange={(date) => taskEditor.setEndTime(date!)}
