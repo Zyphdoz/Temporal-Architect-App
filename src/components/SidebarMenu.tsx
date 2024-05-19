@@ -3,7 +3,7 @@ import { sidebar } from '../services/sidebarMenu.ts'; //.state
 
 function SidebarMenu() {
     return (
-        <aside className="h-screen w-56">
+        <aside className="h-screen min-w-32 max-w-32">
             <nav className="flex h-full flex-col border-r bg-gray-100 shadow-sm">
                 <div className="flex items-center justify-between p-4 pb-2">
                     <img
