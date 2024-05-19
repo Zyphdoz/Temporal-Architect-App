@@ -89,7 +89,7 @@ function TaskEditor() {
                     onChange={(e) => {
                         if (e.target.value !== '') {
                             let value = parseInt(e.target.value);
-                            if (value > 9999) value = task.numRepeats;
+                            if (value > 999) value = task.numRepeats;
                             taskEditor.setRepeats(value);
                         } else {
                             // @ts-ignore
@@ -97,7 +97,7 @@ function TaskEditor() {
                             taskEditor.setRepeats('');
                         }
                     }}
-                    max="9999"
+                    max="999"
                     type="number"
                     className={inputStyle}
                 ></input>
