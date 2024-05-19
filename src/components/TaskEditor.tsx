@@ -26,7 +26,7 @@ function TaskEditor() {
                 >
                     ×
                 </button>
-                <div className="mb-2 mt-5">Title</div>
+                <div className="mb-2 mt-2">Title</div>
                 <input
                     className={inputStyle}
                     value={task.title}
@@ -34,7 +34,7 @@ function TaskEditor() {
                 ></input>
                 <div className="mb-2 mt-5">Notes</div>
                 <textarea
-                    className={`${inputStyle} h-40 py-1`}
+                    className={`${inputStyle} h-20 py-1`}
                     value={task.description}
                     onChange={(e) => taskEditor.setDescription(e.target.value)}
                 ></textarea>
@@ -202,12 +202,10 @@ function TaskEditor() {
                     </label>
                 </div>
                 <button
-                    className="mx-auto mb-2 mt-10 flex h-10 w-fit items-center justify-center rounded-lg border bg-gray-100 px-4 text-lg hover:bg-gray-200"
+                    className="mx-auto mb-2 mt-10 flex h-10 w-fit items-center justify-center rounded-lg border bg-gray-100 px-4 text-lg shadow-sm hover:bg-gray-200"
                     onClick={() => {
-                        if (task.startTime > task.endTime) {
-                            taskEditor.setErrorMessage(
-                                'A task must begin before it can end. Please double check your start and end times and make sure End time comes after Start time.',
-                            );
+                        if (task.startTime >= task.endTime) {
+                            taskEditor.setErrorMessage('End time must be after Start time.');
                         } else if (
                             task.numRepeats > 1 &&
                             task.repeatMonday === false &&
@@ -218,9 +216,7 @@ function TaskEditor() {
                             task.repeatSaturday === false &&
                             task.repeatSunday === false
                         ) {
-                            taskEditor.setErrorMessage(
-                                "Please select which days you want the task to repeat on. If you didn't mean to create a repeating task, set Number of repeats to 0.",
-                            );
+                            taskEditor.setErrorMessage('Pick repeat days or set repeats to 0.');
                         } else {
                             calendar.addTask(task);
                             const successMessage = `Added ${task.numRepeats === 0 ? '1' : task.numRepeats} task${task.numRepeats > 1 ? 's' : ''}`;
