@@ -12,7 +12,6 @@ function CalendarTask({ tasks }: CalendarTaskProps) {
             {tasks.map((task, index) => {
                 const height = task.duration;
                 const backgroundColor = task.backgroundColor;
-                const borderColor = backgroundColor;
                 return (
                     <div
                         className=" transform cursor-pointer transition-all duration-200 hover:opacity-80 hover:shadow-lg"
@@ -26,7 +25,7 @@ function CalendarTask({ tasks }: CalendarTaskProps) {
                             style={{
                                 height,
                                 backgroundColor,
-                                borderColor,
+                                borderColor: 'white',
                                 boxSizing: 'border-box',
                                 overflow: 'hidden',
                                 border: '2px solid white',
