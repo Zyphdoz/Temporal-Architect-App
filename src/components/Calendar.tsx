@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from 'react';
 import TaskEditor from './TaskEditor';
+import CalendarDayHeader from './CalendarDayHeader';
 
 function Calendar() {
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -68,15 +69,20 @@ function Calendar() {
                     )}
                 </div>
             </div>
-            <div className="flex h-full">
+            <div className="flex h-full overflow-hidden">
                 <TaskEditor></TaskEditor>
-                <CalendarDay day={selectedDate!}></CalendarDay>
-                <CalendarDay day={addDays(selectedDate, 1)!}></CalendarDay>
-                <CalendarDay day={addDays(selectedDate, 2)!}></CalendarDay>
-                <CalendarDay day={addDays(selectedDate, 3)!}></CalendarDay>
-                <CalendarDay day={addDays(selectedDate, 4)!}></CalendarDay>
-                <CalendarDay day={addDays(selectedDate, 5)!}></CalendarDay>
-                <CalendarDay day={addDays(selectedDate, 6)!}></CalendarDay>
+                <div className="flex flex-col">
+                    <CalendarDayHeader startDay={selectedDate!}></CalendarDayHeader>
+                    <div className="flex overflow-y-scroll">
+                        <CalendarDay day={selectedDate!}></CalendarDay>
+                        <CalendarDay day={addDays(selectedDate, 1)!}></CalendarDay>
+                        <CalendarDay day={addDays(selectedDate, 2)!}></CalendarDay>
+                        <CalendarDay day={addDays(selectedDate, 3)!}></CalendarDay>
+                        <CalendarDay day={addDays(selectedDate, 4)!}></CalendarDay>
+                        <CalendarDay day={addDays(selectedDate, 5)!}></CalendarDay>
+                        <CalendarDay day={addDays(selectedDate, 6)!}></CalendarDay>
+                    </div>
+                </div>
             </div>
         </div>
     );
