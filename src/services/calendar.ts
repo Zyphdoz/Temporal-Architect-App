@@ -1,4 +1,5 @@
 import { addDays, dateToMmDdYyyyString, isSameDate } from '../utils/dateAndTimeUtils';
+import { StartdayChoices, settings } from './settings';
 import { storage } from './storage';
 
 export interface CalendarTask {
@@ -115,6 +116,19 @@ class Calendar {
 
     getTasks() {
         return this.tasks;
+    }
+
+    getCalendarStartDate(date: Date) {
+        const startDayPreference: StartdayChoices = settings.getCalendarStartDay();
+        const currentWeekday = date.toLocaleDateString('en-US', { weekday: 'long' });
+        let day = date;
+        if (startDayPreference === 'Today' || startDayPreference === currentWeekday) {
+            return day;
+        } else
+            while (startDayPreference !== day.toLocaleDateString('en-US', { weekday: 'long' })) {
+                day = addDays(day, -1);
+            }
+        return day;
     }
 
     private createNewEntryForThisDay(key: string) {

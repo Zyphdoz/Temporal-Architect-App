@@ -5,16 +5,17 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from 'react';
 import TaskEditor from './TaskEditor';
 import CalendarDayHeader from './CalendarDayHeader';
+import { calendar } from '../services/calendar';
 
 function Calendar() {
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(calendar.getCalendarStartDate(new Date()));
 
     const [datePickerIsOpen, setDatePickerIsOpen] = useState(false);
 
     const handleChange = (newDate: Date) => {
         setSelectedDate(() => {
             setDatePickerIsOpen(!datePickerIsOpen);
-            return newDate;
+            return calendar.getCalendarStartDate(newDate);
         });
     };
 

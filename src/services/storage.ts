@@ -1,6 +1,5 @@
 import { CalendarTask, CalendarMap, calendar } from './calendar';
-
-type StartdayChoices = 'Today' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
+import { StartdayChoices, settings } from './settings';
 
 interface SavedData {
     calendarStartDay: StartdayChoices;
@@ -18,17 +17,23 @@ class Storage {
             saved = JSON.parse(savedItem);
         }
 
-        this.calendarStartDay = saved?.calendarStartDay || 'Monday';
+        this.calendarStartDay = saved?.calendarStartDay || 'Today';
         this.tasks = this.repairDatesInTasks(saved?.tasks!) || {};
+        settings.setCalendarStartDay(this.calendarStartDay);
     }
 
     save() {
+        this.calendarStartDay = settings.getCalendarStartDay();
         this.tasks = calendar.getTasks();
         localStorage.setItem('data', JSON.stringify(this));
     }
 
     getTasks(): CalendarMap<CalendarTask[]> {
         return this.tasks;
+    }
+
+    getCalendarStartDay() {
+        return this.calendarStartDay;
     }
 
     /**
