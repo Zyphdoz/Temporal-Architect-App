@@ -42,7 +42,7 @@ class TaskEditor {
             repeatFriday: false,
             repeatSaturday: false,
             repeatSunday: false,
-            backgroundColor: '',
+            backgroundColor: '#F3F4F6',
         };
     }
 
