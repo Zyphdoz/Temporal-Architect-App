@@ -16,9 +16,9 @@ function CalendarDayHeader({ startDay }: CalendarDayHeaderProps) {
     ];
     return (
         <div className="flex border-b">
-            {days.map((day) => {
+            {days.map((day, index) => {
                 return (
-                    <div className="mx-auto">
+                    <div className="mx-auto" key={index}>
                         <div id="headerDay" className="mt-1 text-center">
                             {`${getShortWeekday(day)}`}
                         </div>
