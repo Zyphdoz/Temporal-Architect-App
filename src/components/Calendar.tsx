@@ -18,7 +18,7 @@ function Calendar() {
     };
 
     return (
-        <div className="w-full">
+        <div className="flex h-screen w-full flex-col">
             <div className="relative border-b bg-gray-50 pb-3 pt-6 text-left text-4xl shadow-sm">
                 <button
                     id="previousday"
@@ -68,7 +68,7 @@ function Calendar() {
                     )}
                 </div>
             </div>
-            <div className="flex">
+            <div className="flex h-full">
                 <TaskEditor></TaskEditor>
                 <CalendarDay day={selectedDate!}></CalendarDay>
                 <CalendarDay day={addDays(selectedDate, 1)!}></CalendarDay>
