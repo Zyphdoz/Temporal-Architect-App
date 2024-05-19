@@ -10,7 +10,7 @@ function CalendarTask({ tasks }: CalendarTaskProps) {
     return (
         <>
             {tasks.map((task, index) => {
-                const height = task.duration;
+                const height = task.duration * 2;
                 const backgroundColor = task.backgroundColor;
                 return (
                     <div
@@ -32,7 +32,7 @@ function CalendarTask({ tasks }: CalendarTaskProps) {
                                 borderRadius: '0.375rem',
                             }}
                         >
-                            <div className="flex justify-between px-3 pb-2 pt-3">
+                            <div className="-mt-2 flex justify-between px-3 pb-2 pt-3">
                                 <p className="text-left font-semibold">{task.title}</p>
                                 <p className=" text-nowrap text-right">
                                     {dateToHhMmIn24hFormat(task.startTime)}-{dateToHhMmIn24hFormat(task.endTime)}
