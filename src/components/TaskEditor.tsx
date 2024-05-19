@@ -4,6 +4,7 @@ import { taskEditor } from '../services/taskEditor'; //.state
 import { calendar } from '../services/calendar';
 import ErrorMessage from './ErrorMessage';
 import SuccessMessage from './SuccessMessage';
+import { storage } from '../services/storage';
 
 function TaskEditor() {
     const task = taskEditor.getTask();
@@ -221,6 +222,7 @@ function TaskEditor() {
                             calendar.addTask(task);
                             const successMessage = `Added ${task.numRepeats === 0 ? '1' : task.numRepeats} task${task.numRepeats > 1 ? 's' : ''}`;
                             taskEditor.setSuccessMessage(successMessage);
+                            storage.save();
                             taskEditor.clear();
                             setTimeout(() => {
                                 taskEditor.setSuccessMessage('');

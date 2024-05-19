@@ -1,4 +1,5 @@
 import { addDays, dateToMmDdYyyyString, isSameDate } from '../utils/dateAndTimeUtils';
+import { storage } from './storage';
 
 export interface CalendarTask {
     title: string;
@@ -18,12 +19,12 @@ export interface CalendarTask {
     backgroundColor: string;
 }
 
-interface CalendarMap<T> {
+export interface CalendarMap<T> {
     [key: string]: T;
 }
 
 class Calendar {
-    private tasks: CalendarMap<CalendarTask[]> = {}; //.state
+    private tasks: CalendarMap<CalendarTask[]> = storage.getTasks(); //.state
 
     addTask(task: CalendarTask) {
         const numberOfTasksToAdd = task.numRepeats > 1 ? task.numRepeats : 1;
@@ -110,6 +111,10 @@ class Calendar {
         } else {
             return this.tasks[key];
         }
+    }
+
+    getTasks() {
+        return this.tasks;
     }
 
     private createNewEntryForThisDay(key: string) {
