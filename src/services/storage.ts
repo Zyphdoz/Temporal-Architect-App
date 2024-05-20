@@ -12,9 +12,16 @@ class Storage {
 
     constructor() {
         let saved: SavedData | null = null;
-        const savedItem = localStorage.getItem('data');
-        if (savedItem !== null) {
-            saved = JSON.parse(savedItem);
+
+        let savedItem;
+
+        if (typeof localStorage === 'undefined') {
+            savedItem = {};
+        } else {
+            savedItem = localStorage.getItem('data');
+            if (savedItem !== null) {
+                saved = JSON.parse(savedItem);
+            }
         }
 
         this.calendarStartDay = saved?.calendarStartDay || 'Today';
