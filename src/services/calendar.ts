@@ -135,6 +135,20 @@ class Calendar {
         this.tasks = tasks;
     }
 
+    nextUpcomingTask(): CalendarTask {
+        const rightNow = new Date();
+        const todaysTasks: CalendarTask[] = this.getTasksForDay(rightNow);
+
+        for (let i = 0; i < todaysTasks.length; i++) {
+            const task = todaysTasks[i];
+            if (task.startTime.getTime() >= rightNow.getTime()) {
+                return task;
+            }
+        }
+
+        return this.getTasksForDay(addDays(rightNow, 1))[0];
+    }
+
     private createNewEntryForThisDay(key: string) {
         this.tasks[key] = [];
     }
@@ -151,7 +165,7 @@ class Calendar {
         date.setHours(0, 0, 0, 0);
         let placeholderTask: CalendarTask = {
             title: '',
-            description: 'There are no tasks for this timespan. Click here to create one.',
+            description: '',
             category: [],
             startTime: new Date(date),
             endTime: addDays(new Date(date), 1),
@@ -180,14 +194,18 @@ class Calendar {
             const newTaskSplitsExistingTask =
                 newTask.startTime.getTime() > existingTask.startTime.getTime() &&
                 newTask.endTime.getTime() < existingTask.endTime.getTime();
+
             const newTaskOverlapsBeginningOfExistingTask =
                 newTask.endTime.getTime() > existingTask.startTime.getTime() &&
                 newTask.startTime.getTime() <= existingTask.startTime.getTime();
+
             const newTaskOverlapsEndOfExistingTask =
                 newTask.startTime.getTime() < existingTask.endTime.getTime() &&
                 newTask.endTime.getTime() >= existingTask.endTime.getTime();
+
             const newTaskOverlapsEntireExistingTask =
                 newTaskOverlapsBeginningOfExistingTask && newTaskOverlapsEndOfExistingTask;
+
             const thereIsNoOverlap =
                 newTask.endTime.getTime() <= existingTask.startTime.getTime() ||
                 newTask.startTime.getTime() >= existingTask.endTime.getTime();

@@ -1,7 +1,32 @@
+import { useEffect } from 'react';
 import logo from '../assets/logo.png';
 import { sidebar } from '../services/sidebarMenu.ts'; //.state
+import { calendar } from '../services/calendar.ts';
 
 function SidebarMenu() {
+    useEffect(() => {
+        const countDownToNextTaskInTitle = setInterval(() => {
+            const task = calendar.nextUpcomingTask();
+            const startTime = task.startTime.getTime();
+            const rightNow = new Date().getTime();
+            const timeToNextTask = startTime - rightNow;
+            const hoursToNextTask = Math.floor(timeToNextTask / 3600000);
+            const minutesToNextTask = Math.floor(timeToNextTask / 60000) - hoursToNextTask * 60;
+
+            const minutesToNextTaskPadded = minutesToNextTask.toString().padStart(2, '0');
+
+            const title =
+                task.title === ''
+                    ? 'Temporal Architect App'
+                    : `${task.title} in ${hoursToNextTask}:${minutesToNextTaskPadded}`;
+
+            document.title = title;
+        }, 2000);
+
+        return () => {
+            clearInterval(countDownToNextTaskInTitle);
+        };
+    }, []);
     return (
         <aside className="h-screen min-w-32 max-w-32">
             <nav className="flex h-full flex-col border-r bg-gray-100 shadow-sm">
