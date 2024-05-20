@@ -14,7 +14,7 @@ function CalendarTask({ tasks }: CalendarTaskProps) {
                 const backgroundColor = task.backgroundColor;
                 return (
                     <div
-                        className=" transform cursor-pointer transition-all duration-200 hover:opacity-80 hover:shadow-lg"
+                        className="transform cursor-pointer transition-all duration-200 hover:opacity-80 hover:shadow-lg"
                         key={index}
                         onClick={() => {
                             taskEditor.setTask(task);

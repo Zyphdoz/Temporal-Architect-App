@@ -30,7 +30,7 @@ function Calendar() {
     }, []);
 
     return (
-        <div className="flex h-screen w-full flex-col">
+        <div className="flex h-screen w-full flex-col overflow-x-hidden">
             <div className="relative border-b bg-gray-50 pb-3 pt-6 text-left text-4xl shadow-sm">
                 <button
                     id="previousday"
@@ -82,9 +82,9 @@ function Calendar() {
             </div>
             <div className="flex h-full overflow-hidden">
                 <TaskEditor></TaskEditor>
-                <div className="flex flex-col">
+                <div className="flex flex-grow flex-col">
                     <CalendarDayHeader startDay={selectedDate!}></CalendarDayHeader>
-                    <div ref={scrollbar} className="flex overflow-y-scroll">
+                    <div ref={scrollbar} className="flex overflow-x-hidden overflow-y-scroll">
                         <CalendarDay day={selectedDate!}></CalendarDay>
                         <CalendarDay day={addDays(selectedDate, 1)!}></CalendarDay>
                         <CalendarDay day={addDays(selectedDate, 2)!}></CalendarDay>

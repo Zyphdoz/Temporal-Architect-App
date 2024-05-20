@@ -8,7 +8,7 @@ import { storage } from '../services/storage';
 
 function TaskEditor() {
     const task = taskEditor.getTask();
-    const inputStyle = 'h-10 rounded-md border bg-gray-50 px-2 focus:shadow-lg focus:outline-none';
+    const inputStyle = 'min-h-10 rounded-md border bg-gray-50 px-2 focus:shadow-lg focus:outline-none';
     const checkboxStyleUnchecked =
         'cursor-pointer select-none rounded-md border bg-gray-50 px-1 opacity-20 hover:opacity-40';
     const checkboxStyleChecked = 'cursor-pointer select-none rounded-md border bg-gray-50 px-1 opacity-80';
@@ -17,7 +17,7 @@ function TaskEditor() {
         taskEditor.isVisible() && (
             <div
                 id="taskeditorcontainer"
-                className="flex min-w-80 max-w-80 flex-grow flex-col border-r bg-gray-100 p-4 shadow-sm"
+                className="flex min-w-80 max-w-80 flex-grow flex-col overflow-y-scroll border-r bg-gray-100 p-4 shadow-sm"
                 style={{ background: task.backgroundColor }}
             >
                 <button
@@ -41,7 +41,7 @@ function TaskEditor() {
                 </label>
                 <textarea
                     id="notes"
-                    className={`${inputStyle} h-20 py-1`}
+                    className={`${inputStyle} min-h-20 resize-y py-1`}
                     value={task.description}
                     onChange={(e) => taskEditor.setDescription(e.target.value)}
                 ></textarea>
