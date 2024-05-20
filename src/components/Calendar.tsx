@@ -2,7 +2,7 @@ import CalendarDay from './CalendarDay';
 import { addDays, getMonthName } from '../utils/dateAndTimeUtils';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import TaskEditor from './TaskEditor';
 import CalendarDayHeader from './CalendarDayHeader';
 import { calendar } from '../services/calendar';
@@ -18,6 +18,16 @@ function Calendar() {
             return calendar.getCalendarStartDate(newDate);
         });
     };
+
+    const scrollbar = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        if (scrollbar.current) {
+            const rightNow = new Date();
+            if (calendar.getTasksForDay(rightNow).length > 1) {
+                scrollbar.current.scrollTop = (rightNow.getHours() - 3) * 120;
+            }
+        }
+    }, []);
 
     return (
         <div className="flex h-screen w-full flex-col">
@@ -74,7 +84,7 @@ function Calendar() {
                 <TaskEditor></TaskEditor>
                 <div className="flex flex-col">
                     <CalendarDayHeader startDay={selectedDate!}></CalendarDayHeader>
-                    <div className="flex overflow-y-scroll">
+                    <div ref={scrollbar} className="flex overflow-y-scroll">
                         <CalendarDay day={selectedDate!}></CalendarDay>
                         <CalendarDay day={addDays(selectedDate, 1)!}></CalendarDay>
                         <CalendarDay day={addDays(selectedDate, 2)!}></CalendarDay>
