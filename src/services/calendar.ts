@@ -131,6 +131,10 @@ class Calendar {
         return day;
     }
 
+    onUploadBackup(tasks: CalendarMap<CalendarTask[]>) {
+        this.tasks = tasks;
+    }
+
     private createNewEntryForThisDay(key: string) {
         this.tasks[key] = [];
     }
