@@ -1,4 +1,4 @@
-import { addDays, getShortWeekday } from '../utils/dateAndTimeUtils';
+import { addDays, getShortWeekday, isSameDate } from '../utils/dateAndTimeUtils';
 
 interface CalendarDayHeaderProps {
     startDay: Date;
@@ -22,6 +22,10 @@ function CalendarDayHeader({ startDay }: CalendarDayHeaderProps) {
                         <div id="headerDay" className="mt-1 text-center">
                             {`${getShortWeekday(day)}`}
                         </div>
+                        <div
+                            id="highlightCurrentDay"
+                            className={`${isSameDate(day, new Date()) === true ? 'fixed -z-10 mx-auto h-6 w-12 -translate-x-1 -translate-y-6 rounded-full border-transparent bg-blue-200' : ''}`}
+                        ></div>
                         <div id="headerDate" className="m-auto my-1 h-10 w-10 rounded-full border text-center text-3xl">
                             {`${day.getDate()}`}
                         </div>
