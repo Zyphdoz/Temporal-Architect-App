@@ -5,6 +5,8 @@ import { calendar } from '../services/calendar.ts';
 
 function SidebarMenu() {
     useEffect(() => {
+        let prevTitle = calendar.nextUpcomingTask().title;
+
         const countDownToNextTaskInTitle = setInterval(() => {
             const task = calendar.nextUpcomingTask();
             const startTime = task.startTime.getTime();
@@ -20,6 +22,11 @@ function SidebarMenu() {
                     ? 'Temporal Architect App'
                     : `${task.title} in ${hoursToNextTask}:${minutesToNextTaskPadded}`;
 
+            if (Notification.permission === 'granted' && task.title !== prevTitle) {
+                new Notification(`${prevTitle === '' ? 'untitled task' : prevTitle} starts now`);
+            }
+
+            prevTitle = task.title;
             document.title = title;
         }, 2000);
 

@@ -7,13 +7,13 @@ function Settings() {
                 <p className="ml-4">Settings</p>
             </div>
             <div className="flex min-w-80 max-w-80 flex-grow flex-col border-r bg-gray-100 p-4 shadow-sm">
-                <label className="mb-2 mt-2" htmlFor="cars">
+                <label className="mb-2 mt-2" htmlFor="firstDayInCalendar">
                     First day in calendar:
                 </label>
                 <select
                     className="mb-2 h-10 rounded-md border bg-gray-50 px-2 focus:shadow-lg focus:outline-none"
-                    name="cars"
-                    id="cars"
+                    name="firstDayInCalendar"
+                    id="firstDayInCalendar"
                     defaultValue={settings.getCalendarStartDay()}
                     onChange={(e) => {
                         settings.setCalendarStartDay(e.target.value as StartdayChoices);
@@ -29,6 +29,21 @@ function Settings() {
                     <option value="Saturday">Saturday</option>
                     <option value="Sunday">Sunday</option>
                 </select>
+                <div className={`${Notification.permission === 'granted' ? 'hidden' : ''}`}>
+                    <button
+                        className="mx-auto my-4 flex h-fit items-center justify-center rounded-lg border bg-gray-100 px-4 text-lg shadow-sm hover:bg-gray-200 active:scale-95"
+                        onClick={() => {
+                            Notification.requestPermission().then(function (result) {
+                                console.log(result);
+                            });
+                        }}
+                    >
+                        Enable notifications when a new task starts.
+                    </button>
+                    <p className="mx-auto px-2 text-sm">
+                        (If you want to turn this off later you will need to do so in your browser settings)
+                    </p>
+                </div>
                 <div className="mt-auto">
                     <button
                         className="mx-auto my-4 flex h-10 w-48 items-center justify-center rounded-lg border bg-gray-100 px-4 text-lg shadow-sm hover:bg-gray-200 active:scale-95"
