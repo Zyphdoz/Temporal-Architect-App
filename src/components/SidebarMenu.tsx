@@ -17,10 +17,14 @@ function SidebarMenu() {
 
             const minutesToNextTaskPadded = minutesToNextTask.toString().padStart(2, '0');
 
-            const title =
+            let title =
                 task.title === ''
                     ? 'Temporal Architect App'
                     : `${task.title} in ${hoursToNextTask}:${minutesToNextTaskPadded}`;
+
+            if (title !== 'Temporal Architect App' && timeToNextTask < 60000) {
+                title = `${task.title} soon`;
+            }
 
             if (Notification.permission === 'granted' && task.title !== prevTitle) {
                 new Notification(`${prevTitle === '' ? 'untitled task' : prevTitle} starts now`);
