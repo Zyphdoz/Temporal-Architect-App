@@ -146,7 +146,15 @@ class Calendar {
             }
         }
 
-        return this.getTasksForDay(addDays(rightNow, 1))[0];
+        const tomorrow = addDays(rightNow, 1);
+        const todaysLastTask = todaysTasks[todaysTasks.length - 1].title;
+        const tomorrowsFirstTask = this.getTasksForDay(tomorrow)[0].title;
+
+        if (todaysLastTask === tomorrowsFirstTask && this.getTasksForDay(tomorrow).length > 1) {
+            return this.getTasksForDay(tomorrow)[1];
+        } else {
+            return this.getTasksForDay(tomorrow)[0];
+        }
     }
 
     private createNewEntryForThisDay(key: string) {
