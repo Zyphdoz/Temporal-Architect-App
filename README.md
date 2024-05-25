@@ -6,7 +6,7 @@ This project was inspired by a video on time management. For context on the inte
 After watching the video I wanted to try this out myself but the suggested approach involved using a calendar app, a time tracking app and a spreadsheet. The problem here is that these tools would be slow to use, not only because I'd have to manually move data between them but also because these are general purpose tools designed to handle a lot more than what I'd be using them for, thus their UI and UX would likely not be optimized for my specific use case.
 Therefore, I decided to create my own tool that does exactly what I need while requiring minimal time investment and effort to use.
 
-The tool is available on https://zyphdoz.github.io/temporalarchitectapp or if you prefer to run it locally, you can clone this project and follow the instructions below.
+The tool is available on https://zyphdoz.github.io/Temporal-Architect-App or if you prefer to run it locally, you can clone this project and follow the instructions below.
 
 ## Running locally
 
