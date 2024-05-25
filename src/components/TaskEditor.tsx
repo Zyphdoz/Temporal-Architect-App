@@ -58,25 +58,65 @@ function TaskEditor() {
                 <label htmlFor="starttime" className="mb-2 mt-5">
                     Start time
                 </label>
-                <DatePicker
-                    id="starttime"
-                    className={`${inputStyle} w-full`}
-                    selected={task.startTime}
-                    onChange={(date) => taskEditor.setStartTime(date!)}
-                    showTimeInput
-                    dateFormat="MMMM d, yyyy HH:mm"
-                />
+                <div className="flex">
+                    <DatePicker
+                        id="starttime"
+                        className={`${inputStyle} w-full pr-0`}
+                        selected={task.startTime}
+                        onChange={(date) => taskEditor.setStartTime(date!)}
+                        showTimeInput
+                        dateFormat="MMMM d, yyyy HH:mm"
+                    />
+                    <button
+                        className="mx-1 mb-1 flex h-10 w-10 items-center justify-center rounded-lg border bg-gray-100 px-4 text-lg shadow-sm hover:bg-gray-200"
+                        onClick={() => {
+                            const startTime = task.startTime;
+                            taskEditor.setStartTime(new Date(startTime.setMinutes(startTime.getMinutes() - 5)));
+                        }}
+                    >
+                        -5
+                    </button>
+                    <button
+                        className="mb-1 flex h-10 w-10 items-center justify-center rounded-lg border bg-gray-100 px-4 text-lg shadow-sm hover:bg-gray-200"
+                        onClick={() => {
+                            const startTime = task.startTime;
+                            taskEditor.setStartTime(new Date(startTime.setMinutes(startTime.getMinutes() + 5)));
+                        }}
+                    >
+                        +5
+                    </button>
+                </div>
                 <label htmlFor="endtime" className="mb-2 mt-5">
                     End time
                 </label>
-                <DatePicker
-                    id="endtime"
-                    className={`${inputStyle} w-full`}
-                    selected={task.endTime}
-                    onChange={(date) => taskEditor.setEndTime(date!)}
-                    showTimeInput
-                    dateFormat="MMMM d, yyyy HH:mm"
-                />
+                <div className="flex">
+                    <DatePicker
+                        id="endtime"
+                        className={`${inputStyle} w-full pr-0`}
+                        selected={task.endTime}
+                        onChange={(date) => taskEditor.setEndTime(date!)}
+                        showTimeInput
+                        dateFormat="MMMM d, yyyy HH:mm"
+                    />
+                    <button
+                        className="mx-1 mb-1 flex h-10 w-10 items-center justify-center rounded-lg border bg-gray-100 px-4 text-lg shadow-sm hover:bg-gray-200"
+                        onClick={() => {
+                            const endTime = task.endTime;
+                            taskEditor.setEndTime(new Date(endTime.setMinutes(endTime.getMinutes() - 5)));
+                        }}
+                    >
+                        -5
+                    </button>
+                    <button
+                        className="mb-1 flex h-10 w-10 items-center justify-center rounded-lg border bg-gray-100 px-4 text-lg shadow-sm hover:bg-gray-200"
+                        onClick={() => {
+                            const endTime = task.endTime;
+                            taskEditor.setEndTime(new Date(endTime.setMinutes(endTime.getMinutes() + 5)));
+                        }}
+                    >
+                        +5
+                    </button>
+                </div>
 
                 <div className="mb-2 mt-5">Color</div>
                 <div className="relative">
