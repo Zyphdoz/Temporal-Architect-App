@@ -70,8 +70,9 @@ function TaskEditor() {
                     <button
                         className="mx-1 mb-1 flex h-10 w-10 items-center justify-center rounded-lg border bg-gray-100 px-4 text-lg shadow-sm hover:bg-gray-200"
                         onClick={() => {
-                            const startTime = task.startTime;
-                            taskEditor.setStartTime(new Date(startTime.setMinutes(startTime.getMinutes() - 5)));
+                            let startTime = new Date(task.startTime);
+                            startTime.setMinutes(startTime.getMinutes() - 5);
+                            taskEditor.setStartTime(startTime);
                         }}
                     >
                         -5
@@ -79,8 +80,9 @@ function TaskEditor() {
                     <button
                         className="mb-1 flex h-10 w-10 items-center justify-center rounded-lg border bg-gray-100 px-4 text-lg shadow-sm hover:bg-gray-200"
                         onClick={() => {
-                            const startTime = task.startTime;
-                            taskEditor.setStartTime(new Date(startTime.setMinutes(startTime.getMinutes() + 5)));
+                            let startTime = new Date(task.startTime);
+                            startTime.setMinutes(startTime.getMinutes() + 5);
+                            taskEditor.setStartTime(startTime);
                         }}
                     >
                         +5
@@ -101,8 +103,9 @@ function TaskEditor() {
                     <button
                         className="mx-1 mb-1 flex h-10 w-10 items-center justify-center rounded-lg border bg-gray-100 px-4 text-lg shadow-sm hover:bg-gray-200"
                         onClick={() => {
-                            const endTime = task.endTime;
-                            taskEditor.setEndTime(new Date(endTime.setMinutes(endTime.getMinutes() - 5)));
+                            let endTime = new Date(task.endTime);
+                            endTime.setMinutes(endTime.getMinutes() - 5);
+                            taskEditor.setEndTime(endTime);
                         }}
                     >
                         -5
@@ -110,8 +113,9 @@ function TaskEditor() {
                     <button
                         className="mb-1 flex h-10 w-10 items-center justify-center rounded-lg border bg-gray-100 px-4 text-lg shadow-sm hover:bg-gray-200"
                         onClick={() => {
-                            const endTime = task.endTime;
-                            taskEditor.setEndTime(new Date(endTime.setMinutes(endTime.getMinutes() + 5)));
+                            let endTime = new Date(task.endTime);
+                            endTime.setMinutes(endTime.getMinutes() + 5);
+                            taskEditor.setEndTime(endTime);
                         }}
                     >
                         +5
