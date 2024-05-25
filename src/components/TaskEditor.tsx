@@ -17,7 +17,7 @@ function TaskEditor() {
         taskEditor.isVisible() && (
             <div
                 id="taskeditorcontainer"
-                className="flex min-w-80 max-w-80 flex-grow flex-col overflow-y-scroll border-r bg-gray-100 p-4 shadow-sm"
+                className="flex min-w-80 max-w-80 flex-grow flex-col border-r bg-gray-100 p-4 shadow-sm"
                 style={{ background: task.backgroundColor }}
             >
                 <button
