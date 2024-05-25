@@ -14,11 +14,11 @@ The tool is available on https://zyphdoz.github.io/Temporal-Architect-App or if 
 In your project directory, run the first command, wait for a few seconds (two should suffice if you have a fast computer), press `ctrl+c`, then run the second command. The second command assumes your project directory is called "Temporal Architect App".
 
 ```
-mkdir ../temporal_architect_app_pubsubify_output/ && mkdir ../temporal_architect_app_pubsubify_output/node_modules && node pubsubify.js
+npm i && mkdir ../temporal_architect_app_pubsubify_output/ && mkdir ../temporal_architect_app_pubsubify_output/node_modules && node pubsubify.js
 ```
 
 ```
-cd ../temporal_architect_app_pubsubify_output/ && npm i && cd "../Temporal Architect App" && npm i && npm run pubsubify
+cd ../temporal_architect_app_pubsubify_output/ && npm i && cd "../Temporal Architect App" && npm run pubsubify
 ```
 
 You only need to do the above steps once before you run the project for the very first time.
