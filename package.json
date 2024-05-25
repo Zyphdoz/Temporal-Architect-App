@@ -12,7 +12,7 @@
     "preview": "vite preview",
     "pubsubify": "concurrently \"node pubsubify.js\" \"cd ../temporal_architect_app_pubsubify_output && npm run dev\"",
     "predeploy": "cd ../temporal_architect_app_pubsubify_output && npm run build",
-    "deploy": "cd ../temporal_architect_app_pubsubify_output && gh-pages -d dist"
+    "deploy": "mv ../temporal_architect_app_pubsubify_output/dist . && gh-pages -d dist"
   },
   "dependencies": {
     "react": "^18.2.0",
