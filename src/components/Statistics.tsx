@@ -17,26 +17,26 @@ function Statistics() {
             <div className="flex flex-grow flex-row">
                 <div className="flex min-w-80 max-w-80 flex-grow flex-col border-r bg-gray-100 p-4 shadow-sm">
                     <label htmlFor="starttime" className="mb-2 mt-5">
-                        Start time
+                        From
                     </label>
                     <DatePicker
                         id="starttime"
                         className="h-10 w-full rounded-md border bg-gray-50 px-2 focus:shadow-lg focus:outline-none"
                         selected={startTime}
                         onChange={(date) => setStartTime(date!)}
-                        dateFormat="MMMM d, yyyy"
+                        dateFormat="EEE, MMMM d, yyyy"
                         showYearDropdown
                         showMonthDropdown
                     />
                     <label htmlFor="endtime" className="mb-2 mt-5">
-                        End time
+                        To
                     </label>
                     <DatePicker
                         id="endtime"
                         className="h-10 w-full rounded-md border bg-gray-50 px-2 focus:shadow-lg focus:outline-none"
                         selected={endTime}
                         onChange={(date) => setEndTime(date!)}
-                        dateFormat="MMMM d, yyyy"
+                        dateFormat="EEE, MMMM d, yyyy"
                         showYearDropdown
                         showMonthDropdown
                     />
