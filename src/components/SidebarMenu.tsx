@@ -26,8 +26,8 @@ function SidebarMenu() {
                 title = `${task.title} soon`;
             }
 
-            if (Notification.permission === 'granted' && task.title !== prevTitle) {
-                new Notification(`${prevTitle === '' ? 'untitled task' : prevTitle} starts now`);
+            if (Notification.permission === 'granted' && task.title !== prevTitle && prevTitle !== '') {
+                new Notification(`${prevTitle} starts now`);
             }
 
             prevTitle = task.title;
