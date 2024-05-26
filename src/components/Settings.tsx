@@ -14,7 +14,7 @@ function Settings() {
                     className="mb-2 h-10 rounded-md border bg-gray-50 px-2 focus:shadow-lg focus:outline-none"
                     name="firstDayInCalendar"
                     id="firstDayInCalendar"
-                    defaultValue={settings.getCalendarStartDay()}
+                    defaultValue={settings.getCalendarStartDaySync()}
                     onChange={(e) => {
                         settings.setCalendarStartDay(e.target.value as StartdayChoices);
                         storage.save();

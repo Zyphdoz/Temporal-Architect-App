@@ -8,16 +8,24 @@ import CalendarDayHeader from './CalendarDayHeader';
 import { calendar } from '../services/calendar';
 
 function Calendar() {
-    const [selectedDate, setSelectedDate] = useState(calendar.getCalendarStartDate(new Date()));
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
     const [datePickerIsOpen, setDatePickerIsOpen] = useState(false);
 
     const handleChange = (newDate: Date) => {
-        setSelectedDate(() => {
-            setDatePickerIsOpen(!datePickerIsOpen);
-            return calendar.getCalendarStartDate(newDate);
-        });
+        setDatePickerIsOpen(!datePickerIsOpen);
+
+        fetchStartDate(newDate);
     };
+
+    async function fetchStartDate(date: Date) {
+        const startDate = await calendar.getCalendarStartDate(date);
+        setSelectedDate(startDate);
+    }
+
+    useEffect(() => {
+        fetchStartDate(new Date());
+    }, []);
 
     const scrollbar = useRef<HTMLDivElement>(null);
     useEffect(() => {
@@ -27,7 +35,11 @@ function Calendar() {
                 scrollbar.current.scrollTop = (rightNow.getHours() - 3) * 120;
             }
         }
-    }, []);
+    }, [selectedDate]);
+
+    if (selectedDate === null) {
+        return <div></div>;
+    }
 
     return (
         <div className="flex h-screen w-full flex-col overflow-x-hidden">
@@ -37,7 +49,7 @@ function Calendar() {
                     className={`px-3 hover:font-bold`}
                     onClick={() =>
                         setSelectedDate((prevDate) => {
-                            return addDays(prevDate, -7);
+                            return addDays(prevDate!, -7);
                         })
                     }
                 >
@@ -48,7 +60,7 @@ function Calendar() {
                     className={`px-2 hover:font-bold`}
                     onClick={() =>
                         setSelectedDate((prevDate) => {
-                            return addDays(prevDate, 7);
+                            return addDays(prevDate!, 7);
                         })
                     }
                 >

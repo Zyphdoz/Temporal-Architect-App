@@ -1,3 +1,4 @@
+import { openDB, DBSchema, IDBPDatabase } from 'idb';
 import { CalendarTask, CalendarMap, calendar } from './calendar';
 import { StartdayChoices, settings } from './settings';
 
@@ -6,45 +7,69 @@ interface SavedData {
     tasks: CalendarMap<CalendarTask[]>;
 }
 
+interface StorageDB extends DBSchema {
+    data: {
+        key: string;
+        value: SavedData;
+    };
+}
+
 class Storage {
-    calendarStartDay: StartdayChoices;
-    tasks: CalendarMap<CalendarTask[]>;
+    private dbPromise: Promise<IDBPDatabase<StorageDB>> = null!;
+    private calendarStartDay: StartdayChoices = 'Today';
+    private tasks: CalendarMap<CalendarTask[]> = {};
+    ready: Promise<void>;
 
     constructor() {
-        let saved: SavedData | null = null;
+        if (!this.inTestEnvironement()) {
+            this.dbPromise = openDB<StorageDB>('storageDB', 1, {
+                upgrade(db) {
+                    db.createObjectStore('data');
+                },
+            });
 
-        let savedItem;
-
-        if (typeof localStorage === 'undefined') {
-            savedItem = {};
+            this.ready = this.loadData();
         } else {
-            savedItem = localStorage.getItem('data');
-            if (savedItem !== null) {
-                saved = JSON.parse(savedItem);
-            }
+            this.ready = Promise.resolve();
         }
+    }
+
+    private async loadData() {
+        if (!this.dbPromise) return;
+        const db = await this.dbPromise;
+        const saved = await db.get('data', 'savedData');
 
         this.calendarStartDay = saved?.calendarStartDay || 'Today';
         this.tasks = this.repairDatesInTasks(saved?.tasks!) || {};
         settings.setCalendarStartDay(this.calendarStartDay);
     }
 
-    save() {
-        this.calendarStartDay = settings.getCalendarStartDay();
+    async save() {
+        this.calendarStartDay = await settings.getCalendarStartDay();
         this.tasks = calendar.getTasks();
-        localStorage.setItem('data', JSON.stringify(this));
+        const db = await this.dbPromise;
+        await db.put(
+            'data',
+            {
+                calendarStartDay: this.calendarStartDay,
+                tasks: this.tasks,
+            },
+            'savedData',
+        );
     }
 
     getTasks(): CalendarMap<CalendarTask[]> {
         return this.tasks;
     }
 
-    getCalendarStartDay() {
+    getCalendarStartDay(): StartdayChoices {
         return this.calendarStartDay;
     }
 
-    downloadBackup() {
-        const dataStr = localStorage.getItem('data');
+    async downloadBackup() {
+        const db = await this.dbPromise;
+        const data = await db.get('data', 'savedData');
+        const dataStr = JSON.stringify(data);
         const blob = new Blob([dataStr || ''], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -57,14 +82,22 @@ class Storage {
 
     uploadBackup(file: File) {
         const reader = new FileReader();
-        reader.onload = () => {
+        reader.onload = async () => {
             if (typeof reader.result === 'string') {
                 try {
                     const data = JSON.parse(reader.result);
                     this.tasks = this.repairDatesInTasks(data.tasks);
                     this.calendarStartDay = data.calendarStartDay;
                     settings.setCalendarStartDay(this.calendarStartDay);
-                    localStorage.setItem('data', JSON.stringify(this));
+                    const db = await this.dbPromise;
+                    await db.put(
+                        'data',
+                        {
+                            calendarStartDay: this.calendarStartDay,
+                            tasks: this.tasks,
+                        },
+                        'savedData',
+                    );
                     calendar.onUploadBackup(this.tasks);
                 } catch (e) {
                     console.error('Invalid file content', e);
@@ -77,8 +110,9 @@ class Storage {
         reader.readAsText(file);
     }
 
-    deleteData() {
-        localStorage.removeItem('data');
+    async deleteData() {
+        const db = await this.dbPromise;
+        await db.delete('data', 'savedData');
         this.tasks = {};
         this.calendarStartDay = 'Today';
         settings.setCalendarStartDay(this.calendarStartDay);
@@ -86,7 +120,7 @@ class Storage {
     }
 
     /**
-     * the Date objects have been turned into strings in localstorage
+     * the Date objects have been turned into strings in storage
      * in order for things to work we need to convert them back to Date objects
      */
     private repairDatesInTasks(tasks: CalendarMap<CalendarTask[]>): CalendarMap<CalendarTask[]> {
@@ -101,6 +135,10 @@ class Storage {
         }
 
         return newTasks;
+    }
+
+    private inTestEnvironement(): boolean {
+        return typeof localStorage === 'undefined';
     }
 }
 

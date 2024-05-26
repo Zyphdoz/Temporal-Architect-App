@@ -25,7 +25,16 @@ export interface CalendarMap<T> {
 }
 
 class Calendar {
-    private tasks: CalendarMap<CalendarTask[]> = storage.getTasks(); //.state
+    private tasks: CalendarMap<CalendarTask[]> = {}; //.state
+
+    constructor() {
+        this.initializeTasks();
+    }
+
+    private async initializeTasks() {
+        await storage.ready;
+        this.tasks = storage.getTasks();
+    }
 
     addTask(task: CalendarTask) {
         const numberOfTasksToAdd = task.numRepeats > 1 ? task.numRepeats : 1;
@@ -118,8 +127,8 @@ class Calendar {
         return this.tasks;
     }
 
-    getCalendarStartDate(date: Date) {
-        const startDayPreference: StartdayChoices = settings.getCalendarStartDay();
+    async getCalendarStartDate(date: Date) {
+        const startDayPreference: StartdayChoices = await settings.getCalendarStartDay();
         const currentWeekday = date.toLocaleDateString('en-US', { weekday: 'long' });
         let day = date;
         if (startDayPreference === 'Today' || startDayPreference === currentWeekday) {
