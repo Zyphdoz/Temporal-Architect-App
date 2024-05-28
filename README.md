@@ -3,16 +3,17 @@
 This is a time management tool for people who want to make the most of their time.
 
 ## Features
-- Get an overview of your week in a calendar view
+
+-   Get an overview of your week in a calendar view
 
 ![calendarview](https://github.com/Zyphdoz/Temporal-Architect-App/assets/19358097/c6df7202-9a9d-4c96-a734-95c5731a4d9e)
 
-- Get insightful statistics on how you are spending your time
-  
-![image](https://github.com/Zyphdoz/Temporal-Architect-App/assets/19358097/5ae2c137-64a6-42d0-aa7d-e40ecd3c4510)
-- Countdown to next task in tab title
-- Opt-in desktop nofitications when the next task starts
+-   Get insightful statistics on how you are spending your time
 
+![image](https://github.com/Zyphdoz/Temporal-Architect-App/assets/19358097/5ae2c137-64a6-42d0-aa7d-e40ecd3c4510)
+
+-   Countdown to next task in tab title
+-   You can opt-in to desktop nofitications for when the next task starts
 
 This project was inspired by a video on time management. For context on the intended use case of this tool, I recommend checking out the video [here](https://www.youtube.com/watch?v=ImBlQJAMCQY).
 After watching the video I wanted to try this out myself but the suggested approach involved using a calendar app, a time tracking app and a spreadsheet. The problem here is that these tools would be slow to use, not only because I'd have to manually move data between them but also because these are general purpose tools designed to handle a lot more than what I'd be using them for, thus their UI and UX would likely not be optimized for my specific use case.
@@ -40,4 +41,6 @@ After that you can start the dev server with:
 npm run pubsubify
 ```
 
-If you're curious why there is this convoluted setup process, this is just what happens when you invent your own state management solution for React without taking into consideration what the first time setup is going to look like, for more details see [pubsubify](https://github.com/Zyphdoz/pubsubify).
+## For anyone reading the code
+
+This project uses [pubsubify](https://github.com/Zyphdoz/pubsubify), a custom state management system I developed out of curiosity. This is also why many of the components have their state in singletons. Normally this approach wouldn't work because React doesn't know to rerender when the state in these singletons changes, but pubsubify injects some code before the build step that makes this work.
