@@ -1,6 +1,7 @@
 import { openDB, DBSchema, IDBPDatabase } from 'idb';
 import { CalendarTask, CalendarMap, calendar } from './calendar';
 import { StartdayChoices, settings } from './settings';
+import EventEmitter2 from 'eventemitter2';
 
 interface SavedData {
     calendarStartDay: StartdayChoices;
@@ -14,13 +15,15 @@ interface StorageDB extends DBSchema {
     };
 }
 
-class Storage {
+class Storage extends EventEmitter2 {
     private dbPromise: Promise<IDBPDatabase<StorageDB>> = null!;
     private calendarStartDay: StartdayChoices = 'Today';
     private tasks: CalendarMap<CalendarTask[]> = {};
     ready: Promise<void>;
 
     constructor() {
+        super();
+
         if (!this.inTestEnvironement()) {
             this.dbPromise = openDB<StorageDB>('storageDB', 1, {
                 upgrade(db) {
@@ -41,7 +44,7 @@ class Storage {
 
         this.calendarStartDay = saved?.calendarStartDay || 'Today';
         this.tasks = this.repairDatesInTasks(saved?.tasks!) || {};
-        settings.setCalendarStartDay(this.calendarStartDay);
+        this.emit('ready');
     }
 
     async save() {

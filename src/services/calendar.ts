@@ -28,12 +28,9 @@ class Calendar {
     private tasks: CalendarMap<CalendarTask[]> = {}; //.state
 
     constructor() {
-        this.initializeTasks();
-    }
-
-    private async initializeTasks() {
-        await storage.ready;
-        this.tasks = storage.getTasks();
+        storage.on('ready', () => {
+            this.tasks = storage.getTasks();
+        });
     }
 
     addTask(task: CalendarTask) {

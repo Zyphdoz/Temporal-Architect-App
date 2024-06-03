@@ -13,6 +13,12 @@ export type StartdayChoices =
 class Settings {
     private calendarStartDay: StartdayChoices = 'Monday';
 
+    constructor() {
+        storage.on('ready', () => {
+            this.calendarStartDay = storage.getCalendarStartDay();
+        });
+    }
+
     async getCalendarStartDay() {
         await storage.ready;
         return this.calendarStartDay;
